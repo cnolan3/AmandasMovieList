@@ -7,7 +7,6 @@
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-        "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,html}\"",
         "preview": "vite preview"
     },
     "dependencies": {
@@ -24,9 +23,5 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.6",
         "vite": "^5.2.0"
-    },
-    "prettier": {
-        "tabWidth": 4,
-        "endOfLine": "lf"
     }
 }
