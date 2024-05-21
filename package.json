@@ -1,0 +1,19 @@
+{
+    "name": "amandasmovielist",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,html,css}\""
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "prettier": "^3.2.5"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "endOfLine": "lf"
+    }
+}
