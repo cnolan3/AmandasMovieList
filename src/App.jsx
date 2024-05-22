@@ -1,24 +1,18 @@
-//import { useState } from "react";
-import { Authenticator } from "@aws-amplify/ui-react";
-import { Amplify } from "aws-amplify";
-import outputs from "../amplify_outputs.json";
-import "@aws-amplify/ui-react/styles.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-Amplify.configure(outputs);
+import Homepage from "./pages/Homepage/Homepage";
+import AppPage from "./pages/AppPage/AppPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
-function App({ Component, pageProps }) {
+function App() {
     return (
-        <>
-            <Authenticator>
-                {({ signOut, user }) => {
-                    <main>
-                        <h1>Hello {user?.username}</h1>
-                        <button onClick={signOut}>Sign out</button>
-                        <Component {...pageProps} />
-                    </main>;
-                }}
-            </Authenticator>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route index element={<Homepage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="app" element={<AppPage />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
