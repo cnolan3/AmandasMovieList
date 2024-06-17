@@ -1,5 +1,5 @@
 {
-  "prettier.tabWidth": 4,
-  "prettier.prettierPath": "./node_modules/prettier",
-  "files.eol": "\n"
+    "prettier.tabWidth": 2,
+    "prettier.prettierPath": "",
+    "files.eol": "\n"
 }
