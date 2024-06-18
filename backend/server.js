@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env' });
 
-const logger = require('./logger');
+const logger = require('./utils/logger');
 
 // process.on('uncaughtRejection', (err) => {
 //   console.log('Uncaught exception, shutting down...');

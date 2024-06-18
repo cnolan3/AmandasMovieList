@@ -1,9 +1,8 @@
 const winston = require('winston');
 require('winston-daily-rotate-file');
 
-const { combine, timestamp, colorize, simple, errors, prettyPrint } =
-  winston.format;
-const logDir = `${__dirname}/logs`;
+const { combine, timestamp, colorize, simple, prettyPrint } = winston.format;
+const logDir = `${__dirname}/../logs`;
 
 const levelColors = {
   error: 'brightRed',
@@ -20,14 +19,10 @@ const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   transports: [
     new winston.transports.Console({
-      format: combine(
-        errors({ stack: true }),
-        colorize({ colors: levelColors }),
-        simple(),
-      ),
+      format: combine(colorize({ colors: levelColors }), simple()),
     }),
     new winston.transports.DailyRotateFile({
-      format: combine(errors({ stack: true }), timestamp(), prettyPrint()),
+      format: combine(timestamp(), prettyPrint()),
       filename: `${logDir}/combined-%DATE%.log`,
       datePattern: 'YYYY-MM-DD',
       maxFiles: '7d',
