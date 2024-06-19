@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './config.env' });
+let configFile;
+if (process.argv.length > 2) {
+  configFile = process.argv[2];
+  dotenv.config({ path: `${__dirname}/${configFile}` });
+}
 
 const logger = require('./utils/logger');
+
+if (configFile) logger.info(`Loaded config file ${configFile}`);
+
+logger.info(`Running in ${process.env.NODE_ENV} environment`);
 
 // process.on('uncaughtRejection', (err) => {
 //   console.log('Uncaught exception, shutting down...');

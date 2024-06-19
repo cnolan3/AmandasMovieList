@@ -4,10 +4,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "start:prod": "SET NODE_ENV=production& nodemon server.js",
-    "debug": "ndb server.js",
-    "debug:prod": "SET NODE_ENV=production& ndb server.js",
+    "start": "nodemon server.js config.dev.env",
+    "start:prod": "nodemon server.js config.prod.env",
+    "debug": "ndb server.js config.dev.env",
+    "debug:prod": "ndb server.js config.prod.env",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,html}\""
   },
   "repository": {
