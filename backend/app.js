@@ -9,11 +9,17 @@ const stripAnsi = require('./utils/stripAnsi');
 
 const errorController = require('./controllers/errorController');
 
+const signupKeyRoutes = require('./routes/signupKeyRoutes');
+const userRoutes = require('./routes/userRoutes');
+
 const AppError = require('./utils/appError');
 const logger = require('./utils/logger');
 
 const apiBaseUrl = '/api';
 const apiVersion = '/v1';
+const apiUrl = `${apiBaseUrl}${apiVersion}`;
+
+logger.verbose(`api url: ${apiUrl}`);
 
 const app = express();
 
@@ -49,8 +55,12 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // routes
-app.get('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server`));
+app.use(`${apiUrl}/signupkeys`, signupKeyRoutes);
+app.use(`${apiUrl}/users`, userRoutes);
+
+app.all('*', (req, res, next) => {
+  logger.verbose('catch all route activated');
+  next(new AppError(`Route ${req.originalUrl} does not exist`));
 });
 
 app.use(errorController);
