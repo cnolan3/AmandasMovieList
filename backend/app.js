@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const stripAnsi = require('./utils/stripAnsi');
+const { xss } = require('express-xss-sanitizer');
 
 const errorController = require('./controllers/errorController');
 
@@ -23,8 +24,12 @@ if (process.env.NODE_ENV === 'development') {
 // body parser
 app.use(express.json({ limit: '10kb' }));
 
+// xss sanitization
+app.use(xss());
+
+// routes
 app.get('*', (req, res, next) => {
-  return next(new AppError('TEST ERROR', 500));
+  next(new AppError(`Can't find ${req.originalUrl} on this server`));
 });
 
 app.use(errorController);
