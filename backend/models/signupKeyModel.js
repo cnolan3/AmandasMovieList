@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+
 const AppError = require('../utils/appError');
 
 const expiresAfterDays = 7;
@@ -24,6 +25,7 @@ const signupKeySchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     expires: expiresAfterDays * 24 * 60 * 60 * 1000,
+    // expires: 5000,
     default: Date.now(),
   },
 });
