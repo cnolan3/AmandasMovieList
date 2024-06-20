@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const { promisify } = require('util');
+
+const logger = require('../utils/logger');
+
 const AppError = require('../utils/appError');
 
 const userSchema = new mongoose.Schema({
@@ -27,9 +32,9 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
   },
-  // passwordChangedAt: Date,
-  // passwordResetToken: String,
-  // passwordResetExpires: Date,
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 });
 
 // encrypt the password when saved to the db
@@ -37,6 +42,15 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password, 12);
+
+  next();
+});
+
+// update the passwordChangedAt property when password is changed
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = new Date(Date.now() - 1000);
 
   next();
 });
@@ -51,6 +65,39 @@ userSchema.methods.verifyPassword = async function (candidatePassword) {
   }
 
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// check if the password was changed after the given timestamp
+// returns true if password has been changed since the given timestamp, false otherwise
+userSchema.methods.wasPasswordChangedAfter = async function (timestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+
+    return timestamp < changedTimestamp;
+  }
+
+  return false;
+};
+
+// create a password reset token
+userSchema.methods.createPasswordResetToken = async function () {
+  const resetToken = (await promisify(crypto.randomBytes)(32)).toString('hex');
+
+  logger.debug('generating reset token');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  logger.debug(`reset token created ${this.passwordResetToken}`);
+
+  this.passwordResetExpires = Date.now() + 2 * 60 * 60 * 1000;
+
+  return resetToken;
 };
 
 module.exports = mongoose.model('User', userSchema);

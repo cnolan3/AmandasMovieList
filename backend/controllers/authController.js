@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const crypto = require('crypto');
 
 const SignupKey = require('../models/signupKeyModel');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const logger = require('../utils/logger');
+const sendEmail = require('../utils/email');
 
 // create JWT
 const signToken = (id) =>
@@ -162,7 +164,142 @@ exports.login = catchAsync(async (req, res, next) => {
 
   logger.verbose('user logged in');
 
-  res.status(201).json({
+  res.status(200).json({
+    status: 'success',
+    token,
+    data: null,
+  });
+});
+
+// send forgot password email
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+
+  // get user by email
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new AppError('There is no user with that email address', 404));
+  }
+
+  // generate reset token
+  const resetToken = await user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  logger.verbose('password reset token created');
+
+  // send token to the email
+  const resetUrl = `https://amandasmovielist.com/forgotpassword/${resetToken}`;
+
+  const message = `Forgot your password? Submit a password reset request with the given temporary password at: ${resetUrl}\n If you didn't forget your password, please ignore this email!`;
+
+  try {
+    await sendEmail({
+      email,
+      subject: 'AmandasMovieList pasword reset link (valid for 2 hours)',
+      message,
+    });
+
+    logger.verbose(`reset email sent to ${email}`);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Reset email sent',
+    });
+  } catch (err) {
+    logger.error(err);
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later',
+        500,
+      ),
+    );
+  }
+});
+
+// consume the password reset token to reset password
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const { resetToken, newPassword, newPasswordConfirm } = req.body;
+
+  // get user from jwt
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+
+  // check if new password matches new password confirmation
+  if (newPassword !== newPasswordConfirm)
+    return next(
+      new AppError('New password does not match password confirmation', 400),
+    );
+
+  // set new password if user exists and token has not expired
+  if (!user) return next(new AppError('Token is invalid or has expired', 400));
+
+  user.password = newPassword;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  // log the user in with jwt
+  const token = signToken(user._id);
+
+  const cookieOptions = getCookieOptions();
+
+  res.cookie('jwt', token, cookieOptions);
+
+  logger.verbose('user logged in');
+
+  res.status(200).json({
+    status: 'success',
+    token,
+    data: null,
+  });
+});
+
+// update password (was not forgotten)
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { currentPassword, newPassword, newPasswordConfirm } = req.body;
+  // get the user from db
+  let user = await User.findById(req.user._id).select('+password');
+
+  if (!user)
+    return next(new AppError('User has been deleted since logging in', 404));
+
+  // check that new password matches new password confirmation
+  if (newPassword !== newPasswordConfirm)
+    return next(
+      new AppError('New password does not match password confirmation', 400),
+    );
+
+  // verify given password (need to re-verify even if already logged in)
+  if (!(await user.verifyPassword(currentPassword)))
+    return next(
+      new AppError('Current password is not corrent, please try again', 401),
+    );
+
+  // update password
+  user.password = req.body.newPassword;
+  user = await user.save();
+
+  // sign the uer in with a token
+  const token = signToken(user._id);
+
+  const cookieOptions = getCookieOptions();
+
+  res.cookie('jwt', token, cookieOptions);
+
+  logger.verbose('user logged in');
+
+  res.status(200).json({
     status: 'success',
     token,
     data: null,
