@@ -52,14 +52,24 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // get user from db
-  const user = await User.findById(decoded.id);
+  const user = await User.findById(decoded.id).select('+passwordChangedAt');
   if (!user)
     return next(
       new AppError('The user belonging to this token no longer exists', 401),
     );
 
+  // check if user changed password after jwt was created
+  if (await user.wasPasswordChangedAfter(decoded.iat))
+    return next(
+      new AppError(
+        'User recently changed their password, please log in again',
+        401,
+      ),
+    );
+
   // grant access to route
-  req.user = user;
+  req.user = { ...user, passwordChangedAt: undefined };
+  logger.debug(JSON.stringify(req.user));
   next();
 });
 
@@ -168,7 +178,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
 
   // get user by email
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select({
+    passwordResetToken: 1,
+    passwordResetExpires: 1,
+  });
   if (!user) {
     return next(new AppError('There is no user with that email address', 404));
   }

@@ -16,4 +16,6 @@ router.patch(
   authController.updatePassword,
 );
 
+router.route('/').get();
+
 module.exports = router;

@@ -32,9 +32,18 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
+  passwordChangedAt: {
+    type: Date,
+    select: false,
+  },
+  passwordResetToken: {
+    type: String,
+    select: false,
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false,
+  },
 });
 
 // encrypt the password when saved to the db
