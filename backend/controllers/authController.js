@@ -90,16 +90,16 @@ exports.redact = catchAsync(async (req, res, next) => {
   // get token from auth headers
   const token = getTokenFromHeaders(req.headers);
 
-  let priviledged;
+  // set priviledged to false initially
+  req.priviledged = false;
 
   // if there is a token, verify it
   if (token) {
     const user = await verifyUserWithJWT(token, next);
 
-    priviledged = user.role === 'admin';
+    req.priviledged = user.role === 'admin';
   }
 
-  req.priviledged = priviledged;
   next();
 });
 
