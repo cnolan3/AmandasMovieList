@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const AppError = require('../utils/appError');
 
@@ -10,11 +10,6 @@ const signupKeySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Access key needs a key'],
     select: false,
-    trim: true,
-  },
-  keyName: {
-    type: String,
-    required: [true, 'Access key needs a name'],
     trim: true,
   },
   createdBy: {
@@ -32,7 +27,7 @@ const signupKeySchema = new mongoose.Schema({
 
 // encrypt given key on save
 signupKeySchema.pre('save', async function (next) {
-  this.key = await bcrypt.hash(this.key, 12);
+  this.key = crypto.createHash('sha256').update(this.key).digest('hex');
 
   next();
 });
@@ -46,7 +41,11 @@ signupKeySchema.methods.verifyKey = async function (candidateKey) {
     );
   }
 
-  return await bcrypt.compare(candidateKey, this.key);
+  const hashedKey = crypto
+    .createHash('sha256')
+    .update(candidateKey)
+    .digest('hex');
+  return hashedKey === this.key;
 };
 
 module.exports = mongoose.model('SignupKey', signupKeySchema);

@@ -11,13 +11,11 @@ exports.createKey = catchAsync(async (req, res, next) => {
   const { username } = req.user;
 
   // generate key
-  const keyName = (await promisify(crypto.randomBytes)(4)).toString('hex');
-  const key = (await promisify(crypto.randomBytes)(10)).toString('hex');
+  const key = (await promisify(crypto.randomBytes)(12)).toString('hex');
 
   await SignupKey.create({
     createdBy: username,
     key,
-    keyName,
   });
 
   logger.verbose('signup key created');
@@ -26,7 +24,6 @@ exports.createKey = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       signupKey: key,
-      signupKeyName: keyName,
       createdBy: username,
     },
   });

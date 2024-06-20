@@ -79,14 +79,7 @@ exports.restrictTo =
 
 // signup user
 exports.signup = catchAsync(async (req, res, next) => {
-  const {
-    username,
-    email,
-    password,
-    passwordConfirm,
-    signupKeyName,
-    signupKey,
-  } = req.body;
+  const { username, email, password, passwordConfirm, signupKey } = req.body;
 
   // check that password matches password confirmation
   if (password !== passwordConfirm) {
@@ -96,12 +89,11 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   // get the signup key from the db
-  const key = await SignupKey.findOne({ keyName: signupKeyName }).select(
-    '+key',
-  );
+  const hashedKey = crypto.createHash('sha256').update(signupKey).digest('hex');
+  const key = await SignupKey.findOne({ key: hashedKey });
 
   // check that the key exists and verify
-  if (!key || !(await key.verifyKey(signupKey))) {
+  if (!key) {
     return next(new AppError('Invalid signup key', 400));
   }
 
