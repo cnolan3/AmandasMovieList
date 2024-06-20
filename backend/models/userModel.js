@@ -18,13 +18,16 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Users must have an email'],
+    unique: true,
     trim: true,
     validate: [validator.isEmail, 'User email must be in a valid format.'],
+    select: false,
   },
   role: {
     type: String,
     enum: ['user', 'amanda', 'admin'],
     default: 'user',
+    select: false,
   },
   password: {
     type: String,

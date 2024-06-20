@@ -10,8 +10,8 @@ const logger = require('../utils/logger');
 const sendEmail = require('../utils/email');
 
 // create JWT
-const signToken = (id) =>
-  jwt.sign({ id: id }, process.env.JWT_SECRET, {
+const signToken = async (id) =>
+  await promisify(jwt.sign)({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
@@ -29,30 +29,27 @@ const getCookieOptions = () => {
   return cookieOptions;
 };
 
-// protect routes with jwt token login
-exports.protect = catchAsync(async (req, res, next) => {
-  // get token from auth headers
+// extract jwt token from auth headers
+const getTokenFromHeaders = (headers) => {
   let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
+  if (headers.authorization && headers.authorization.startsWith('Bearer')) {
+    token = headers.authorization.split(' ')[1];
   }
 
-  if (!token)
-    return next(
-      new AppError(
-        'You are not logged in, please log in to access this resource',
-        401,
-      ),
-    );
+  return token;
+};
 
+// verify user in db with a jwt
+const verifyUserWithJWT = async (token, next) => {
   // verify the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // get user from db
-  const user = await User.findById(decoded.id).select('+passwordChangedAt');
+  const user = await User.findById(decoded.id).select({
+    passwordChangedAt: 1,
+    role: 1,
+    username: 1,
+  });
   if (!user)
     return next(
       new AppError('The user belonging to this token no longer exists', 401),
@@ -67,9 +64,42 @@ exports.protect = catchAsync(async (req, res, next) => {
       ),
     );
 
+  return user;
+};
+
+// protect routes with jwt token login
+exports.protect = catchAsync(async (req, res, next) => {
+  // get token from auth headers
+  const token = getTokenFromHeaders(req.headers);
+
+  if (!token)
+    return next(
+      new AppError('You do not have a token, please log in to obtain one', 401),
+    );
+
+  // verify token
+  const user = await verifyUserWithJWT(token, next);
+
   // grant access to route
-  req.user = { ...user, passwordChangedAt: undefined };
-  logger.debug(JSON.stringify(req.user));
+  req.user = user;
+  next();
+});
+
+// mark admin users as priviledged to add extra info to responses
+exports.redact = catchAsync(async (req, res, next) => {
+  // get token from auth headers
+  const token = getTokenFromHeaders(req.headers);
+
+  let priviledged;
+
+  // if there is a token, verify it
+  if (token) {
+    const user = await verifyUserWithJWT(token, next);
+
+    priviledged = user.role === 'admin';
+  }
+
+  req.priviledged = priviledged;
   next();
 });
 
@@ -77,8 +107,11 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
-    logger.debug(`restricted roles: ${roles}, given role: ${req.user.role}`);
-    if (!roles.includes(req.user.role)) {
+    const { role, _id, username } = req.user;
+    if (!roles.includes(role)) {
+      logger.info(
+        `User id ${_id} (${username}) tried to access a restricted route (${roles})`,
+      );
       return next(
         new AppError('You do not have permission to access this resource', 403),
       );
@@ -122,7 +155,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   await SignupKey.deleteOne({ _id: key._id });
 
   // sign the user in with a token
-  const token = signToken(newUser._id);
+  const token = await signToken(newUser._id);
 
   const cookieOptions = getCookieOptions();
 
@@ -158,7 +191,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // sign the uer in with a token
-  const token = signToken(user._id);
+  const token = await signToken(user._id);
 
   const cookieOptions = getCookieOptions();
 
@@ -255,7 +288,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // log the user in with jwt
-  const token = signToken(user._id);
+  const token = await signToken(user._id);
 
   const cookieOptions = getCookieOptions();
 
@@ -296,7 +329,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user = await user.save();
 
   // sign the uer in with a token
-  const token = signToken(user._id);
+  const token = await signToken(user._id);
 
   const cookieOptions = getCookieOptions();
 
