@@ -5,11 +5,17 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.get(
-  '/create',
-  authController.protect,
-  authController.restrictTo('amanda', 'admin'),
-  signupKeyController.createKey,
-);
+router
+  .route('/')
+  .post(
+    authController.protect,
+    authController.restrictTo('amanda', 'admin'),
+    signupKeyController.createKey,
+  )
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    signupKeyController.getKeys,
+  );
 
 module.exports = router;

@@ -28,3 +28,15 @@ exports.createKey = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// get info on all current keys
+exports.getKeys = catchAsync(async (req, res, next) => {
+  const keys = await SignupKey.find();
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      keys,
+    },
+  });
+});
