@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
+  votedFor: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'MovieList',
+  },
 });
 
 // encrypt the password when saved to the db
@@ -64,6 +68,15 @@ userSchema.pre('save', async function (next) {
 
   this.passwordChangedAt = new Date(Date.now() - 1000);
 
+  next();
+});
+
+// populate the votedFor field
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'votedFor',
+    select: 'title',
+  });
   next();
 });
 
@@ -112,4 +125,6 @@ userSchema.methods.createPasswordResetToken = async function () {
   return resetToken;
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

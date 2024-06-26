@@ -13,9 +13,8 @@ const signupKeySchema = new mongoose.Schema({
     trim: true,
   },
   createdBy: {
-    type: String,
-    required: [true, 'Access key needs a created by username'],
-    trim: true,
+    type: mongoose.Schema.ObjectId,
+    required: [true, 'Access key needs a created by id'],
   },
   createdAt: {
     type: Date,
@@ -29,6 +28,15 @@ const signupKeySchema = new mongoose.Schema({
 signupKeySchema.pre('save', async function (next) {
   this.key = crypto.createHash('sha256').update(this.key).digest('hex');
 
+  next();
+});
+
+// populate the createdBy field
+signupKeySchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'createdBy',
+    select: 'username email',
+  });
   next();
 });
 
@@ -48,4 +56,6 @@ signupKeySchema.methods.verifyKey = async function (candidateKey) {
   return hashedKey === this.key;
 };
 
-module.exports = mongoose.model('SignupKey', signupKeySchema);
+const SignupKey = mongoose.model('SignupKey', signupKeySchema);
+
+module.exports = SignupKey;
