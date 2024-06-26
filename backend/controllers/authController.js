@@ -321,7 +321,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // verify given password (need to re-verify even if already logged in)
   if (!(await user.verifyPassword(currentPassword)))
     return next(
-      new AppError('Current password is not corrent, please try again', 401),
+      new AppError('Current password is not correct, please try again', 401),
     );
 
   // update password
