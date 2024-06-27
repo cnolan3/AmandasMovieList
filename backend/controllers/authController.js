@@ -45,11 +45,9 @@ const verifyUserWithJWT = async (token, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // get user from db
-  const user = await User.findById(decoded.id).select({
-    passwordChangedAt: 1,
-    role: 1,
-    username: 1,
-  });
+  const user = await User.findById(decoded.id).select(
+    '+passwordChangedAt +role',
+  );
   if (!user)
     return next(
       new AppError('The user belonging to this token no longer exists', 401),
