@@ -64,7 +64,7 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-    let appErrorObj;
+    let appErrorObj = err;
 
     if (err.name === 'CastError') appErrorObj = handleCastErrorDB(err);
     if (err.code === 11000) appErrorObj = handleDuplicateFieldDB(err);
