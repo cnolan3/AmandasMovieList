@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const MovieList = require('../models/movieListModel');
 const User = require('../models/userModel');
 
@@ -6,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 // const logger = require('../utils/logger');
 const APIFeatures = require('../utils/apiFeatures');
+const OMDBGet = require('../utils/omdbGet');
 
 // add user info to add movie request middleware
 exports.recommendMovie = catchAsync(async (req, res, next) => {
@@ -30,10 +30,8 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
     recommendedByName = req.body.recommendedByName;
   }
 
-  const omdbRes = await fetch(
-    `https://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.OMDB_API_KEY}`,
-  );
-  const data = await omdbRes.json();
+  const omdb = new OMDBGet().omdbID(imdbID);
+  const data = await omdb.send();
 
   const rottenPercent = parseFloat(data.Ratings[1].Value);
 

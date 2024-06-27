@@ -12,6 +12,7 @@ const errorController = require('./controllers/errorController');
 const signupKeyRoutes = require('./routes/signupKeyRoutes');
 const userRoutes = require('./routes/userRoutes');
 const movieListRoutes = require('./routes/movieListRoutes');
+const movieApiRoutes = require('./routes/movieApiRoutes');
 
 const AppError = require('./utils/appError');
 const logger = require('./utils/logger');
@@ -56,6 +57,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // routes
+app.use(`${apiUrl}/movies`, movieApiRoutes);
 app.use(`${apiUrl}/watchlist`, movieListRoutes);
 app.use(`${apiUrl}/signupkeys`, signupKeyRoutes);
 app.use(`${apiUrl}/users`, userRoutes);
