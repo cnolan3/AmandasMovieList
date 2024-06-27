@@ -2,7 +2,9 @@ const winston = require('winston');
 require('winston-daily-rotate-file');
 
 const { combine, timestamp, colorize, simple, prettyPrint } = winston.format;
-const logDir = `${__dirname}/../logs`;
+
+let logDir = `${__dirname}/../devlogs`;
+if (process.env.NODE_ENV === 'production') logDir = `${__dirname}/../logs`;
 
 const levelColors = {
   error: 'brightRed',
