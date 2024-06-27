@@ -84,22 +84,17 @@ exports.myInfo = catchAsync(async (req, res, next) => {
 exports.voteFor = catchAsync(async (req, res, next) => {
   const { imdbID } = req.params;
 
-  logger.debug('a');
   const movie = await MovieList.findOne({ imdbID });
   if (!movie)
     return next(new AppError('Movie id is not on the watchlist', 404));
 
-  logger.debug('b');
   if (movie.seen)
     return next(new AppError('Amanda has already watched this movie', 400));
 
-  logger.debug('c');
   await User.findByIdAndUpdate(req.user.id, { votedFor: movie._id });
 
-  logger.debug('d');
   await User.calcMovieVotes(movie._id);
 
-  logger.debug('e');
   res.status(200).json({
     status: 'success',
     data: {
@@ -119,4 +114,62 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   logger.info(`User id: ${user._id} (${user.username}) deleted`);
 
   res.status(204).send();
+});
+
+// create a user
+exports.createUser = catchAsync(async (req, res, next) => {
+  const { username, email, password, passwordConfirm, role } = req.body;
+
+  if (password !== passwordConfirm)
+    return next(
+      new AppError('Password does not match password confirmation', 400),
+    );
+
+  const user = await User.create({
+    username,
+    email,
+    password,
+    role,
+  });
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    },
+  });
+});
+
+// update a users info
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  let username;
+  let email;
+  let role;
+
+  if (req.body.username) username = req.body.username;
+  if (req.body.email) email = req.body.email;
+  if (req.body.role) role = req.body.role;
+
+  await User.findByIdAndUpdate(
+    id,
+    { username, email, role },
+    { runValidators: true },
+  );
+
+  const user = await User.findById(id).select('+email +role');
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    },
+  });
 });

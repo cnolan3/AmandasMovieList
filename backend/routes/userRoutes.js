@@ -32,7 +32,14 @@ router.get(
   userController.searchUser,
 );
 
-router.route('/').get(authController.redact, userController.getAllUsers);
+router
+  .route('/')
+  .get(authController.redact, userController.getAllUsers)
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.createUser,
+  );
 
 router
   .route('/:id')
@@ -41,6 +48,11 @@ router
     authController.protect,
     authController.restrictTo('admin'),
     userController.deleteUser,
+  )
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    userController.updateUser,
   );
 
 module.exports = router;
