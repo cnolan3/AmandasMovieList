@@ -8,13 +8,13 @@ const logger = require('../utils/logger');
 // create a key and store it in the db
 exports.createKey = catchAsync(async (req, res, next) => {
   // get requesting users username from jwt
-  const { username } = req.user;
+  const { username, _id: userId } = req.user;
 
   // generate key
   const key = (await promisify(crypto.randomBytes)(12)).toString('hex');
 
   await SignupKey.create({
-    createdBy: username,
+    createdBy: userId,
     key,
   });
 
@@ -24,7 +24,10 @@ exports.createKey = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       signupKey: key,
-      createdBy: username,
+      createdBy: {
+        username,
+        userId,
+      },
     },
   });
 });

@@ -31,17 +31,23 @@ const movieListSchema = new mongoose.Schema({
     required: [true, 'Movie needs a poster link'],
   },
   rottenTomatoRating: {
-    type: String,
+    type: Number,
     required: [true, 'Movie needs a rotten tomatoes rating'],
-    trim: true,
   },
   imdbID: {
     type: String,
+    unique: true,
     required: [true, 'Movie needs an imdbID'],
     trim: true,
   },
+  seen: {
+    type: Boolean,
+    default: false,
+  },
   amandaRating: {
     type: Number,
+    min: [0, 'Rating must be >= 0'],
+    max: [5, 'Rating must be <= 5'],
   },
   recommendedByName: {
     type: String,
@@ -51,6 +57,10 @@ const movieListSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  numVotes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // populate the recommendedById
@@ -59,6 +69,7 @@ movieListSchema.pre(/^find/, function (next) {
     path: 'recommendedById',
     select: 'username',
   });
+  next();
 });
 
 const MovieList = mongoose.model('MovieList', movieListSchema);

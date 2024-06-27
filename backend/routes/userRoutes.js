@@ -12,6 +12,13 @@ router.post('/forgotpassword', authController.forgotPassword);
 router.patch('/resetpassword', authController.resetPassword);
 
 router.patch(
+  '/voteformovie/:imdbID',
+  authController.protect,
+  authController.restrictTo('user', 'admin'),
+  userController.voteFor,
+);
+
+router.patch(
   '/updatepassword',
   authController.protect,
   authController.updatePassword,

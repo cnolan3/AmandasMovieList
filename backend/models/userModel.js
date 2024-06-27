@@ -5,53 +5,56 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 
 const logger = require('../utils/logger');
-
+const MovieList = require('./movieListModel');
 const AppError = require('../utils/appError');
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, 'Users must have a username'],
-    unique: true,
-    trim: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: [true, 'Users must have a username'],
+      unique: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: [true, 'Users must have an email'],
+      unique: true,
+      trim: true,
+      validate: [validator.isEmail, 'User email must be in a valid format.'],
+      select: false,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'amanda', 'admin'],
+      default: 'user',
+      select: false,
+    },
+    password: {
+      type: String,
+      required: [true, 'Users must have a password'],
+      minlength: 8,
+      select: false,
+    },
+    passwordChangedAt: {
+      type: Date,
+      select: false,
+    },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetExpires: {
+      type: Date,
+      select: false,
+    },
+    votedFor: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'MovieList',
+    },
   },
-  email: {
-    type: String,
-    required: [true, 'Users must have an email'],
-    unique: true,
-    trim: true,
-    validate: [validator.isEmail, 'User email must be in a valid format.'],
-    select: false,
-  },
-  role: {
-    type: String,
-    enum: ['user', 'amanda', 'admin'],
-    default: 'user',
-    select: false,
-  },
-  password: {
-    type: String,
-    required: [true, 'Users must have a password'],
-    minlength: 8,
-    select: false,
-  },
-  passwordChangedAt: {
-    type: Date,
-    select: false,
-  },
-  passwordResetToken: {
-    type: String,
-    select: false,
-  },
-  passwordResetExpires: {
-    type: Date,
-    select: false,
-  },
-  votedFor: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'MovieList',
-  },
-});
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
+);
 
 // encrypt the password when saved to the db
 userSchema.pre('save', async function (next) {
@@ -73,6 +76,7 @@ userSchema.pre('save', async function (next) {
 
 // populate the votedFor field
 userSchema.pre(/^find/, function (next) {
+  if (!this.votedFor) return next();
   this.populate({
     path: 'votedFor',
     select: 'title',
@@ -123,6 +127,46 @@ userSchema.methods.createPasswordResetToken = async function () {
   this.passwordResetExpires = Date.now() + 2 * 60 * 60 * 1000;
 
   return resetToken;
+};
+
+// update movie list with vote info
+userSchema.statics.calcMovieVotes = async function (movieId) {
+  // mongoose.Types.ObjectId.createFromHexString(movieId)
+  const votes = await this.aggregate([
+    {
+      $match: {
+        votedFor: movieId,
+      },
+    },
+    {
+      $group: {
+        _id: '$votedFor',
+        nVotes: { $sum: 1 },
+      },
+    },
+  ]);
+
+  logger.debug(JSON.stringify(votes));
+
+  if (votes.length > 0) {
+    await MovieList.findByIdAndUpdate(movieId, {
+      numVotes: votes[0].nVotes,
+    });
+  } else {
+    await MovieList.findByIdAndUpdate(movieId, {
+      numVotes: 0,
+    });
+  }
+};
+
+// delete votes for a specific movie
+userSchema.statics.deleteVotesFor = async function (movieId) {
+  const users = await this.find({ votedFor: movieId });
+
+  users.forEach(async (user) => {
+    user.votedFor = undefined;
+    await user.save();
+  });
 };
 
 const User = mongoose.model('User', userSchema);

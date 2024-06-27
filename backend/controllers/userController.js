@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 const logger = require('../utils/logger');
+const MovieList = require('../models/movieListModel');
 
 const addPriviledgedInfo = (req, query) => {
   if (req.priviledged)
@@ -79,6 +80,39 @@ exports.myInfo = catchAsync(async (req, res, next) => {
   });
 });
 
+// submit a vote for the next movie to watch
+exports.voteFor = catchAsync(async (req, res, next) => {
+  const { imdbID } = req.params;
+
+  logger.debug('a');
+  const movie = await MovieList.findOne({ imdbID });
+  if (!movie)
+    return next(new AppError('Movie id is not on the watchlist', 404));
+
+  logger.debug('b');
+  if (movie.seen)
+    return next(new AppError('Amanda has already watched this movie', 400));
+
+  logger.debug('c');
+  await User.findByIdAndUpdate(req.user.id, { votedFor: movie._id });
+
+  logger.debug('d');
+  await User.calcMovieVotes(movie._id);
+
+  logger.debug('e');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      votedFor: {
+        imdbID,
+        id: movie._id,
+        title: movie.title,
+      },
+    },
+  });
+});
+
+// delete a user
 exports.deleteUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
