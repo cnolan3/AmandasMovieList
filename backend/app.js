@@ -19,7 +19,7 @@ const logger = require('./utils/logger');
 
 const apiBaseUrl = '/api';
 const apiVersion = '/v1';
-const apiUrl = `${apiBaseUrl}${apiVersion}`;
+const apiUrl = `${apiVersion}`;
 
 logger.verbose(`api url: ${apiUrl}`);
 
