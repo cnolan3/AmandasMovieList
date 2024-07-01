@@ -1,12 +1,13 @@
-import NavBar from "../../components/NavBar/NavBar";
+import HeaderSection from "../../components/HeaderSection/HeaderSection";
 import MainSection from "../../components/MainSection/MainSection";
+import MovieList from "../../components/MovieList/MovieList";
 
 function Homepage() {
   return (
     <div>
-      <NavBar />
+      <HeaderSection />
       <MainSection>
-        <h2>HomePage</h2>
+        <MovieList />
       </MainSection>
     </div>
   );
