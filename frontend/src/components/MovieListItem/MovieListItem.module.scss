@@ -1,5 +1,5 @@
-@use '../../sass/colors';
-@use '../../sass/fonts';
+@use '../../sass/colors.module.scss';
+@use '../../sass/fonts.module.scss';
 
 .movieListItem {
   height: 7rem;

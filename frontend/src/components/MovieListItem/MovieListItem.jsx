@@ -1,22 +1,18 @@
 import styles from './MovieListItem.module.scss';
+import variables from '../../sass/colors.module.scss';
+
+import hexToRGB from '../../utils/hexToRGBA';
+import trimSentence from '../../utils/trimSentence';
 
 function MovieListItem({movie, position, children}) {
-  const {title, poster, rottenRating, runtime } = movie;
+  const title = trimSentence(movie.title, 35);
 
-  const titleMaxCharacters = 35;
-  let trimmedTitle = title;
-  if (title.length > titleMaxCharacters) {
-    trimmedTitle = title.substr(0, titleMaxCharacters);
-
-    if (title[titleMaxCharacters + 1] !== ' ') {
-      trimmedTitle = trimmedTitle.substr(0, trimmedTitle.lastIndexOf(' '));
-    }
-    
-    trimmedTitle = `${trimmedTitle}...`;
+  const posterGradient = {
+      background: `linear-gradient(to right, ${hexToRGB(variables.colorBackgroundLight, 1)} 66%, 92%, ${hexToRGB(variables.colorBackgroundLight, 0.4)}), url(${movie.poster}) right -10rem center no-repeat`,
   }
 
   return (
-    <li className={styles.movieListItem} style={{ background: `linear-gradient(to right, rgba(251, 253, 255, 1) 66%, 92%, rgba(211, 212, 214, 0.5)), url(${poster}) right -10rem center no-repeat`}} >
+    <li className={styles.movieListItem} style={posterGradient} >
     
       <div className={styles.movieNum}>
         <p>{position}</p>
@@ -24,14 +20,14 @@ function MovieListItem({movie, position, children}) {
 
       <div className={styles.movieInfoSection}>
         <div className={styles.movieTitle}>
-          <p>{trimmedTitle}</p>
+          <p>{title}</p>
         </div>
         <div className={styles.movieStats}>
           {children}
         </div>
       </div>
 
-      <div className={styles.moviePoster} style={{ backgroundImage: `url(${poster})`}}/>
+      <div className={styles.moviePoster} style={{ backgroundImage: `url(${movie.poster})`}}/>
     </li>
   )
 }

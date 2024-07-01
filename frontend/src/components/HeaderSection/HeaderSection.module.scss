@@ -1,5 +1,5 @@
-@use '../../sass/colors';
-@use '../../sass/fonts';
+@use '../../sass/colors.module.scss';
+@use '../../sass/fonts.module.scss';
 
 .header {
   position: relative;
@@ -9,30 +9,33 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  overflow: hidden;
+  padding-bottom: -1px;
 
-  &::before {
-    content: "";
+  background: linear-gradient(
+    to bottom,
+    colors.$color-primary-gradient-third,
+    colors.$color-primary-gradient-from,
+    75%,
+    colors.$color-primary-gradient-to
+  );
+
+  &::after {
+    content: '';
     position: absolute;
-    top: 0;
+    bottom: -1px;
     left: 0;
-    height: 100%;
     width: 100%;
-    background: linear-gradient(
-      to bottom,
-      colors.$color-primary-gradient-from,
-      35%,
-      colors.$color-primary-gradient-to
-    );
-    border-radius: 0 0 50% 50%/0 0 100% 100%;
-    transform: scaleX(2.2);
+    height: 3rem;
+    background-color: colors.$color-background;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
   }
 }
 
 .headerContent {
   width: 100%;
   margin: 2rem 0;
-  padding: 0 60px;
+  padding: 0 5rem;
 }
 
 .loginRow {

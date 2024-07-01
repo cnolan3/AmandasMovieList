@@ -1,0 +1,33 @@
+$color-primary: #4F53C5;
+$color-secondary: #0C0C2C;
+$color-accent: #EF6B91;
+
+$color-background: #EFF0FB;
+$color-background-dark: #C8CBF1;
+$color-background-light: #fdfdff;
+$color-text: #040610;
+
+$color-primary-gradient-third: #4F89C4;
+$color-primary-gradient-from: #4F62C4;
+$color-primary-gradient-to: #1C1D53;
+
+$color-accent-gradient-from: $color-accent;
+$color-accent-gradient-to: #AC123E;
+
+:export {
+  colorPrimary: $color-primary;
+  colorSecondary: $color-secondary;
+  colorAccent: $color-accent;
+
+  colorBackground: $color-background;
+  colorBackgroundDark: $color-background-dark;
+  colorBackgroundLight: $color-background-light;
+  colorText: $color-text;
+
+  colorPrimaryGradientThird: $color-primary-gradient-third;
+  colorPrimaryGradientFrom: $color-primary-gradient-from;
+  colorPrimaryGradientTo: $color-primary-gradient-to;
+
+  colorAccentGradientFrom: $color-accent-gradient-from;
+  colorAccentGradientTo: $color-accent-gradient-to;
+}
