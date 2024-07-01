@@ -1,0 +1,28 @@
+@use '../../sass/colors';
+@use '../../sass/fonts';
+
+.watchList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 80%;
+}
+
+.stat {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  svg {
+    color: colors.$color-primary;
+    display: inline-block;
+    height: 1.6rem;
+    width: 1.6rem;
+  }
+
+  span {
+    color: colors.$color-text;
+    font-size: fonts.$size-1;
+    font-weight: fonts.$weight-medium;
+  }
+}
