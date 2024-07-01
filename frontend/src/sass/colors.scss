@@ -1,10 +1,10 @@
-$color-primary: #3180E0;
+$color-primary: rgb(49, 128, 224);
 $color-secondary: #011937;
 $color-accent: #F09ABE;
 
 $color-background: #F6F9FE;
 $color-background-dark: #BDD8FB;
-$color-background-light: #FBFDFF;
+$color-background-light: rgb(251, 253, 255);
 $color-text: #02070D;
 
 $color-primary-gradient-from: #034290;
@@ -12,3 +12,5 @@ $color-primary-gradient-to: #011937;
 
 $color-accent-gradient-from: #F09ABE;
 $color-accent-gradient-to: #E23B80;
+
+$test:rgb(211, 212, 214)

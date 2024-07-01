@@ -37,7 +37,7 @@ function MovieList() {
 function MovieListItem({movie, position}) {
   const {title, poster, rottenRating, runtime } = movie;
 
-  const titleMaxCharacters = 38;
+  const titleMaxCharacters = 35;
   let trimmedTitle = title;
   if (title.length > titleMaxCharacters) {
     trimmedTitle = title.substr(0, titleMaxCharacters);
@@ -50,7 +50,7 @@ function MovieListItem({movie, position}) {
   }
 
   return (
-    <li className={styles.movieListItem}>
+    <li className={styles.movieListItem} style={{ background: `linear-gradient(to right, rgba(251, 253, 255, 1) 66%, 92%, rgba(211, 212, 214, 0.5)), url(${poster}) right -10rem center no-repeat`}} >
     
       <div className={styles.movieNum}>
         <p>{position}</p>
