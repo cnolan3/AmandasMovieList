@@ -11,8 +11,20 @@ function MovieListItem({movie, position, children}) {
       background: `linear-gradient(to right, ${hexToRGB(variables.colorBackgroundLight, 1)} 66%, 92%, ${hexToRGB(variables.colorBackgroundLight, 0.4)}), url(${movie.poster}) right -10rem center no-repeat`,
   }
 
+  const normalGradient = {
+      background: `linear-gradient(to right, ${hexToRGB(variables.colorBackgroundLight, 1)} 60%, 85%, ${hexToRGB(variables.colorPrimary, 0.5)})`,
+  }
+
+  const poster = {
+    backgroundImage: `url(${movie.poster})`,
+  }
+
+  const emptyPoster = {
+    backgroundColor: 'rbga(0, 0, 0, 0)'
+  }
+
   return (
-    <li className={styles.movieListItem} style={posterGradient} >
+    <li className={styles.movieListItem} style={movie.poster ? posterGradient : normalGradient} >
     
       <div className={styles.movieNum}>
         <p>{position}</p>
@@ -27,7 +39,7 @@ function MovieListItem({movie, position, children}) {
         </div>
       </div>
 
-      <div className={styles.moviePoster} style={{ backgroundImage: `url(${movie.poster})`}}/>
+      <div className={styles.moviePoster} style={movie.poster ? poster : emptyPoster}/>
     </li>
   )
 }
