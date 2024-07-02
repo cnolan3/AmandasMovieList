@@ -1,13 +1,13 @@
 import HeaderSection from "../../components/HeaderSection/HeaderSection";
 import MainSection from "../../components/MainSection/MainSection";
-import MovieList from "../../components/MovieList/MovieList";
+import MovieListSection from "../../components/MovieListSection/MovieListSection";
 
 function Homepage() {
   return (
     <div>
       <HeaderSection />
       <MainSection>
-        <MovieList />
+        <MovieListSection />
       </MainSection>
     </div>
   );

@@ -1,5 +1,5 @@
-@use 'sass/colors';
-@use 'sass/fonts';
+@use 'sass/colors.module.scss';
+@use 'sass/fonts.module.scss';
 
 * {
   margin: 0;
@@ -15,4 +15,5 @@ html {
 body {
   font-family: fonts.$base-font, sans-serif;
   background-color: colors.$color-background;
+  color: colors.$color-text;
 }

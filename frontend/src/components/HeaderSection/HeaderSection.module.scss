@@ -12,13 +12,14 @@
   padding-bottom: -1px;
 
   background: linear-gradient(
-    to bottom,
+    140deg,
     colors.$color-primary-gradient-third,
     colors.$color-primary-gradient-from,
     75%,
     colors.$color-primary-gradient-to
   );
 
+  // bottom bar, simulates rounded edges of list section
   &::after {
     content: '';
     position: absolute;

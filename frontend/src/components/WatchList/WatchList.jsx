@@ -1,6 +1,7 @@
 import styles from './WatchList.module.scss';
 
 import MovieListItem from '../MovieListItem/MovieListItem';
+import ListStats from '../ListStats/ListStats';
 
 const watchList = [
   {
@@ -28,7 +29,9 @@ const watchList = [
 
 function WatchList() {
   return (
-    <ul className={styles.watchList}>
+    <>
+    <ListStats list={watchList} />
+    <ul className={styles.list}>
       {watchList.map((movie, i) => (
         <MovieListItem movie={movie} position={i + 1} key={movie.imdbID}>
           <div className={styles.stat}>
@@ -46,6 +49,7 @@ function WatchList() {
         </MovieListItem>
       ))}
     </ul>
+    </>
   )
 }
 

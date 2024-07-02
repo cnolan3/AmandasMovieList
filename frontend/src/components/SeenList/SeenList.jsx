@@ -1,14 +1,9 @@
 import styles from './SeenList.module.scss';
 
 import MovieListItem from '../MovieListItem/MovieListItem';
+import ListStats from '../ListStats/ListStats';
 
 const seenList = [
-  {
-    title: "Spider Man: Lost Cause",
-    imdbID: "tt2803854",
-    poster: "https://m.media-amazon.com/images/M/MV5BYmZkYWRlNWQtOGY0Zi00MWZkLWJiZTktNjRjMDY4MTU2YzAyXkEyXkFqcGdeQXVyMzYzNzc1NjY@._V1_SX300.jpg",
-    amandaRating: 3,
-  },
   {
     title: "Taxi Driver",
     imdbID: "tt0075314",
@@ -25,7 +20,9 @@ const seenList = [
 
 function SeenList() {
   return (
-    <ul className={styles.seenList}>
+    <>
+    <ListStats list={seenList} />
+    <ul className={styles.list}>
       {seenList.map((movie, i) => (
         <MovieListItem movie={movie} position={i + 1} key={movie.imdbID}> 
           <div className={styles.stat}>
@@ -34,6 +31,7 @@ function SeenList() {
         </MovieListItem>
       ))}
     </ul>
+    </>
   )
 }
 
