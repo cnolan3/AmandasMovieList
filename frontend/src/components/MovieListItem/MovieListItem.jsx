@@ -8,7 +8,7 @@ function MovieListItem({movie, position, children}) {
   const title = trimSentence(movie.title, 35);
 
   const posterGradient = {
-      background: `linear-gradient(to right, ${hexToRGB(variables.colorBackgroundLight, 1)} 66%, 92%, ${hexToRGB(variables.colorBackgroundLight, 0.4)}), url(${movie.poster}) right -10rem center no-repeat`,
+      background: `linear-gradient(to right, ${hexToRGB(variables.colorBackgroundLight, 1)} 63%, 90%, ${hexToRGB(variables.colorBackgroundLight, 0.5)}), url(${movie.poster}) right -10rem center no-repeat`,
   }
 
   const normalGradient = {
