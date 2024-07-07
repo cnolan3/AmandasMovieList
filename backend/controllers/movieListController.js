@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
-const logger = require('../utils/logger');
+// const logger = require('../utils/logger');
 const APIFeatures = require('../utils/apiFeatures');
 const OMDBGet = require('../utils/omdbGet');
 

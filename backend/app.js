@@ -1,6 +1,7 @@
 const helmet = require('helmet');
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const { xss } = require('express-xss-sanitizer');
@@ -17,7 +18,7 @@ const movieApiRoutes = require('./routes/movieApiRoutes');
 const AppError = require('./utils/appError');
 const logger = require('./utils/logger');
 
-const apiBaseUrl = '/api';
+// const apiBaseUrl = '/api';
 const apiVersion = '/v1';
 const apiUrl = `${apiVersion}`;
 
@@ -27,6 +28,8 @@ const app = express();
 
 // set security http headers
 app.use(helmet());
+
+app.use(cors());
 
 // http logging
 if (process.env.NODE_ENV === 'development') {
@@ -40,12 +43,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // limit requests from same IP
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again later',
-});
-app.use(apiBaseUrl, limiter);
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: 'Too many requests from this IP, please try again later',
+// });
+// app.use(apiUrl, limiter);
 
 // body parser
 app.use(express.json({ limit: '10kb' }));
