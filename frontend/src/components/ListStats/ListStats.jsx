@@ -1,8 +1,8 @@
-import styles from './ListStats.module.scss';
+import styles from "./ListStats.module.scss";
 
-function ListStats({list}) {
+function ListStats({ list }) {
   const numItems = list.length;
-  const movieTag = numItems > 1 ? 'Movies' : 'Movie';
+  const movieTag = numItems > 1 ? "Movies" : "Movie";
 
   return (
     <div className={styles.listStats}>
@@ -11,7 +11,7 @@ function ListStats({list}) {
       </div>
       <p className={styles.numItemsTag}>{movieTag}</p>
     </div>
-  )
+  );
 }
 
-export default ListStats
+export default ListStats;

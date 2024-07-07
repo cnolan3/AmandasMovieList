@@ -1,4 +1,4 @@
-import styles from './HeaderSection.module.scss';
+import styles from "./HeaderSection.module.scss";
 
 function HeaderSection() {
   return (
@@ -13,7 +13,7 @@ function HeaderSection() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default HeaderSection
+export default HeaderSection;
