@@ -34,7 +34,9 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
   const data = await omdb.send();
 
   // check for a rotten tomatoes rating
-  const rotten = data.Ratings.find(element => element["Source"] === "Rotten Tomatoes");
+  const rotten = data.Ratings.find(
+    (element) => element.Source === 'Rotten Tomatoes',
+  );
 
   // -1 represents a N/A rotten tomato rating
   let rottenPercent = -1;
@@ -81,12 +83,12 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
     .sort('+amandaRating')
     .limitFields()
     .paginate();
-  const watchlist = await features.query.select('-numVotes');
+  const seenlist = await features.query.select('-numVotes');
 
   res.status(200).json({
     status: 'success',
     data: {
-      watchlist,
+      seenlist,
     },
   });
 });
