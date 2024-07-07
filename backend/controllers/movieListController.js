@@ -68,7 +68,7 @@ exports.getWatchlist = catchAsync(async (req, res, next) => {
   const watchlist = await features.query.select('-amandaRating');
 
   res.status(200).json({
-    status: 'status',
+    status: 'success',
     data: {
       watchlist,
     },
@@ -84,7 +84,7 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
   const watchlist = await features.query.select('-numVotes');
 
   res.status(200).json({
-    status: 'status',
+    status: 'success',
     data: {
       watchlist,
     },
@@ -106,7 +106,7 @@ exports.rateMovie = catchAsync(async (req, res, next) => {
   await User.deleteVotesFor(movie._id);
 
   res.status(200).json({
-    status: 'status',
+    status: 'success',
     data: {
       movie: {
         id: movie._id,
@@ -127,7 +127,7 @@ exports.unwatch = catchAsync(async (req, res, next) => {
   );
 
   res.status(200).json({
-    status: 'status',
+    status: 'success',
     data: {
       movie: {
         id: movie._id,
@@ -146,7 +146,7 @@ exports.deleteMovie = catchAsync(async (req, res, next) => {
   await MovieList.findByIdAndDelete(movie._id);
 
   res.status(200).json({
-    status: 'status',
+    status: 'success',
     data: {},
   });
 });
