@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
-// const logger = require('../utils/logger');
+const logger = require('../utils/logger');
 const APIFeatures = require('../utils/apiFeatures');
 const OMDBGet = require('../utils/omdbGet');
 
@@ -30,10 +30,15 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
     recommendedByName = req.body.recommendedByName;
   }
 
-  const omdb = new OMDBGet().omdbID(imdbID);
+  const omdb = new OMDBGet().imdbID(imdbID);
   const data = await omdb.send();
 
-  const rottenPercent = parseFloat(data.Ratings[1].Value);
+  // check for a rotten tomatoes rating
+  const rotten = data.Ratings.find(element => element["Source"] === "Rotten Tomatoes");
+
+  // -1 represents a N/A rotten tomato rating
+  let rottenPercent = -1;
+  if (rotten) rottenPercent = parseFloat(rotten.Value);
 
   await MovieList.create({
     title: data.Title,
