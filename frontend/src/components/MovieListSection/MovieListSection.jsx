@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import MovieInfo from "../MovieInfo/MovieInfo";
+import { useSearch } from "../../contexts/searchContext";
 import SeenList from "../SeenList/SeenList";
 import WatchList from "../WatchList/WatchList";
 import styles from "./MovieListSection.module.scss";
 
 function MovieList() {
   const [tabState, setTabState] = useState("watchlist");
+  const { setPlaceholder } = useSearch();
+
+  useEffect(() => {
+    setPlaceholder("Search the movie list");
+  }, []);
+
   return (
     <>
       <div className={styles.movieList}>

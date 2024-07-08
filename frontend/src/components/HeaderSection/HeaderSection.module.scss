@@ -11,9 +11,10 @@
   flex-direction: column;
   padding-bottom: -1px;
 
+  //colors.$color-primary-gradient-third,
+
   background: linear-gradient(
     140deg,
-    colors.$color-primary-gradient-third,
     colors.$color-primary-gradient-from,
     75%,
     colors.$color-primary-gradient-to
@@ -78,17 +79,30 @@
 
 .search {
   border: none;
-  border-radius: 15px / 50%;
+  border-radius: 17px / 50%;
   height: 35px;
   width: 100%;
+  font-family: fonts.$base-font;
+  font-weight: fonts.$weight-medium;
   color: colors.$color-text;
   background-color: colors.$color-background-light;
-  padding: 0 2rem;
+  padding: 0 4rem;
+  background-image: url("../../assets/icons8-search-30.png");
+  background-repeat: no-repeat;
+  background-position: left 5px top 2px;
+  transition: box-shadow 0.3s;
   z-index: 1;
 
   &:focus {
-    border: 2px solid colors.$color-secondary;
-    // border: none;
+    outline: none;
+    // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 5px rgba(colors.$color-primary-bright, 1);
+  }
+
+  &::placeholder {
+    font-family: fonts.$base-font;
+    font-weight: fonts.$weight-semi-bold;
+    color: colors.$color-text-light;
   }
 }
 

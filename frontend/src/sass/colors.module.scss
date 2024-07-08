@@ -1,24 +1,25 @@
-$color-primary: #4F53C5;
-$color-primary-light: #DCDDF3;
-$color-secondary: #0C0C2C;
-$color-accent: #EF6B91;
+$color-primary: #4f53c5;
+$color-primary-light: #dcddf3;
+$color-primary-bright: #4f89c4;
+$color-secondary: #0c0c2c;
+$color-accent: #ef6b91;
 
-$color-background: #EFF0FB;
-$color-background-dark: #C8CBF1;
+$color-background: #eff0fb;
+$color-background-dark: #c8cbf1;
 $color-background-light: #fdfdff;
 
 $color-text: #040610;
 $color-text-light: #8e8f97;
 
-$color-primary-gradient-third: #4F89C4;
 $color-primary-gradient-from: $color-primary;
-$color-primary-gradient-to: #1C1D53;
+$color-primary-gradient-to: #1c1d53;
 
 $color-accent-gradient-from: $color-accent;
-$color-accent-gradient-to: #AC123E;
+$color-accent-gradient-to: #ac123e;
 
 :export {
   colorPrimary: $color-primary;
+  colorPrimaryBright: $color-primary-bright;
   colorSecondary: $color-secondary;
   colorAccent: $color-accent;
 
@@ -27,10 +28,10 @@ $color-accent-gradient-to: #AC123E;
   colorBackgroundLight: $color-background-light;
   colorText: $color-text;
 
-  colorPrimaryGradientThird: $color-primary-gradient-third;
   colorPrimaryGradientFrom: $color-primary-gradient-from;
   colorPrimaryGradientTo: $color-primary-gradient-to;
 
   colorAccentGradientFrom: $color-accent-gradient-from;
   colorAccentGradientTo: $color-accent-gradient-to;
 }
+

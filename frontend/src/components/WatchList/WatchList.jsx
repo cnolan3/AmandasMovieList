@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useSearch } from "../../contexts/searchContext";
 import { useWatchList } from "../../hooks/useMovieList";
 import ListStats from "../ListStats/ListStats";
 import MovieInfo from "../MovieInfo/MovieInfo";
@@ -8,10 +9,17 @@ import Spinner from "../Spinner/Spinner";
 import styles from "./WatchList.module.scss";
 
 function WatchList() {
+  const { query } = useSearch();
   const { watchList, error, status } = useWatchList();
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+
+  let filteredWatchList = watchList;
+  if (query && watchList)
+    filteredWatchList = watchList.filter((movie) =>
+      movie.title.toLowerCase().includes(query.toLowerCase()),
+    );
 
   function handleSelectMovie(movie) {
     setHasShown(true);
@@ -32,7 +40,7 @@ function WatchList() {
           <ListStats list={watchList} />
           <div className={styles.listContainer}>
             <ul className={styles.list}>
-              {watchList.map((movie, i) => (
+              {filteredWatchList.map((movie, i) => (
                 <MovieListItem
                   movie={movie}
                   position={i + 1}

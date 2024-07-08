@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { useSearch } from "../../contexts/searchContext";
 import { useSeenList } from "../../hooks/useMovieList";
 import ListStats from "../ListStats/ListStats";
 import MovieInfo from "../MovieInfo/MovieInfo";
@@ -8,10 +9,17 @@ import Spinner from "../Spinner/Spinner";
 import styles from "./SeenList.module.scss";
 
 function SeenList() {
+  const { query } = useSearch();
   const { seenList, error, status } = useSeenList();
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false); // false if the card has never been opened before, true after first time opening
+
+  let filteredSeenList = seenList;
+  if (query && seenList)
+    filteredSeenList = seenList.filter((movie) =>
+      movie.title.toLowerCase().includes(query.toLowerCase()),
+    );
 
   function handleSelectMovie(movie) {
     setSelectedMovie(movie);
@@ -33,7 +41,7 @@ function SeenList() {
 
           <div className={styles.listContainer}>
             <ul className={styles.list}>
-              {seenList.map((movie, i) => (
+              {filteredSeenList.map((movie, i) => (
                 <MovieListItem
                   onClick={() => handleSelectMovie(movie)}
                   movie={movie}
