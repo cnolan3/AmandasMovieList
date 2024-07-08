@@ -28,6 +28,14 @@ const movieListSchema = new mongoose.Schema({
     required: [true, 'Movie needs a plot'],
     trim: true,
   },
+  cast: {
+    type: String,
+    trim: true,
+  },
+  director: {
+    type: String,
+    trim: true,
+  },
   poster: {
     type: String,
     required: [true, 'Movie needs a poster link'],

@@ -48,6 +48,8 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
     runtime: data.Runtime,
     genre: data.Genre,
     plot: data.Plot,
+    cast: data.Actors,
+    director: data.Director,
     poster: data.Poster,
     rottenTomatoRating: rottenPercent,
     imdbID: data.imdbID,
