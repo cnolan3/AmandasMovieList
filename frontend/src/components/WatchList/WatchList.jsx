@@ -21,6 +21,12 @@ function WatchList() {
       movie.title.toLowerCase().includes(query.toLowerCase()),
     );
 
+  // let selectedRecommendedBy = "";
+  // if (selectedMovie && selectedMovie.recommendedById)
+  //   selectedRecommendedBy = selectedMovie.recommendedById.username;
+  // if (selectedMovie && selectedMovie.recommendedByName)
+  //   selectedRecommendedBy = selectedMovie.recommendedByName;
+
   function handleSelectMovie(movie) {
     setHasShown(true);
     setShowCard(true);
