@@ -1,5 +1,5 @@
-@use '../../sass/colors.module.scss';
-@use '../../sass/fonts.module.scss';
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
 
 .movieListItem {
   height: 7rem;
@@ -14,6 +14,13 @@
   border-bottom-right-radius: 10px;
   border-top-left-radius: 38px 50%;
   border-bottom-left-radius: 38px 50%;
+
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .moviePoster {
@@ -22,7 +29,7 @@
   padding: 1rem 0;
   background-position: center;
   background-size: contain;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
 }
 
 .movieInfoSection {
@@ -72,3 +79,4 @@
     font-weight: fonts.$weight-bold;
   }
 }
+
