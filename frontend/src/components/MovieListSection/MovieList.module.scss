@@ -1,5 +1,5 @@
-@use '../../sass/colors.module.scss';
-@use '../../sass/fonts.module.scss';
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
 
 .list {
   list-style: none;
@@ -7,6 +7,25 @@
   flex-direction: column;
   gap: 2rem;
   width: 100%;
+  padding: 1.5rem 3rem 4rem 3rem;
+}
+
+.listContainer {
+  height: 100%;
+  // mask-image: linear-gradient(
+  //   to bottom,
+  //   black calc(100% - 48px),
+  //   transparent 100%
+  // );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15px,
+    black calc(100% - 15px),
+    transparent 100%
+  );
+
+  overflow-y: scroll;
 }
 
 .stat {
@@ -26,3 +45,40 @@
     font-weight: fonts.$weight-medium;
   }
 }
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-80svh);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-80svh);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.infoCard {
+  width: 100%;
+  position: absolute;
+  bottom: -80svh;
+}
+
+.show {
+  animation: slideUp 0.3s ease 0s;
+  transform: translateY(-80svh);
+}
+
+.hide {
+  animation: slideDown 0.3s ease 0s;
+  transform: translateY(0);
+}
+

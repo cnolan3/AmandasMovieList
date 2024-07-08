@@ -3,7 +3,7 @@ import hexToRGB from "../../utils/hexToRGBA";
 import trimSentence from "../../utils/trimSentence";
 import styles from "./MovieListItem.module.scss";
 
-function MovieListItem({ movie, position, children }) {
+function MovieListItem({ movie, position, onClick, children }) {
   const title = trimSentence(movie.title, 35);
 
   const posterGradient = {
@@ -26,6 +26,7 @@ function MovieListItem({ movie, position, children }) {
     <li
       className={styles.movieListItem}
       style={movie.poster ? posterGradient : normalGradient}
+      onClick={onClick}
     >
       <div className={styles.movieNum}>
         <p>{position}</p>

@@ -1,12 +1,13 @@
-@use '../../sass/colors.module.scss';
-@use '../../sass/fonts.module.scss';
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
 
 .movieList {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  width: 80%;
+  width: 100%;
+  padding: 0 2rem;
 }
 
 .tabRow {
@@ -32,3 +33,4 @@
     font-size: fonts.$size-3;
   }
 }
+

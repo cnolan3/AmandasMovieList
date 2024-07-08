@@ -1,14 +1,14 @@
-@use '../../sass/colors.module.scss';
-@use '../../sass/fonts.module.scss';
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
 
 .listStats {
   display: flex;
   align-items: center;
   gap: 0.8rem;
   background-color: rgba(colors.$color-primary-light, 1);
-  height: 3.9rem;
-  border-radius: 18px / 50%;
-  padding: 0 1rem 0 0.5rem;
+  height: 3.7rem;
+  border-radius: 16px / 50%;
+  padding: 0 1rem 0 0.3rem;
 }
 
 .numItems {
@@ -17,8 +17,8 @@
   justify-content: center;
   background-color: colors.$color-primary;
   color: colors.$color-background-light;
-  height: 2.7rem;
-  width: 2.7rem;
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
 
   p {
@@ -32,3 +32,4 @@
   font-weight: fonts.$weight-medium;
   color: colors.$color-text;
 }
+

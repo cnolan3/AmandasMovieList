@@ -1,28 +1,27 @@
+import { useState } from "react";
+
 import { useSeenList } from "../../hooks/useMovieList";
 import ListStats from "../ListStats/ListStats";
+import MovieInfo from "../MovieInfo/MovieInfo";
 import MovieListItem from "../MovieListItem/MovieListItem";
 import Spinner from "../Spinner/Spinner";
 import styles from "./SeenList.module.scss";
 
-// const seenList = [
-//   {
-//     title: "Taxi Driver",
-//     imdbID: "tt0075314",
-//     poster:
-//       "https://m.media-amazon.com/images/M/MV5BM2M1MmVhNDgtNmI0YS00ZDNmLTkyNjctNTJiYTQ2N2NmYzc2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-//     amandaRating: 3,
-//   },
-//   {
-//     title: "The Ghost Busters",
-//     imdbID: "tt0072505",
-//     poster:
-//       "https://m.media-amazon.com/images/M/MV5BYjkwZDE1YmMtZjgwNC00NGRjLWEwNTYtMTBkYjFkZjA3ZDc0XkEyXkFqcGdeQXVyMTYzMjc0Nzc3._V1_SX300.jpg",
-//     amandaRating: 0,
-//   },
-// ];
-
 function SeenList() {
   const { seenList, error, status } = useSeenList();
+  const [selectedMovie, setSelectedMovie] = useState();
+  const [showCard, setShowCard] = useState(false);
+  const [hasShown, setHasShown] = useState(false); // false if the card has never been opened before, true after first time opening
+
+  function handleSelectMovie(movie) {
+    setSelectedMovie(movie);
+    setHasShown(true);
+    setShowCard(true);
+  }
+
+  function handleUnselectMovie() {
+    setShowCard(false);
+  }
 
   return (
     <>
@@ -31,23 +30,43 @@ function SeenList() {
       ) : (
         <>
           <ListStats list={seenList} />
-          <ul className={styles.list}>
-            {seenList.map((movie, i) => (
-              <MovieListItem movie={movie} position={i + 1} key={movie.imdbID}>
-                <div className={styles.stat}>
-                  {Array.from({ length: movie.amandaRating }, (item, index) => (
-                    <FullStar key={index} />
-                  ))}
-                  {Array.from(
-                    { length: 5 - movie.amandaRating },
-                    (item, index) => (
-                      <EmptyStar key={index} />
-                    ),
-                  )}
-                </div>
-              </MovieListItem>
-            ))}
-          </ul>
+
+          <div className={styles.listContainer}>
+            <ul className={styles.list}>
+              {seenList.map((movie, i) => (
+                <MovieListItem
+                  onClick={() => handleSelectMovie(movie)}
+                  movie={movie}
+                  position={i + 1}
+                  key={movie.imdbID}
+                >
+                  <div className={styles.stat}>
+                    {Array.from(
+                      { length: movie.amandaRating },
+                      (item, index) => (
+                        <FullStar key={index} />
+                      ),
+                    )}
+                    {Array.from(
+                      { length: 5 - movie.amandaRating },
+                      (item, index) => (
+                        <EmptyStar key={index} />
+                      ),
+                    )}
+                  </div>
+                </MovieListItem>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            className={`${styles.infoCard}${showCard ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
+          >
+            <MovieInfo
+              movie={selectedMovie}
+              onClose={handleUnselectMovie}
+            ></MovieInfo>
+          </div>
         </>
       )}
     </>

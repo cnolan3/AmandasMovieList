@@ -1,5 +1,5 @@
-@use 'sass/colors.module.scss';
-@use 'sass/fonts.module.scss';
+@use "sass/colors.module.scss";
+@use "sass/fonts.module.scss";
 
 * {
   margin: 0;
@@ -9,7 +9,7 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
