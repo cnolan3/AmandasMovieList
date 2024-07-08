@@ -83,6 +83,12 @@
   width: 100%;
   color: colors.$color-text;
   background-color: colors.$color-background-light;
+  padding: 0 2rem;
   z-index: 1;
+
+  &:focus {
+    border: 2px solid colors.$color-secondary;
+    // border: none;
+  }
 }
 
