@@ -57,8 +57,8 @@ function MovieInfo({ movie, onClose, children }) {
               </div>
 
               <div className={styles.extraInfoSection}>
-                <p>cast: as;dlfkjas;dlkfj</p>
-                <p>directed by: as;ldkfjaskld;fa</p>
+                {movie.cast && <p>{`cast: ${movie.cast}`}</p>}
+                {movie.director && <p>{`directed by: ${movie.director}`}</p>}
               </div>
             </div>
           </div>
