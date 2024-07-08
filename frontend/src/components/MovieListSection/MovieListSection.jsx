@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
 
 import { useSearch } from "../../contexts/searchContext";
-import SeenList from "../SeenList/SeenList";
-import WatchList from "../WatchList/WatchList";
+import MovieInfo from "../MovieInfo/MovieInfo";
+import SeenList from "../MovieList/SeenList";
+import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
 
 function MovieList() {
   const [tabState, setTabState] = useState("watchlist");
   const { setPlaceholder } = useSearch();
+  const [selectedMovie, setSelectedMovie] = useState();
+  const [showCard, setShowCard] = useState(false);
+  const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
     setPlaceholder("Search the movie list");
   }, []);
+
+  // let selectedRecommendedBy = "";
+  // if (selectedMovie && selectedMovie.recommendedById)
+  //   selectedRecommendedBy = selectedMovie.recommendedById.username;
+  // if (selectedMovie && selectedMovie.recommendedByName)
+  //   selectedRecommendedBy = selectedMovie.recommendedByName;
+
+  function handleSelectMovie(movie) {
+    setHasShown(true);
+    setShowCard(true);
+    setSelectedMovie(movie);
+  }
+
+  function handleUnselectMovie() {
+    setShowCard(false);
+  }
 
   return (
     <>
@@ -38,7 +58,20 @@ function MovieList() {
             <h3>Seen</h3>
           </div>
         </div>
-        {tabState === "watchlist" ? <WatchList /> : <SeenList />}
+        {tabState === "watchlist" ? (
+          <WatchList onSelectMovie={(movie) => handleSelectMovie(movie)} />
+        ) : (
+          <SeenList onSelectMovie={(movie) => handleSelectMovie(movie)} />
+        )}
+      </div>
+
+      <div
+        className={`${styles.infoCard}${showCard ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
+      >
+        <MovieInfo
+          movie={selectedMovie}
+          onClose={handleUnselectMovie}
+        ></MovieInfo>
       </div>
     </>
   );

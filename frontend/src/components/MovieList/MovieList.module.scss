@@ -42,39 +42,3 @@
   }
 }
 
-@keyframes slideUp {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-80svh);
-  }
-}
-
-@keyframes slideDown {
-  0% {
-    transform: translateY(-80svh);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.infoCard {
-  width: 100%;
-  position: absolute;
-  bottom: -80svh;
-}
-
-.show {
-  animation: slideUp 0.3s ease 0s;
-  transform: translateY(-80svh);
-}
-
-.hide {
-  animation: slideDown 0.3s ease 0s;
-  transform: translateY(0);
-}
-
