@@ -24,6 +24,10 @@ const queryClient = new QueryClient({
   },
 });
 
+queryClient.setQueryDefaults(["myInfo"], {
+  retry: (count, { message: error }) => error !== "Unauthorized",
+});
+
 const routes = [
   {
     name: "Home",
@@ -75,7 +79,7 @@ function Base() {
           nodeRef={route.nodeRef}
           timeout={route.timeout}
           classNames={route.class}
-          unmountOnExit
+          // unmountOnExit
         >
           <div ref={route.nodeRef} className={route.class}>
             {outlet}
