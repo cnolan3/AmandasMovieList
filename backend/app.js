@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
+const cookieParser = require('cookie-parser');
 const { xss } = require('express-xss-sanitizer');
 
 const stripAnsi = require('./utils/stripAnsi');
@@ -52,6 +53,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // body parser
 app.use(express.json({ limit: '10kb' }));
+
+// cookie parser
+app.use(cookieParser());
 
 // NoSQL query sanitization
 app.use(mongoSanitize());

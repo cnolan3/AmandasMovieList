@@ -9,6 +9,8 @@ const AppError = require('../utils/appError');
 const logger = require('../utils/logger');
 const sendEmail = require('../utils/email');
 
+const cookieName = 'AML_login_token';
+
 // create JWT
 const signToken = async (id) =>
   await promisify(jwt.sign)({ id: id }, process.env.JWT_SECRET, {
@@ -30,14 +32,16 @@ const getCookieOptions = () => {
 };
 
 // extract jwt token from auth headers
-const getTokenFromHeaders = (headers) => {
-  let token;
-  if (headers.authorization && headers.authorization.startsWith('Bearer')) {
-    token = headers.authorization.split(' ')[1];
-  }
+// const getTokenFromHeaders = (headers) => {
+//   let token;
+//   if (headers.authorization && headers.authorization.startsWith('Bearer')) {
+//     token = headers.authorization.split(' ')[1];
+//   }
+//   return token;
+// };
 
-  return token;
-};
+// extract jwt token from cookies
+const getTokenFromCookies = (cookies) => cookies[cookieName];
 
 // verify user in db with a jwt
 const verifyUserWithJWT = async (token, next) => {
@@ -67,8 +71,11 @@ const verifyUserWithJWT = async (token, next) => {
 
 // protect routes with jwt token login
 exports.protect = catchAsync(async (req, res, next) => {
+  // logger.debug('protect');
   // get token from auth headers
-  const token = getTokenFromHeaders(req.headers);
+  const token = getTokenFromCookies(req.cookies);
+
+  logger.debug(JSON.stringify(req.cookies));
 
   if (!token)
     return next(
@@ -86,7 +93,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 // mark admin users as priviledged to add extra info to responses
 exports.redact = catchAsync(async (req, res, next) => {
   // get token from auth headers
-  const token = getTokenFromHeaders(req.headers);
+  const token = getTokenFromCookies(req.cookies);
 
   // set priviledged to false initially
   req.priviledged = false;
@@ -157,13 +164,12 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   const cookieOptions = getCookieOptions();
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie(cookieName, token, cookieOptions);
 
   logger.verbose('user signed up');
 
   res.status(201).json({
     status: 'success',
-    token,
     data: {
       newUser: {
         username: newUser.username,
@@ -175,6 +181,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 // log the user in
 exports.login = catchAsync(async (req, res, next) => {
+  logger.debug(`login - ${JSON.stringify(req.cookies)}`);
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -195,13 +202,12 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const cookieOptions = getCookieOptions();
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie(cookieName, token, cookieOptions);
 
   logger.verbose('user logged in');
 
   res.status(200).json({
     status: 'success',
-    token,
     data: {
       username: user.username,
       role: user.role,
@@ -296,13 +302,12 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   const cookieOptions = getCookieOptions();
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie(cookieName, token, cookieOptions);
 
   logger.verbose('user logged in');
 
   res.status(200).json({
     status: 'success',
-    token,
     data: null,
   });
 });
@@ -337,13 +342,12 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   const cookieOptions = getCookieOptions();
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie(cookieName, token, cookieOptions);
 
   logger.verbose('user logged in');
 
   res.status(200).json({
     status: 'success',
-    token,
     data: null,
   });
 });
