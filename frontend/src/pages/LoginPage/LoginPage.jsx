@@ -1,4 +1,4 @@
-import { SlClose } from "react-icons/sl";
+import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
 import LoginForm from "../../components/LoginForm/LoginForm";
@@ -10,7 +10,7 @@ function LoginPage() {
     <div className={styles.login}>
       <div className={styles.exitRow}>
         <Link to="/" className={styles.exitBtn}>
-          <SlClose size={30} color={colors.colorText} />
+          <GrClose size={30} color={colors.colorText} />
         </Link>
       </div>
       <div className={styles.loginContainer}>

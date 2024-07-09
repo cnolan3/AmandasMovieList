@@ -2,19 +2,19 @@
 @use "../../sass/fonts.module.scss";
 
 .loginForm {
-  // width: 100%;
+  width: 26rem;
 }
 
 .loginField {
-  width: 25rem;
+  width: 100%;
 
-  &:last-child {
-    padding-top: 5rem;
+  &:first-child {
+    margin-bottom: 5rem;
   }
 
   label {
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: fonts.$size-3;
   }
 
@@ -27,11 +27,43 @@
     border: none;
     border-bottom: 2px solid black;
 
-    font-size: fonts.$size-4;
+    font-size: fonts.$size-5;
+    font-weight: fonts.$weight-default;
+
+    text-decoration: none;
 
     &:focus {
       outline: none;
+      text-decoration: none;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: colors.$color-text;
+      -webkit-text-size-adjust: 100%;
+      transition: background-color 5000s ease-in-out 0s;
+      // box-shadow: inset 0 0 20px 20px #23232329;
     }
   }
+}
+
+.submitRow {
+  padding-top: 8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn {
+  height: 4rem;
+  width: 20rem;
+  color: colors.$color-background;
+  background-color: colors.$color-text;
+  border: none;
+  border-radius: 22px / 50%;
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 

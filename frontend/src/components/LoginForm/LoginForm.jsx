@@ -21,6 +21,7 @@ function LoginForm() {
         <input
           type="text"
           id="username"
+          autoCorrect="off"
           {...register("username", { required: "Username is required" })}
         />
       </div>
@@ -28,10 +29,15 @@ function LoginForm() {
       <div className={styles.loginField}>
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type="password"
           id="password"
+          autoCorrect="off"
           {...register("password", { required: "Password is required" })}
         />
+      </div>
+
+      <div className={styles.submitRow}>
+        <button className={styles.submitBtn}>Login</button>
       </div>
     </form>
   );
