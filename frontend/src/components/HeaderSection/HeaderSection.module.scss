@@ -68,8 +68,13 @@
   color: colors.$color-text;
   font-size: fonts.$size-2;
   font-weight: fonts.$weight-semi-bold;
+  -webkit-tap-highlight-color: transparent;
 
   z-index: 1;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .searchRow {

@@ -1,6 +1,7 @@
 import { SlClose } from "react-icons/sl";
 import { Link } from "react-router-dom";
 
+import LoginForm from "../../components/LoginForm/LoginForm";
 import colors from "../../sass/colors.module.scss";
 import styles from "./LoginPage.module.scss";
 
@@ -13,7 +14,7 @@ function LoginPage() {
         </Link>
       </div>
       <div className={styles.loginContainer}>
-        <h2>Login</h2>
+        <LoginForm />
       </div>
     </div>
   );
