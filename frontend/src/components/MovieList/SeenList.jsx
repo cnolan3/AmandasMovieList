@@ -20,7 +20,12 @@ function SeenList({ onSelectMovie }) {
       movie.title.toLowerCase().includes(query.toLowerCase()),
     );
 
-  if (status === "pending") return <Spinner />;
+  if (status === "pending")
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spinner />
+      </div>
+    );
 
   return (
     <MovieList movieList={filteredSeenList}>

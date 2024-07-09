@@ -13,6 +13,7 @@
 .listContainer {
   height: 100%;
   width: 100%;
+  margin-bottom: 1.5rem;
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -40,5 +41,10 @@
     font-size: fonts.$size-1;
     font-weight: fonts.$weight-medium;
   }
+}
+
+.spinnerContainer {
+  margin: auto 0;
+  padding-bottom: 15rem;
 }
 
