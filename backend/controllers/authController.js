@@ -182,7 +182,9 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // check for user and verify password
-  const user = await User.findOne({ username }).select('+password');
+  const user = await User.findOne({ username }).select(
+    '+password +email +role',
+  );
 
   if (!user || !(await user.verifyPassword(password))) {
     return next(new AppError('Incorrect username or password', 401));
@@ -203,6 +205,7 @@ exports.login = catchAsync(async (req, res, next) => {
     data: {
       username: user.username,
       role: user.role,
+      email: user.email,
     },
   });
 });

@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['user', 'amanda', 'admin'],
       default: 'user',
+      select: false,
     },
     password: {
       type: String,

@@ -31,7 +31,10 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.getAUser = catchAsync(async (req, res, next) => {
-  const user = await addPriviledgedInfo(req, User.findById(req.params.id));
+  const user = await addPriviledgedInfo(
+    req,
+    User.findById(req.params.id).select('-__v'),
+  );
 
   if (!user) {
     return next(new AppError('No user found with that id', 404));
@@ -39,9 +42,7 @@ exports.getAUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    data: {
-      user,
-    },
+    data: user,
   });
 });
 
@@ -50,7 +51,7 @@ exports.searchUser = catchAsync(async (req, res, next) => {
   const { username } = req.params;
   const usersQuery = User.find({
     username: { $regex: `^${username}`, $options: 'i' },
-  });
+  }).select('-__v');
   const users = await addPriviledgedInfo(req, usersQuery);
 
   res.status(200).json({
@@ -63,20 +64,13 @@ exports.searchUser = catchAsync(async (req, res, next) => {
 
 // get my own user info
 exports.myInfo = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id).select({
-    email: 1,
-    role: 1,
-    passwordChangedAt: 1,
-    username: 1,
-  });
+  const user = await User.findById(req.user._id).select('+email +role -__v');
 
   if (!user) return next(new AppError('User not found', 404));
 
   res.status(200).json({
     status: 'success',
-    data: {
-      user,
-    },
+    data: user,
   });
 });
 
@@ -165,11 +159,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
-    data: {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-    },
+    data: user,
   });
 });
