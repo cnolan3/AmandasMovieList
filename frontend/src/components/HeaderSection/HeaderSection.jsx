@@ -11,7 +11,7 @@ function HeaderSection() {
         <div className={styles.loginRow}>
           <h2>Amandas Movie List</h2>
           <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
-            login
+            Login
           </Link>
         </div>
         <div className={styles.searchRow}>
