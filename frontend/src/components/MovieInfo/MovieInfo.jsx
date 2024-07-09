@@ -57,8 +57,18 @@ function MovieInfo({ movie, onClose, children }) {
               </div>
 
               <div className={styles.extraInfoSection}>
-                {movie.cast && <p>{`cast: ${movie.cast}`}</p>}
-                {movie.director && <p>{`directed by: ${movie.director}`}</p>}
+                {movie.cast && (
+                  <p>
+                    <strong>Starring: </strong>
+                    {movie.cast}
+                  </p>
+                )}
+                {movie.director && (
+                  <p>
+                    <strong>Directed by: </strong>
+                    {movie.director}
+                  </p>
+                )}
               </div>
             </div>
           </div>
