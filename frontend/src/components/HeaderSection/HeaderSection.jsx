@@ -1,14 +1,18 @@
+import { Link } from "react-router-dom";
+
 import { useSearch } from "../../contexts/searchContext";
 import styles from "./HeaderSection.module.scss";
 
 function HeaderSection() {
-  const { query, placeholder, setQuery } = useSearch();
+  const { placeholder, setQuery } = useSearch();
   return (
     <div className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.loginRow}>
           <h2>Amandas Movie List</h2>
-          <button className={`${styles.btn} ${styles.btnLogin}`}>login</button>
+          <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
+            login
+          </Link>
         </div>
         <div className={styles.searchRow}>
           <input
