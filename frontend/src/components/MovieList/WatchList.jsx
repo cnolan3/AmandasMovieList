@@ -23,7 +23,7 @@ function WatchList({ onSelectMovie }) {
   if (status === "pending")
     return (
       <div className={styles.spinnerContainer}>
-        <Spinner />
+        <Spinner size={20} />
       </div>
     );
 

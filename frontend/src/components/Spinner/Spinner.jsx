@@ -3,9 +3,9 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 import variables from "../../sass/colors.module.scss";
 
-function Spinner() {
+function Spinner({ size = 10 }) {
   return (
-    <PulseLoader color={variables.colorPrimary} loading={true} size={20} />
+    <PulseLoader color={variables.colorPrimary} loading={true} size={size} />
   );
 }
 
