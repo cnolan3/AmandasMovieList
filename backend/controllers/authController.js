@@ -216,6 +216,18 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
+// log the user out (clear the login token cookie)
+exports.logout = catchAsync(async (req, res, next) => {
+  res.clearCookie(cookieName);
+
+  logger.verbose('user logged out');
+
+  res.status(200).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 // send forgot password email
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
