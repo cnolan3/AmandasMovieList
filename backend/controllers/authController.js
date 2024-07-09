@@ -73,6 +73,7 @@ const verifyUserWithJWT = async (token, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // logger.debug('protect');
   // get token from auth headers
+  logger.debug(`protect - ${JSON.stringify(req.cookies)}`);
   const token = getTokenFromCookies(req.cookies);
 
   logger.debug(JSON.stringify(req.cookies));
@@ -181,7 +182,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 // log the user in
 exports.login = catchAsync(async (req, res, next) => {
-  logger.debug(`login - ${JSON.stringify(req.cookies)}`);
   const { username, password } = req.body;
 
   if (!username || !password) {
