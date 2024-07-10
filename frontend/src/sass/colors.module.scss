@@ -17,6 +17,8 @@ $color-primary-gradient-to: #1c1d53;
 $color-accent-gradient-from: $color-accent;
 $color-accent-gradient-to: #ac123e;
 
+$color-attention: #ff4c20;
+
 :export {
   colorPrimary: $color-primary;
   colorPrimaryBright: $color-primary-bright;
@@ -33,5 +35,7 @@ $color-accent-gradient-to: #ac123e;
 
   colorAccentGradientFrom: $color-accent-gradient-from;
   colorAccentGradientTo: $color-accent-gradient-to;
+
+  colorAttention: $color-attention;
 }
 

@@ -10,7 +10,7 @@ export function useLogin() {
     mutationFn: ({ username, password }) => sendLoginApi(username, password),
     onSuccess: (myInfo) => {
       // toast.success("New cabin successfully created");
-      queryClient.setQueryData(["auth", "myInfo"], myInfo);
+      return queryClient.setQueryData(["auth", "myInfo"], myInfo);
     },
     // onError: (err) => toast.error(err.message),
     onError: (err) => {
@@ -29,7 +29,7 @@ export function useLogout() {
     mutationFn: () => sendLogoutApi(),
     onSuccess: () => {
       // toast.success("New cabin successfully created");
-      queryClient.setQueryData(["auth", "myInfo"], null);
+      return queryClient.setQueryData(["auth", "myInfo"], null);
     },
     // onError: (err) => toast.error(err.message),
     onError: (err) => console.log(err),

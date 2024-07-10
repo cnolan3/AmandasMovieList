@@ -31,7 +31,7 @@ function LoginPage() {
       {
         onSuccess: () => {
           clearTimeout(timerId.current);
-          navigate("/");
+          return navigate("/");
         },
       },
     );

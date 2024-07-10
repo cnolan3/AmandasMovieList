@@ -1,0 +1,46 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.infoCardContainer {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    colors.$color-primary,
+    80%,
+    colors.$color-primary-gradient-to
+  );
+  width: 100%;
+  height: 80svh;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding: 2rem 2rem 2rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  color: colors.$color-background;
+}
+
+.closeIcon {
+  flex: none; // do not grow or shrink width
+}
+
+.titleSection {
+  padding: 0 1rem;
+  // margin: 0 0 2rem 0;
+  width: 100%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  h2 {
+    flex: auto; // grow and shrink width to fit title
+    text-align: center;
+    font-size: fonts.$size-5;
+    font-weight: fonts.$weight-bold;
+    letter-spacing: 1px;
+    line-height: fonts.$line-height-large-text;
+  }
+}
+

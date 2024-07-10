@@ -1,0 +1,26 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.plotSectionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: auto;
+  gap: 1rem;
+}
+
+p {
+  font-size: fonts.$size-3;
+  font-weight: fonts.$weight-default;
+  line-height: fonts.$line-height-default;
+}
+
+.extraInfoSection {
+  width: 100%;
+  p {
+    padding-bottom: 0.5rem;
+    font-weight: fonts.$weight-default;
+    font-size: fonts.$size-1;
+  }
+}
+

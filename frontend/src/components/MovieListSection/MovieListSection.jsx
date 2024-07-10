@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { useSearch } from "../../contexts/searchContext";
-import MovieInfo from "../MovieInfo/MovieInfo";
+import MovieInfo from "../MovieInfoCard/InfoCard";
+import SeenListCard from "../MovieInfoCard/SeenListCard";
+import WatchListCard from "../MovieInfoCard/WatchListCard";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
@@ -74,10 +76,17 @@ function MovieList() {
       <div
         className={`${styles.infoCard}${showCard ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
       >
-        <MovieInfo
-          movie={selectedMovie}
-          onClose={handleUnselectMovie}
-        ></MovieInfo>
+        {tabState === "watchlist" ? (
+          <WatchListCard
+            movie={selectedMovie}
+            onClose={handleUnselectMovie}
+          ></WatchListCard>
+        ) : (
+          <SeenListCard
+            movie={selectedMovie}
+            onClose={handleUnselectMovie}
+          ></SeenListCard>
+        )}
       </div>
     </>
   );
