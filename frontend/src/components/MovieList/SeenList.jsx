@@ -1,6 +1,7 @@
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
+import { useMovieList } from "../../contexts/MovieListContext";
 import { useSeenList } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
 import MovieListItem from "../MovieListItem/MovieListItem";
@@ -9,7 +10,7 @@ import MovieList from "./MovieList";
 import styles from "./SeenList.module.scss";
 
 function SeenList({ onSelectMovie, searchQuery }) {
-  const { seenList, error, status } = useSeenList();
+  const { seenList, seenListStatus } = useMovieList();
 
   let filteredSeenList = seenList;
   if (searchQuery && seenList)
@@ -17,7 +18,7 @@ function SeenList({ onSelectMovie, searchQuery }) {
       movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
-  if (status === "pending")
+  if (seenListStatus === "pending")
     return (
       <div className={styles.spinnerContainer}>
         <Spinner size={20} />

@@ -11,6 +11,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import "./App.css";
 import MovieListSection from "./components/MovieListSection/MovieListSection";
+import { MovieListProvider } from "./contexts/MovieListContext.jsx";
 import { SearchProvider } from "./contexts/searchContext.jsx";
 import { UserProvider } from "./contexts/userContext.jsx";
 import AccountPage from "./pages/AccountPage/AccountPage";
@@ -102,7 +103,9 @@ function App() {
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
       <SearchProvider>
         <UserProvider>
-          <RouterProvider router={router} />
+          <MovieListProvider>
+            <RouterProvider router={router} />
+          </MovieListProvider>
         </UserProvider>
       </SearchProvider>
     </QueryClientProvider>
