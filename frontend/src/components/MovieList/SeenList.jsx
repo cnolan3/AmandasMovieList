@@ -2,8 +2,8 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
 import { useMovieList } from "../../contexts/MovieListContext";
-import { useSeenList } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
+import filterMovieList from "../../utils/filterMovieList";
 import MovieListItem from "../MovieListItem/MovieListItem";
 import Spinner from "../Spinner/Spinner";
 import MovieList from "./MovieList";
@@ -12,11 +12,7 @@ import styles from "./SeenList.module.scss";
 function SeenList({ onSelectMovie, searchQuery }) {
   const { seenList, seenListStatus } = useMovieList();
 
-  let filteredSeenList = seenList;
-  if (searchQuery && seenList)
-    filteredSeenList = seenList.filter((movie) =>
-      movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+  const filteredList = filterMovieList(seenList, searchQuery);
 
   if (seenListStatus === "pending")
     return (
@@ -26,8 +22,8 @@ function SeenList({ onSelectMovie, searchQuery }) {
     );
 
   return (
-    <MovieList movieList={filteredSeenList}>
-      {filteredSeenList.map((movie, i) => (
+    <MovieList movieList={filteredList} movieListStatus={seenListStatus}>
+      {filteredList.map((movie, i) => (
         <MovieListItem
           onClick={() => onSelectMovie(movie)}
           movie={movie}

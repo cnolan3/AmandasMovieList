@@ -3,8 +3,8 @@ import { IconContext } from "react-icons/lib";
 import { SiRottentomatoes } from "react-icons/si";
 
 import { useMovieList } from "../../contexts/MovieListContext";
-import { useWatchList } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
+import filterMovieList from "../../utils/filterMovieList";
 import MovieListItem from "../MovieListItem/MovieListItem";
 import Spinner from "../Spinner/Spinner";
 import MovieList from "./MovieList";
@@ -13,11 +13,7 @@ import styles from "./WatchList.module.scss";
 function WatchList({ onSelectMovie, searchQuery }) {
   const { watchList, watchListStatus } = useMovieList();
 
-  let filteredWatchList = watchList;
-  if (searchQuery && watchList)
-    filteredWatchList = watchList.filter((movie) =>
-      movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+  const filteredList = filterMovieList(watchList, searchQuery);
 
   if (watchListStatus === "pending")
     return (
@@ -27,8 +23,8 @@ function WatchList({ onSelectMovie, searchQuery }) {
     );
 
   return (
-    <MovieList movieList={filteredWatchList}>
-      {filteredWatchList.map((movie, i) => (
+    <MovieList movieList={filteredList} movieListStatus={watchListStatus}>
+      {filteredList.map((movie, i) => (
         <MovieListItem
           movie={movie}
           position={i + 1}
