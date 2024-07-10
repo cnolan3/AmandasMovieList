@@ -1,21 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
-import { useLogin } from "../../hooks/useAuth";
 import styles from "./LoginForm.module.scss";
 
-function LoginForm() {
+function LoginForm({ onSubmit }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
-  const navigate = useNavigate();
-  const { isLoading, login } = useLogin();
-
-  function onSubmit(data) {
-    login(
-      { username: data.username, password: data.password },
-      { onSuccess: () => navigate("/") },
-    );
-  }
 
   function onError(error) {}
 

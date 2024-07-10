@@ -1,5 +1,7 @@
+import handleApiError from "../utils/handleApiError";
 import { addContentTypeHeader } from "../utils/reqHeaders";
 
+// log a user in
 export async function sendLoginApi(username, password) {
   const headers = new Headers();
   addContentTypeHeader(headers);
@@ -15,14 +17,25 @@ export async function sendLoginApi(username, password) {
   );
 
   if (!response.ok) {
-    switch (response.status) {
-      case 401:
-        throw new Error("Login failed, unauthorized");
-      default:
-        throw new Error("Login request failed");
-    }
+    handleApiError(response.status);
   }
 
   return (await response.json()).data;
+}
+
+// log the user out
+export async function sendLogoutApi() {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/users/logout`,
+    {
+      method: "POST",
+    },
+  );
+
+  if (!response.ok) {
+    handleApiError(response.status);
+  }
+
+  return;
 }
 

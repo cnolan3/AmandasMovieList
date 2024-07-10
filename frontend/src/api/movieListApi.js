@@ -1,3 +1,5 @@
+import handleApiError from "../utils/handleApiError";
+
 // get the watchlist from the backend
 export async function getWatchListApi() {
   const response = await fetch(
@@ -6,7 +8,7 @@ export async function getWatchListApi() {
   );
 
   if (!response.ok) {
-    throw new Error("Retrieving watchlist failed");
+    handleApiError(response.status);
   }
 
   const data = await response.json();
@@ -21,7 +23,7 @@ export async function getSeenListApi() {
   );
 
   if (!response.ok) {
-    throw new Error("Retrieving seenlist failed");
+    handleApiError(response.status);
   }
 
   const data = await response.json();

@@ -1,3 +1,5 @@
+import handleApiError from "../utils/handleApiError";
+
 export async function getMyInfoApi() {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/users/myinfo`,
@@ -5,12 +7,7 @@ export async function getMyInfoApi() {
   );
 
   if (!response.ok) {
-    switch (response.status) {
-      case 401:
-        throw new Error("Unauthorized");
-      default:
-        throw new Error("Retrieving myInfo failed");
-    }
+    handleApiError(response.status);
   }
 
   const { username, role, email } = (await response.json()).data;
