@@ -9,7 +9,7 @@ export function useWatchList() {
     error,
     status,
   } = useQuery({
-    queryKey: ["watchlist"],
+    queryKey: ["movielist", "watchlist"],
     queryFn: getWatchListApi,
   });
 
@@ -23,7 +23,7 @@ export function useSeenList() {
     error,
     status,
   } = useQuery({
-    queryKey: ["seenlist"],
+    queryKey: ["movielist", "seenlist"],
     queryFn: getSeenListApi,
   });
 

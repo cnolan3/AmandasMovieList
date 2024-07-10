@@ -8,7 +8,7 @@ import styles from "./MovieListSection.module.scss";
 
 function MovieList() {
   const [tabState, setTabState] = useState("watchlist");
-  const { setPlaceholder } = useSearch();
+  const { setPlaceholder, query } = useSearch();
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
@@ -59,9 +59,15 @@ function MovieList() {
           </div>
         </div>
         {tabState === "watchlist" ? (
-          <WatchList onSelectMovie={(movie) => handleSelectMovie(movie)} />
+          <WatchList
+            onSelectMovie={(movie) => handleSelectMovie(movie)}
+            searchQuery={query}
+          />
         ) : (
-          <SeenList onSelectMovie={(movie) => handleSelectMovie(movie)} />
+          <SeenList
+            onSelectMovie={(movie) => handleSelectMovie(movie)}
+            searchQuery={query}
+          />
         )}
       </div>
 
@@ -78,3 +84,4 @@ function MovieList() {
 }
 
 export default MovieList;
+

@@ -9,7 +9,7 @@ export function useMyInfo() {
     error,
     status,
   } = useQuery({
-    queryKey: ["myInfo"],
+    queryKey: ["auth", "myInfo"],
     queryFn: getMyInfoApi,
   });
 

@@ -1,8 +1,6 @@
 import { FaRegStar, FaStar } from "react-icons/fa";
-import { HiOutlineStar, HiStar } from "react-icons/hi";
 import { IconContext } from "react-icons/lib";
 
-import { useSearch } from "../../contexts/searchContext";
 import { useSeenList } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
 import MovieListItem from "../MovieListItem/MovieListItem";
@@ -10,14 +8,13 @@ import Spinner from "../Spinner/Spinner";
 import MovieList from "./MovieList";
 import styles from "./SeenList.module.scss";
 
-function SeenList({ onSelectMovie }) {
-  const { query } = useSearch();
+function SeenList({ onSelectMovie, searchQuery }) {
   const { seenList, error, status } = useSeenList();
 
   let filteredSeenList = seenList;
-  if (query && seenList)
+  if (searchQuery && seenList)
     filteredSeenList = seenList.filter((movie) =>
-      movie.title.toLowerCase().includes(query.toLowerCase()),
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
   if (status === "pending")

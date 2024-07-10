@@ -9,6 +9,7 @@
   z-index: 0;
 }
 
+.account,
 .login {
   position: absolute;
   width: 100%;
@@ -16,19 +17,23 @@
   z-index: 1;
 }
 
+.account-enter,
 .login-enter {
   opacity: 0;
 }
 
+.account-enter-active,
 .login-enter-active {
   opacity: 1;
   transition: opacity 200ms;
 }
 
+.account-exit,
 .login-exit {
   opacity: 1;
 }
 
+.account-exit-active,
 .login-exit-active {
   opacity: 0;
   transition: opacity 200ms;
