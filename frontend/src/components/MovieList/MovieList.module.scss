@@ -5,6 +5,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   width: 100%;
   padding: 1.5rem 3rem 4rem 3rem;
@@ -46,5 +47,11 @@
 .spinnerContainer {
   margin: auto 0;
   padding-bottom: 15rem;
+}
+
+.listEmptyMessage {
+  color: colors.$color-text-light;
+  font-size: fonts.$size-4;
+  font-weight: fonts.$weight-semi-bold;
 }
 

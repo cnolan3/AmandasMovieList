@@ -2,7 +2,7 @@ import styles from "./ListStats.module.scss";
 
 function ListStats({ list }) {
   const numItems = list.length;
-  const movieTag = numItems > 1 ? "Movies" : "Movie";
+  const movieTag = numItems === 1 ? "Movie" : "Movies";
 
   return (
     <div className={styles.listStats}>

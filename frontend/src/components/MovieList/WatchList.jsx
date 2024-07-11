@@ -24,29 +24,35 @@ function WatchList({ onSelectMovie, searchQuery }) {
 
   return (
     <MovieList movieList={filteredList} movieListStatus={watchListStatus}>
-      {filteredList.map((movie, i) => (
-        <MovieListItem
-          movie={movie}
-          position={i + 1}
-          key={movie.imdbID}
-          onClick={() => onSelectMovie(movie)}
-        >
-          <IconContext.Provider value={{ color: colors.colorPrimary }}>
-            <div className={styles.stat}>
-              <FaClock />
-              <span>{movie.runtime}</span>
-            </div>
-            <div className={styles.stat}>
-              <SiRottentomatoes />
-              <span>
-                {movie.rottenTomatoRating === -1
-                  ? "N/A"
-                  : `${movie.rottenTomatoRating}%`}
-              </span>
-            </div>
-          </IconContext.Provider>
-        </MovieListItem>
-      ))}
+      {filteredList && filteredList.length > 0 ? (
+        filteredList.map((movie, i) => (
+          <MovieListItem
+            movie={movie}
+            position={i + 1}
+            key={movie.imdbID}
+            onClick={() => onSelectMovie(movie)}
+          >
+            <IconContext.Provider value={{ color: colors.colorPrimary }}>
+              <div className={styles.stat}>
+                <FaClock />
+                <span>{movie.runtime}</span>
+              </div>
+              <div className={styles.stat}>
+                <SiRottentomatoes />
+                <span>
+                  {movie.rottenTomatoRating === -1
+                    ? "N/A"
+                    : `${movie.rottenTomatoRating}%`}
+                </span>
+              </div>
+            </IconContext.Provider>
+          </MovieListItem>
+        ))
+      ) : searchQuery ? (
+        <h2 className={styles.listEmptyMessage}>Search Not Found</h2>
+      ) : (
+        <h2 className={styles.listEmptyMessage}>No Movies In List</h2>
+      )}
     </MovieList>
   );
 }
