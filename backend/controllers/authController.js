@@ -328,7 +328,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const { currentPassword, newPassword, newPasswordConfirm } = req.body;
   // get the user from db
-  let user = await User.findById(req.user._id).select('+password');
+  let user = await User.findById(req.user._id).select('+password +email +role');
 
   if (!user)
     return next(new AppError('User has been deleted since logging in', 404));
@@ -357,9 +357,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   res.cookie(cookieName, token, cookieOptions);
 
   logger.verbose('user logged in');
+  logger.debug(`update password for: ${JSON.stringify(user)} `);
 
   res.status(200).json({
     status: 'success',
-    data: null,
+    data: {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    },
   });
 });
