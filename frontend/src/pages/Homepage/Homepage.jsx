@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-import HeaderSection from "../../components/HeaderSection/HeaderSection";
-import MainSection from "../../components/MainSection/MainSection";
+import HeaderSection from "../../components/Sections/HeaderSection/HeaderSection";
+import MainSection from "../../components/Sections/MainSection/MainSection";
 
 function Homepage() {
   return (

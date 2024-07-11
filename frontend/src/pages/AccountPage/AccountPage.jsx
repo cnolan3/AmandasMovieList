@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
-import Button from "../../components/Button/Button";
-import Spinner from "../../components/Spinner/Spinner";
+import Button from "../../components/UI/Button/Button";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import UpdatePasswordForm from "../../components/UpdatePasswordForm/UpdatePasswordForm";
 import { useUser } from "../../contexts/userContext";
 import { useLogout } from "../../hooks/useAuth";

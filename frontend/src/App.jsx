@@ -11,7 +11,8 @@ import "./App.css";
 import MovieListSection from "./components/MovieListSection/MovieListSection";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
-import LoginPage from "./pages/LoginPage/LoginPage";
+import LoginPage from "./pages/LoginResetPage/LoginResetPage";
+import LoginSubPage from "./pages/LoginResetPage/LoginSubPage";
 
 const routes = [
   {
@@ -25,12 +26,14 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    name: "Login",
+    name: "Login/Reset",
     element: <LoginPage />,
     nodeRef: createRef(),
-    class: "login",
+    class: "login-reset",
     timeout: 200,
+    children: [
+      { path: "/login", element: <LoginSubPage />, nodeRef: createRef() },
+    ],
   },
   {
     path: "/account",

@@ -1,0 +1,23 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.userIconContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+
+  text-decoration: none;
+
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+
+  p {
+    color: colors.$color-background;
+    font-size: fonts.$size-1;
+    font-weight: fonts.$weight-medium;
+  }
+}
+

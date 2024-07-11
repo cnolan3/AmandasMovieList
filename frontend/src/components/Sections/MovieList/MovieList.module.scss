@@ -1,0 +1,64 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  padding: 1.5rem 3rem 4rem 3rem;
+}
+
+.listContainer {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15px,
+    black calc(100% - 15px),
+    transparent 100%
+  );
+
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.stat {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  svg {
+    color: colors.$color-primary;
+    display: inline-block;
+    height: 1.6rem;
+    width: 1.6rem;
+  }
+
+  span {
+    color: colors.$color-text;
+    font-size: fonts.$size-1;
+    font-weight: fonts.$weight-medium;
+  }
+}
+
+.spinnerContainer {
+  margin: auto 0;
+  padding-bottom: 15rem;
+}
+
+.listEmptyMessage {
+  color: colors.$color-text-light;
+  font-size: fonts.$size-4;
+  font-weight: fonts.$weight-semi-bold;
+}
+
