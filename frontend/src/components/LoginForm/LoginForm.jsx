@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 
+import Button from "../Button/Button";
 import FormRow from "../FormRow/FormRow";
 import styles from "./LoginForm.module.scss";
 
@@ -33,7 +34,7 @@ function LoginForm({ onSubmit }) {
       </FormRow>
 
       <div className={styles.submitRow}>
-        <button className={styles.submitBtn}>Login</button>
+        <Button className={styles.submitBtn}>Login</Button>
       </div>
     </form>
   );

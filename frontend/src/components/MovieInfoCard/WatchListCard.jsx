@@ -6,6 +6,7 @@ import { useUser } from "../../contexts/userContext";
 import { useDeleteMovie } from "../../hooks/useMovieList";
 import { useRateMovie } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
+import Button from "../Button/Button";
 import InfoCard from "./InfoCard";
 import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
@@ -60,8 +61,8 @@ function WatchListCard({ movie, onClose }) {
       </MovieInfo>
       {isAmanda && (
         <div className={styles.lowerSection}>
-          <button
-            className={`${styles.btn} ${styles.deleteBtn} ${!stage ? styles.disabled : ""}`}
+          <Button
+            className={`${styles.deleteBtn} ${!stage ? styles.disabled : ""}`}
             onClick={() => handleDeleteMovie(movie.imdbID)}
             disabled={!stage}
           >
@@ -71,9 +72,9 @@ function WatchListCard({ movie, onClose }) {
               }
             />
             Remove
-          </button>
-          <button
-            className={`${styles.btn} ${styles.rateBtn}`}
+          </Button>
+          <Button
+            className={styles.rateBtn}
             onClick={() => setStage((stage) => !stage)}
           >
             {stage ? (
@@ -84,7 +85,7 @@ function WatchListCard({ movie, onClose }) {
             ) : (
               "Cancel Move"
             )}
-          </button>
+          </Button>
         </div>
       )}
     </InfoCard>

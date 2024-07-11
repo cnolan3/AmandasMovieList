@@ -11,27 +11,18 @@
   gap: 3rem;
 }
 
-.btn {
-  height: 4rem;
-  padding: 0 2rem;
+.rateBtn,
+.moveBtn {
   width: 25rem;
-  border-radius: 21px / 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 5px;
-  font-size: fonts.$size-2;
-  font-weight: fonts.$weight-semi-bold;
+}
 
-  &.rateBtn {
-    color: colors.$color-text;
-    background-color: colors.$color-accent;
-  }
+.rateBtn {
+  color: colors.$color-text;
+  background-color: colors.$color-accent;
+}
 
-  &.moveBtn {
-    color: colors.$color-background;
-    background-color: colors.$color-secondary;
-  }
+.moveBtn {
+  color: colors.$color-background;
+  background-color: colors.$color-secondary;
 }
 

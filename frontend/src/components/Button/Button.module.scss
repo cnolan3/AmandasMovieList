@@ -1,0 +1,17 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.btn {
+  height: 4rem;
+  padding: 0 2rem;
+  border-radius: 21px / 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 5px;
+  font-family: fonts.$base-font;
+  font-size: fonts.$size-2;
+  font-weight: fonts.$weight-semi-bold;
+}
+

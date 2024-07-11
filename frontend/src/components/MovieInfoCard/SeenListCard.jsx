@@ -3,6 +3,7 @@ import { FaArrowRight, FaTrash } from "react-icons/fa";
 import { useUser } from "../../contexts/userContext";
 import { useDeleteMovie } from "../../hooks/useMovieList";
 import colors from "../../sass/colors.module.scss";
+import Button from "../Button/Button";
 import InfoCard from "./InfoCard";
 import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
@@ -29,13 +30,13 @@ function SeenListCard({ movie, onClose }) {
       </MovieInfo>
       {isAmanda && (
         <div className={styles.lowerSection}>
-          <button
-            className={`${styles.btn} ${styles.deleteBtn}`}
+          <Button
+            className={styles.deleteBtn}
             onClick={() => handleDeleteMovie(movie.imdbID)}
           >
             <FaTrash color={colors.colorBackground} />
             Remove
-          </button>
+          </Button>
         </div>
       )}
     </InfoCard>

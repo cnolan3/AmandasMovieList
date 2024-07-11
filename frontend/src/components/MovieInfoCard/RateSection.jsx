@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import colors from "../../sass/colors.module.scss";
+import Button from "../Button/Button";
 import StarRating from "../StarRating/StarRating";
 import styles from "./RateSection.module.scss";
 
@@ -15,18 +16,12 @@ function RateSection({ onRate }) {
         defaultRating={1}
         onSetRating={(r) => setRating(r)}
       />
-      <button
-        className={`${styles.btn} ${styles.rateBtn}`}
-        onClick={() => onRate(rating)}
-      >
+      <Button className={styles.rateBtn} onClick={() => onRate(rating)}>
         Rate Movie and Move
-      </button>
-      <button
-        className={`${styles.btn} ${styles.moveBtn}`}
-        onClick={() => onRate(null)}
-      >
+      </Button>
+      <Button className={styles.moveBtn} onClick={() => onRate(null)}>
         Move without Rating
-      </button>
+      </Button>
     </div>
   );
 }
