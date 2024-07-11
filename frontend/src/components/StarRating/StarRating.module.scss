@@ -12,3 +12,11 @@
   display: flex;
 }
 
+.star {
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+

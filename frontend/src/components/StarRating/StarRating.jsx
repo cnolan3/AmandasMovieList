@@ -63,6 +63,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
 
   return (
     <span
+      className={styles.star}
       role="button"
       style={starStyle}
       onClick={onRate}
