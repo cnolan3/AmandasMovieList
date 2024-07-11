@@ -3,9 +3,9 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import Button from "../../components/UI/Button/Button";
+import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import UpdatePasswordForm from "../../components/UpdatePasswordForm/UpdatePasswordForm";
 import { useUser } from "../../contexts/userContext";
@@ -13,7 +13,6 @@ import { useLogout } from "../../hooks/useAuth";
 import { useUpdatePassword } from "../../hooks/useAuth";
 import colors from "../../sass/colors.module.scss";
 import styles from "./AccountPage.module.scss";
-import "./AccountPageTransition.css";
 
 function AccountPage() {
   const { logout, status: logoutStatus } = useLogout();
@@ -22,10 +21,7 @@ function AccountPage() {
   const timerId = useRef(null);
   const [show, setShow] = useState(true);
   const { myInfo, loggedIn } = useUser();
-  const [updatePassPage, setUpdatePassPage] = useState(false);
-  const accRef = useRef(null);
-  const updateRef = useRef(null);
-  const nodeRef = updatePassPage ? updateRef : accRef;
+  const [stage, setStage] = useState(true);
 
   useEffect(() => {
     // start a timer to show the loading spinner 500ms after hitting 'login'
@@ -57,7 +53,7 @@ function AccountPage() {
       {
         onSuccess: () => {
           clearTimeout(timerId.current);
-          return setUpdatePassPage(false);
+          return setStage(false);
         },
       },
     );
@@ -76,56 +72,45 @@ function AccountPage() {
         </Link>
       </div>
 
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          key={!updatePassPage}
-          nodeRef={nodeRef}
-          addEndListener={(done) => {
-            nodeRef.current.addEventListener("transitionend", done, false);
-          }}
-          classNames={!updatePassPage ? "fade-left" : "fade-right"}
-        >
-          <div ref={nodeRef} className={styles.accountContainer}>
-            {!updatePassPage ? (
-              <>
-                <div className={styles.userInfoSection}>
-                  <h3 className={styles.infoTag}>Username:</h3>
-                  <p className={styles.info}>
-                    {loggedIn ? myInfo.username : ""}
-                  </p>
-                  <h3 className={styles.infoTag}>Email:</h3>
-                  <p className={styles.info}>{loggedIn ? myInfo.email : ""}</p>
-                </div>
-                <div className={styles.btnSection}>
-                  <Button
-                    className={styles.updatePasswordBtn}
-                    onClick={() => setUpdatePassPage(true)}
-                  >
-                    Update Password
-                    <FaArrowRight />
-                  </Button>
-                  <Button className={styles.logoutBtn} onClick={handleLogout}>
-                    Logout
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <>
-                <UpdatePasswordForm
-                  onSubmit={(data) => handleUpdatePassword(data)}
-                />
+      <SlideTransition stageState={stage}>
+        <div className={styles.accountContainer}>
+          {stage ? (
+            <>
+              <div className={styles.userInfoSection}>
+                <h3 className={styles.infoTag}>Username:</h3>
+                <p className={styles.info}>{loggedIn ? myInfo.username : ""}</p>
+                <h3 className={styles.infoTag}>Email:</h3>
+                <p className={styles.info}>{loggedIn ? myInfo.email : ""}</p>
+              </div>
+              <div className={styles.btnSection}>
                 <Button
-                  className={styles.cancelUpdateBtn}
-                  onClick={() => setUpdatePassPage(false)}
+                  className={styles.updatePasswordBtn}
+                  onClick={() => setStage(false)}
                 >
-                  <FaArrowLeft />
-                  Cancel
+                  Update Password
+                  <FaArrowRight />
                 </Button>
-              </>
-            )}
-          </div>
-        </CSSTransition>
-      </SwitchTransition>
+                <Button className={styles.logoutBtn} onClick={handleLogout}>
+                  Logout
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <UpdatePasswordForm
+                onSubmit={(data) => handleUpdatePassword(data)}
+              />
+              <Button
+                className={styles.cancelUpdateBtn}
+                onClick={() => setStage(true)}
+              >
+                <FaArrowLeft />
+                Cancel
+              </Button>
+            </>
+          )}
+        </div>
+      </SlideTransition>
     </div>
   );
 }

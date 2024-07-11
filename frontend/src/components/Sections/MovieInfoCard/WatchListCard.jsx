@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import colors from "../../../sass/colors.module.scss";
+import SlideTransition from "../../UI/SlideTransition/SlideTransition";
 import { useUser } from "../../contexts/userContext";
 import { useDeleteMovie } from "../../hooks/useMovieList";
 import { useRateMovie } from "../../hooks/useMovieList";
@@ -12,16 +12,12 @@ import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
 import RateSection from "./RateSection";
 import styles from "./WatchListCard.module.scss";
-import "./WatchListCardTransition.css";
 
 function WatchListCard({ movie, onClose }) {
   const { myInfo, loggedIn } = useUser();
   const { status: deleteMovieStatus, deleteMovie } = useDeleteMovie();
   const { status: rateMovieStatus, rateMovie } = useRateMovie();
   const [stage, setStage] = useState(true);
-  const plotRef = useRef(null);
-  const rateRef = useRef(null);
-  const nodeRef = stage ? plotRef : rateRef;
 
   const isAmanda = loggedIn ? myInfo.role === "amanda" : false;
 
@@ -38,26 +34,15 @@ function WatchListCard({ movie, onClose }) {
   return (
     <InfoCard title={movie.title} onClose={onClose}>
       <MovieInfo movie={movie}>
-        <SwitchTransition mode="out-in">
-          <CSSTransition
-            key={stage}
-            nodeRef={nodeRef}
-            addEndListener={(done) => {
-              nodeRef.current.addEventListener("transitionend", done, false);
-            }}
-            classNames={stage ? "fade-left" : "fade-right"}
-          >
-            <div ref={nodeRef} className={styles.transitionRef}>
-              {stage ? (
-                <PlotSection movie={movie} />
-              ) : (
-                <RateSection
-                  onRate={(rating) => handleRateMovie(movie.imdbID, rating)}
-                />
-              )}
-            </div>
-          </CSSTransition>
-        </SwitchTransition>
+        <SlideTransition
+          stageState={stage}
+          firstComponent={<PlotSection movie={movie} />}
+          secondComponent={
+            <RateSection
+              onRate={(rating) => handleRateMovie(movie.imdbID, rating)}
+            />
+          }
+        />
       </MovieInfo>
       {isAmanda && (
         <div className={styles.lowerSection}>

@@ -11,8 +11,9 @@ import "./App.css";
 import MovieListSection from "./components/MovieListSection/MovieListSection";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
-import LoginPage from "./pages/LoginResetPage/LoginResetPage";
-import LoginSubPage from "./pages/LoginResetPage/LoginSubPage";
+import ForgotSubPage from "./pages/LoginForgotPage/ForgotSubPage";
+import LoginForgotPage from "./pages/LoginForgotPage/LoginForgotPage";
+import LoginSubPage from "./pages/LoginForgotPage/LoginSubPage";
 
 const routes = [
   {
@@ -27,12 +28,17 @@ const routes = [
   },
   {
     name: "Login/Reset",
-    element: <LoginPage />,
+    element: <LoginForgotPage />,
     nodeRef: createRef(),
     class: "login-reset",
     timeout: 200,
     children: [
       { path: "/login", element: <LoginSubPage />, nodeRef: createRef() },
+      {
+        path: "/forgotpassword",
+        element: <ForgotSubPage />,
+        nodeRef: createRef(),
+      },
     ],
   },
   {

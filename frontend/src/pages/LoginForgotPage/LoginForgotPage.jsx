@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
+import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { useLogin } from "../../hooks/useAuth";
 import colors from "../../sass/colors.module.scss";
-import styles from "./LoginResetPage.module.scss";
+import styles from "./LoginForgotPage.module.scss";
 
-function LoginPage() {
+function LoginForgotPage() {
   const navigate = useNavigate();
   const { status, login } = useLogin();
   const timerId = useRef(null);
@@ -56,4 +57,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LoginForgotPage;

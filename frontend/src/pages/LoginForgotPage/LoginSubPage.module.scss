@@ -1,0 +1,22 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.forgotLink {
+  color: colors.$color-text;
+  font-size: fonts.$size-3;
+  font-weight: fonts.$weight-medium;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+    border-bottom: 1px solid colors.$color-text;
+  }
+
+  &:hover,
+  &:active {
+    color: colors.$color-background;
+    text-decoration: none;
+    border-bottom: 1px solid colors.$color-background;
+  }
+}
+
