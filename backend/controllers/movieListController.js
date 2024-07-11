@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
-// const logger = require('../utils/logger');
+const logger = require('../utils/logger');
 const APIFeatures = require('../utils/apiFeatures');
 const OMDBGet = require('../utils/omdbGet');
 
@@ -97,6 +97,7 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
 
 // give a movie an amanda rating
 exports.rateMovie = catchAsync(async (req, res, next) => {
+  logger.debug(`rating req.body: ${JSON.stringify(req.body)}`);
   let updateData = { seen: true, votes: 0 };
   if (req.body.rating)
     updateData = { ...updateData, amandaRating: req.body.rating };
@@ -126,7 +127,7 @@ exports.rateMovie = catchAsync(async (req, res, next) => {
 exports.unwatch = catchAsync(async (req, res, next) => {
   const movie = await MovieList.findOneAndUpdate(
     { imdbID: req.params.imdbID },
-    { seen: false },
+    { seen: false, amandaRating: 0 },
     { runValidators: true },
   );
 
