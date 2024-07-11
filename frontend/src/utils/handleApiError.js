@@ -1,5 +1,7 @@
 export default function handleApiError(statusCode) {
   switch (statusCode) {
+    case 400:
+      throw new Error("Bad request");
     case 401:
       throw new Error("Unauthorized");
     case 404:
@@ -10,3 +12,4 @@ export default function handleApiError(statusCode) {
       throw new Error("Request failed");
   }
 }
+

@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { sendLoginApi, sendLogoutApi } from "../api/authApi";
+import {
+  sendLoginApi,
+  sendLogoutApi,
+  sendUpdatePasswordApi,
+} from "../api/authApi";
 
 // log the user in
 export function useLogin() {
@@ -36,5 +40,20 @@ export function useLogout() {
   });
 
   return { status, logout };
+}
+
+// update user password
+export function useUpdatePassword() {
+  const queryClient = useQueryClient();
+
+  const { mutate: updatePassword, status } = useMutation({
+    mutationFn: ({ currentPassword, newPassword, newPasswordConfirm }) =>
+      sendUpdatePasswordApi(currentPassword, newPassword, newPasswordConfirm),
+    onSuccess: (myInfo) => queryClient.setQueryData(["auth", "myInfo"], myInfo),
+    // onError: (err) => toast.error(err.message),
+    onError: (err) => console.log(err),
+  });
+
+  return { status, updatePassword };
 }
 
