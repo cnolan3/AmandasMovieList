@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 
 import App from "./App.jsx";
 import { MovieListProvider } from "./contexts/MovieListContext.jsx";
@@ -29,6 +30,22 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </MovieListProvider>
         </UserProvider>
       </SearchProvider>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: { duration: 3000 },
+          error: { duration: 5000 },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "#eff0fb",
+            color: "#040610",
+          },
+        }}
+      />
     </QueryClientProvider>
   </React.StrictMode>,
 );

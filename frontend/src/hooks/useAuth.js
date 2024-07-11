@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 import {
   sendLoginApi,
@@ -13,13 +14,10 @@ export function useLogin() {
   const { mutate: login, status } = useMutation({
     mutationFn: ({ username, password }) => sendLoginApi(username, password),
     onSuccess: (myInfo) => {
-      // toast.success("New cabin successfully created");
+      toast.success("Successfully logged in");
       return queryClient.setQueryData(["auth", "myInfo"], myInfo);
     },
-    // onError: (err) => toast.error(err.message),
-    onError: (err) => {
-      console.log(err);
-    },
+    onError: (err) => toast.error(err.message),
   });
 
   return { status, login };
@@ -32,11 +30,10 @@ export function useLogout() {
   const { mutate: logout, status } = useMutation({
     mutationFn: () => sendLogoutApi(),
     onSuccess: () => {
-      // toast.success("New cabin successfully created");
+      toast.success("Successfully logged out");
       return queryClient.setQueryData(["auth", "myInfo"], null);
     },
-    // onError: (err) => toast.error(err.message),
-    onError: (err) => console.log(err),
+    onError: (err) => toast.error(err.message),
   });
 
   return { status, logout };
@@ -49,9 +46,11 @@ export function useUpdatePassword() {
   const { mutate: updatePassword, status } = useMutation({
     mutationFn: ({ currentPassword, newPassword, newPasswordConfirm }) =>
       sendUpdatePasswordApi(currentPassword, newPassword, newPasswordConfirm),
-    onSuccess: (myInfo) => queryClient.setQueryData(["auth", "myInfo"], myInfo),
-    // onError: (err) => toast.error(err.message),
-    onError: (err) => console.log(err),
+    onSuccess: (myInfo) => {
+      toast.success("Password updated successfully");
+      return queryClient.setQueryData(["auth", "myInfo"], myInfo);
+    },
+    onError: (err) => toast.error(err.message),
   });
 
   return { status, updatePassword };
