@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 
+import FormRow from "../FormRow/FormRow";
 import styles from "./LoginForm.module.scss";
 
 function LoginForm({ onSubmit }) {
@@ -13,25 +14,23 @@ function LoginForm({ onSubmit }) {
       className={styles.loginForm}
       onSubmit={handleSubmit(onSubmit, onError)}
     >
-      <div className={styles.loginField}>
-        <label htmlFor="username">Username</label>
+      <FormRow label="Username" error={errors?.username?.message}>
         <input
           type="text"
           id="username"
           autoCorrect="off"
           {...register("username", { required: "Username is required" })}
         />
-      </div>
+      </FormRow>
 
-      <div className={styles.loginField}>
-        <label htmlFor="password">Password</label>
+      <FormRow label="Password" error={errors?.password?.message}>
         <input
           type="password"
           id="password"
           autoCorrect="off"
           {...register("password", { required: "Password is required" })}
         />
-      </div>
+      </FormRow>
 
       <div className={styles.submitRow}>
         <button className={styles.submitBtn}>Login</button>
