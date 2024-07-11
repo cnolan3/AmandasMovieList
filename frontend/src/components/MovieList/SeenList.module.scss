@@ -1,1 +1,13 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
 @import "./MovieList.module.scss";
+
+.stat {
+  p {
+    color: colors.$color-primary;
+    font-size: fonts.$size-2;
+    font-weight: fonts.$weight-semi-bold;
+  }
+}
+

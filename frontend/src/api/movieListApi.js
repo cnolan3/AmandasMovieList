@@ -1,4 +1,5 @@
 import handleApiError from "../utils/handleApiError";
+import { addContentTypeHeader } from "../utils/reqHeaders";
 
 // get the watchlist from the backend
 export async function getWatchListApi() {
@@ -47,9 +48,12 @@ export async function deleteMovieApi(movieId) {
 
 // rate movie and move it to seen list
 export async function rateMovieApi(movieId, rating) {
+  const headers = new Headers();
+  addContentTypeHeader(headers);
+
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/watchlist/ratemovie/${movieId}`,
-    { method: "PATCH", body: JSON.stringify({ rating }) },
+    { method: "PATCH", headers, body: JSON.stringify({ rating }) },
   );
 
   if (!response.ok) {

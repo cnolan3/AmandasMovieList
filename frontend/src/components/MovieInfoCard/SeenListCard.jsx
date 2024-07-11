@@ -23,7 +23,9 @@ function SeenListCard({ movie, onClose }) {
   return (
     <InfoCard title={movie.title} onClose={onClose}>
       <MovieInfo movie={movie}>
-        <PlotSection movie={movie} />
+        <div className={styles.transitionRef}>
+          <PlotSection movie={movie} />
+        </div>
       </MovieInfo>
       {isAmanda && (
         <div className={styles.lowerSection}>

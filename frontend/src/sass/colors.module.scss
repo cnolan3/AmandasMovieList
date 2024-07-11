@@ -5,6 +5,7 @@ $color-secondary: #0c0c2c;
 $color-accent: #ef6b91;
 
 $color-background: #eff0fb;
+$color-background-faded: #adadb1;
 $color-background-dark: #c8cbf1;
 $color-background-light: #fdfdff;
 
@@ -18,6 +19,7 @@ $color-accent-gradient-from: $color-accent;
 $color-accent-gradient-to: #ac123e;
 
 $color-attention: #ff4c20;
+$color-attention-faded: #a05248;
 
 :export {
   colorPrimary: $color-primary;
@@ -26,6 +28,7 @@ $color-attention: #ff4c20;
   colorAccent: $color-accent;
 
   colorBackground: $color-background;
+  colorBackgroundFaded: $color-background-faded;
   colorBackgroundDark: $color-background-dark;
   colorBackgroundLight: $color-background-light;
   colorText: $color-text;
@@ -37,5 +40,6 @@ $color-attention: #ff4c20;
   colorAccentGradientTo: $color-accent-gradient-to;
 
   colorAttention: $color-attention;
+  colorAttentionFaded: $color-attention-faded;
 }
 

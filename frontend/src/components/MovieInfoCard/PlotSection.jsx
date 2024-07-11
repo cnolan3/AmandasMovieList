@@ -2,7 +2,7 @@ import styles from "./PlotSection.module.scss";
 
 function PlotSection({ movie }) {
   return (
-    <>
+    <div className={styles.plotSectionContainer}>
       <p>{movie.plot}</p>
 
       <div className={styles.extraInfoSection}>
@@ -19,7 +19,7 @@ function PlotSection({ movie }) {
           </p>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

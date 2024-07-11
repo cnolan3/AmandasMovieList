@@ -31,14 +31,21 @@ function SeenList({ onSelectMovie, searchQuery }) {
           key={movie.imdbID}
         >
           <div className={styles.stat}>
-            <IconContext.Provider value={{ color: colors.colorPrimary }}>
-              {Array.from({ length: movie.amandaRating }, (item, index) => (
-                <FaStar key={index} />
-              ))}
-              {Array.from({ length: 5 - movie.amandaRating }, (item, index) => (
-                <FaRegStar key={index} />
-              ))}
-            </IconContext.Provider>
+            {movie.amandaRating && movie.amandaRating > 0 ? (
+              <IconContext.Provider value={{ color: colors.colorPrimary }}>
+                {Array.from({ length: movie.amandaRating }, (item, index) => (
+                  <FaStar key={index} />
+                ))}
+                {Array.from(
+                  { length: 5 - movie.amandaRating },
+                  (item, index) => (
+                    <FaRegStar key={index} />
+                  ),
+                )}
+              </IconContext.Provider>
+            ) : (
+              <p>No rating</p>
+            )}
           </div>
         </MovieListItem>
       ))}
