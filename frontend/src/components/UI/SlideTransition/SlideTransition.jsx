@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
-import "./SlideTrans.css";
+import "./SlideTransition.css";
 
 function SlideTransition({
   stageState,

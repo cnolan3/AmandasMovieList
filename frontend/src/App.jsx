@@ -27,19 +27,12 @@ const routes = [
     ],
   },
   {
+    path: "/login",
     name: "Login/Reset",
     element: <LoginForgotPage />,
     nodeRef: createRef(),
     class: "login-reset",
     timeout: 200,
-    children: [
-      { path: "/login", element: <LoginSubPage />, nodeRef: createRef() },
-      {
-        path: "/forgotpassword",
-        element: <ForgotSubPage />,
-        nodeRef: createRef(),
-      },
-    ],
   },
   {
     path: "/account",
@@ -97,3 +90,4 @@ function App() {
 }
 
 export default App;
+

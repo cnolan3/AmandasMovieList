@@ -56,3 +56,20 @@
   padding-top: 5rem;
 }
 
+.forgotLink {
+  color: colors.$color-text;
+  font-size: fonts.$size-3;
+  font-weight: fonts.$weight-medium;
+  border-bottom: 1px solid colors.$color-text;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+}
+
