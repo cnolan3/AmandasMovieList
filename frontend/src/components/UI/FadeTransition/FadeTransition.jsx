@@ -2,20 +2,18 @@ import { useRef } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import ComponentTransition from "../ComponentTransition/ComponentTransition";
-import "./SlideTransition.css";
+import "./FadeTransition.css";
 
-function SlideTransition({
+function FadeTransition({
   stageState,
   firstComponent,
   secondComponent,
   children,
 }) {
-  const slideClass = stageState ? "slide-left" : "slide-right";
-
   return (
     <ComponentTransition
       stageState={stageState}
-      transClassName={slideClass}
+      transClassName={"fade"}
       firstComponent={firstComponent}
       secondComponent={secondComponent}
     >
@@ -24,5 +22,5 @@ function SlideTransition({
   );
 }
 
-export default SlideTransition;
+export default FadeTransition;
 

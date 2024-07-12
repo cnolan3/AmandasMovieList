@@ -9,6 +9,7 @@ import {
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import "./App.css";
+import AddMovieSection from "./components/Sections/AddMovieSection/AddMovieSection";
 import MovieListSection from "./components/Sections/MovieListSection/MovieListSection";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
@@ -24,6 +25,7 @@ const routes = [
     timeout: 0,
     children: [
       { path: "/", element: <MovieListSection />, nodeRef: createRef() },
+      { path: "/addmovie", element: <AddMovieSection />, nodeRef: createRef() },
     ],
   },
   {

@@ -7,7 +7,7 @@ import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
 
-function MovieList() {
+function MovieListSection() {
   const [tabState, setTabState] = useState("watchlist");
   const { setPlaceholder, query } = useSearch();
   const [selectedMovie, setSelectedMovie] = useState();
@@ -91,5 +91,5 @@ function MovieList() {
   );
 }
 
-export default MovieList;
+export default MovieListSection;
 
