@@ -293,7 +293,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
-  });
+  }).select('+email +role');
 
   // check if new password matches new password confirmation
   if (newPassword !== newPasswordConfirm)
@@ -320,7 +320,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    data: null,
+    data: {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    },
   });
 });
 
