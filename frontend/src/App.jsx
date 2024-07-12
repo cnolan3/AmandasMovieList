@@ -2,6 +2,7 @@ import { createRef } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
+  matchPath,
   useLocation,
   useOutlet,
 } from "react-router-dom";
@@ -12,6 +13,7 @@ import MovieListSection from "./components/Sections/MovieListSection/MovieListSe
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
 import LoginForgotPage from "./pages/LoginForgotPage/LoginForgotPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 
 const routes = [
   {
@@ -40,6 +42,14 @@ const routes = [
     class: "account",
     timeout: 200,
   },
+  {
+    path: "/resetpassword/:resetToken",
+    name: "ResetPassword",
+    element: <ResetPasswordPage />,
+    nodeRef: createRef(),
+    class: "login-reset",
+    timeout: 200,
+  },
 ];
 
 const router = createBrowserRouter([
@@ -57,12 +67,15 @@ const router = createBrowserRouter([
 function Base() {
   const location = useLocation();
   const outlet = useOutlet();
+  console.log(routes, typeof location.pathname);
   const route =
     routes.find(
       (route) =>
-        (route.path && route.path === location.pathname) ||
+        (route.path && matchPath({ path: route.path }, location.pathname)) ||
         (route.children &&
-          (route.children.find((child) => child.path === location.pathname) ??
+          (route.children.find((child) =>
+            matchPath({ path: child.path }, location.pathname),
+          ) ??
             false)),
     ) ?? {};
   return (

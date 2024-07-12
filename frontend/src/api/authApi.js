@@ -92,3 +92,30 @@ export async function sendForgotPasswordApi(email) {
   return data.data;
 }
 
+// send password reset (after forgot password)
+export async function sendResetPasswordApi(
+  resetToken,
+  newPassword,
+  newPasswordConfirm,
+) {
+  const headers = new Headers();
+  addContentTypeHeader(headers);
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/users/resetpassword`,
+    {
+      method: "PATCH",
+      credentials: "same-origin",
+      headers,
+      body: JSON.stringify({ resetToken, newPassword, newPasswordConfirm }),
+    },
+  );
+
+  if (!response.ok) {
+    handleApiError(response.status);
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+

@@ -5,6 +5,7 @@ import {
   sendForgotPasswordApi,
   sendLoginApi,
   sendLogoutApi,
+  sendResetPasswordApi,
   sendUpdatePasswordApi,
 } from "../api/authApi";
 
@@ -65,5 +66,22 @@ export function useForgotPassword() {
   });
 
   return { status, forgotPassword };
+}
+
+// send reset password request (after forgot password)
+export function useResetPassword() {
+  const queryClient = useQueryClient();
+
+  const { mutate: resetPassword, status } = useMutation({
+    mutationFn: ({ resetToken, newPassword, newPasswordConfirm }) =>
+      sendResetPasswordApi(resetToken, newPassword, newPasswordConfirm),
+    onSuccess: (myInfo) => {
+      toast.success("Password reset successfull");
+      return queryClient.setQueryData(["auth", "myInfo"], myInfo);
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  return { status, resetPassword };
 }
 
