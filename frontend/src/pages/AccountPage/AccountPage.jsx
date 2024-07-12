@@ -79,6 +79,7 @@ function AccountPage() {
           <div className={styles.accountContainer}>
             {stage ? (
               <>
+                <h2>Account Info</h2>
                 <div className={styles.userInfoSection}>
                   <h3 className={styles.infoTag}>Username:</h3>
                   <p className={styles.info}>
