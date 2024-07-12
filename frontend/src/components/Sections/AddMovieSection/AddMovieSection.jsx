@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearch } from "../../../contexts/searchContext";
 import SeenListCard from "../MovieInfoCard/SeenListCard";
 import WatchListCard from "../MovieInfoCard/WatchListCard";
+import SearchList from "../MovieList/SearchList";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./AddMovieSection.module.scss";
@@ -15,7 +16,7 @@ function AddMovieSection() {
   const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
-    setPlaceholder("Search the movie list");
+    setPlaceholder("Search movies");
   }, []);
 
   // let selectedRecommendedBy = "";
@@ -36,7 +37,7 @@ function AddMovieSection() {
 
   return (
     <>
-      <WatchList
+      <SearchList
         onSelectMovie={(movie) => handleSelectMovie(movie)}
         searchQuery={query}
       />

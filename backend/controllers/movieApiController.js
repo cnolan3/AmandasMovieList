@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchAsync');
 const OMDBSearch = require('../utils/omdbSearch');
 const OMDBGet = require('../utils/omdbGet');
-// const logger = require('../utils/logger');
+const AppError = require('../utils/appError');
+const logger = require('../utils/logger');
 
 // search omdb for a movie
 exports.searchMovies = catchAsync(async (req, res, next) => {
@@ -15,6 +16,10 @@ exports.searchMovies = catchAsync(async (req, res, next) => {
   }
 
   const data = await omdb.send();
+
+  logger.debug(`search data: ${JSON.stringify(data)}`);
+
+  if (!data.Search) return next(new AppError('No search results found', 404));
 
   res.status(200).json({
     status: 'success',
@@ -33,9 +38,18 @@ exports.getMovieById = catchAsync(async (req, res, next) => {
   const omdb = new OMDBGet().imdbID(imdbID);
   const data = await omdb.send();
 
+  // check for a rotten tomatoes rating
+  const rotten = data.Ratings.find(
+    (element) => element.Source === 'Rotten Tomatoes',
+  );
+
+  // -1 represents a N/A rotten tomato rating
+  let rottenPercent = -1;
+  if (rotten) rottenPercent = parseFloat(rotten.Value);
+
   res.status(200).json({
     status: 'success',
-    data: data,
+    data: { ...data, rottenTomatoRating: rottenPercent },
   });
 });
 
@@ -46,8 +60,17 @@ exports.getMovieByTitle = catchAsync(async (req, res, next) => {
   const omdb = new OMDBGet().title(title);
   const data = await omdb.send();
 
+  // check for a rotten tomatoes rating
+  const rotten = data.Ratings.find(
+    (element) => element.Source === 'Rotten Tomatoes',
+  );
+
+  // -1 represents a N/A rotten tomato rating
+  let rottenPercent = -1;
+  if (rotten) rottenPercent = parseFloat(rotten.Value);
+
   res.status(200).json({
     status: 'success',
-    data: data,
+    data: { ...data, rottenTomatoRating: rottenPercent },
   });
 });

@@ -43,14 +43,14 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
   if (rotten) rottenPercent = parseFloat(rotten.Value);
 
   await MovieList.create({
-    title: data.Title,
-    year: data.Year,
-    runtime: data.Runtime,
-    genre: data.Genre,
-    plot: data.Plot,
-    cast: data.Actors,
-    director: data.Director,
-    poster: data.Poster,
+    Title: data.Title,
+    Year: data.Year,
+    Runtime: data.Runtime,
+    Genre: data.Genre,
+    Plot: data.Plot,
+    Actors: data.Actors,
+    Director: data.Director,
+    Poster: data.Poster,
     rottenTomatoRating: rottenPercent,
     imdbID: data.imdbID,
     recommendedByName,
@@ -116,7 +116,7 @@ exports.rateMovie = catchAsync(async (req, res, next) => {
       movie: {
         id: movie._id,
         imdbID: movie.imdbID,
-        title: movie.title,
+        Title: movie.Title,
       },
       rating: movie.amandaRating,
     },
@@ -137,7 +137,7 @@ exports.unwatch = catchAsync(async (req, res, next) => {
       movie: {
         id: movie._id,
         imdbID: movie.imdbID,
-        title: movie.title,
+        Title: movie.Title,
       },
     },
   });

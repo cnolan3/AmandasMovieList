@@ -3,40 +3,40 @@
 const mongoose = require('mongoose');
 
 const movieListSchema = new mongoose.Schema({
-  title: {
+  Title: {
     type: String,
     required: [true, 'Movie needs a title'],
     trim: true,
   },
-  year: {
+  Year: {
     type: String,
     required: [true, 'Movie needs a year'],
     trim: true,
   },
-  runtime: {
+  Runtime: {
     type: String,
     required: [true, 'Movie needs a runtime'],
     trim: true,
   },
-  genre: {
+  Genre: {
     type: String,
     required: [true, 'Movie needs a genre'],
     trim: true,
   },
-  plot: {
+  Plot: {
     type: String,
     required: [true, 'Movie needs a plot'],
     trim: true,
   },
-  cast: {
+  Actors: {
     type: String,
     trim: true,
   },
-  director: {
+  Director: {
     type: String,
     trim: true,
   },
-  poster: {
+  Poster: {
     type: String,
     required: [true, 'Movie needs a poster link'],
   },
