@@ -1,0 +1,36 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.protected {
+  height: 100svh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  background-color: colors.$color-background;
+
+  h2 {
+    color: colors.$color-text;
+    font-size: fonts.$size-5;
+    font-weight: fonts.$weight-medium;
+  }
+}
+
+.loginBtn,
+.homeBtn {
+  width: 20rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.loginBtn {
+  color: colors.$color-text;
+  background-color: colors.$color-accent;
+}
+
+.homeBtn {
+  color: colors.$color-background;
+  background-color: colors.$color-text;
+}
+

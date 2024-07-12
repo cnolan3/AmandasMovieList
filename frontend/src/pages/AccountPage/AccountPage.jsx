@@ -12,6 +12,7 @@ import { useUser } from "../../contexts/userContext";
 import { useLogout } from "../../hooks/useAuth";
 import { useUpdatePassword } from "../../hooks/useAuth";
 import colors from "../../sass/colors.module.scss";
+import ProtectedPage from "../ProtectedPage/ProtectedPage";
 import styles from "./AccountPage.module.scss";
 
 function AccountPage() {
@@ -62,59 +63,62 @@ function AccountPage() {
   }
 
   return (
-    <div className={styles.account}>
-      {(logoutStatus === "pending" || updateStatus === "pending") && show && (
-        <div className={styles.overlay}>
-          <Spinner color={colors.colorAccent} size={20} />
+    <ProtectedPage>
+      <div className={styles.account}>
+        {(logoutStatus === "pending" || updateStatus === "pending") && show && (
+          <div className={styles.overlay}>
+            <Spinner color={colors.colorAccent} size={20} />
+          </div>
+        )}
+        <div className={styles.exitRow}>
+          <Link to="/" className={styles.exitBtn}>
+            <GrClose size={30} color={colors.colorText} />
+          </Link>
         </div>
-      )}
-      <div className={styles.exitRow}>
-        <Link to="/" className={styles.exitBtn}>
-          <GrClose size={30} color={colors.colorText} />
-        </Link>
-      </div>
-
-      <SlideTransition stageState={stage}>
-        <div className={styles.accountContainer}>
-          {stage ? (
-            <>
-              <div className={styles.userInfoSection}>
-                <h3 className={styles.infoTag}>Username:</h3>
-                <p className={styles.info}>{loggedIn ? myInfo.username : ""}</p>
-                <h3 className={styles.infoTag}>Email:</h3>
-                <p className={styles.info}>{loggedIn ? myInfo.email : ""}</p>
-              </div>
-              <div className={styles.btnSection}>
+        <SlideTransition stageState={stage}>
+          <div className={styles.accountContainer}>
+            {stage ? (
+              <>
+                <div className={styles.userInfoSection}>
+                  <h3 className={styles.infoTag}>Username:</h3>
+                  <p className={styles.info}>
+                    {loggedIn ? myInfo.username : ""}
+                  </p>
+                  <h3 className={styles.infoTag}>Email:</h3>
+                  <p className={styles.info}>{loggedIn ? myInfo.email : ""}</p>
+                </div>
+                <div className={styles.btnSection}>
+                  <Button
+                    className={styles.updatePasswordBtn}
+                    onClick={() => setStage(false)}
+                  >
+                    Update Password
+                    <FaArrowRight />
+                  </Button>
+                  <Button className={styles.logoutBtn} onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <UpdatePasswordForm
+                  onSubmit={handleSubmit}
+                  onSuccess={handleUpdateSuccess}
+                />
                 <Button
-                  className={styles.updatePasswordBtn}
-                  onClick={() => setStage(false)}
+                  className={styles.cancelUpdateBtn}
+                  onClick={() => setStage(true)}
                 >
-                  Update Password
-                  <FaArrowRight />
+                  <FaArrowLeft />
+                  Cancel
                 </Button>
-                <Button className={styles.logoutBtn} onClick={handleLogout}>
-                  Logout
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <UpdatePasswordForm
-                onSubmit={handleSubmit}
-                onSuccess={handleUpdateSuccess}
-              />
-              <Button
-                className={styles.cancelUpdateBtn}
-                onClick={() => setStage(true)}
-              >
-                <FaArrowLeft />
-                Cancel
-              </Button>
-            </>
-          )}
-        </div>
-      </SlideTransition>
-    </div>
+              </>
+            )}
+          </div>
+        </SlideTransition>
+      </div>
+    </ProtectedPage>
   );
 }
 

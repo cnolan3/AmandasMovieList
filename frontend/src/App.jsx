@@ -67,7 +67,6 @@ const router = createBrowserRouter([
 function Base() {
   const location = useLocation();
   const outlet = useOutlet();
-  console.log(routes, typeof location.pathname);
   const route =
     routes.find(
       (route) =>
