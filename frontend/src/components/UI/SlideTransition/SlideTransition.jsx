@@ -13,7 +13,8 @@ function SlideTransition({
   const secondRef = useRef(null);
   const nodeRef = stageState ? firstRef : secondRef;
 
-  const childComponent = stageState ? { firstComponent } : { secondComponent };
+  const childComponent = stageState ? firstComponent : secondComponent;
+  const slideClass = stageState ? "slide-left" : "slide-right";
 
   return (
     <SwitchTransition mode="out-in">
@@ -23,7 +24,7 @@ function SlideTransition({
         addEndListener={(done) => {
           nodeRef.current.addEventListener("transitionend", done, false);
         }}
-        classNames={stageState ? "slide-left" : "slide-right"}
+        classNames={slideClass}
       >
         <div ref={nodeRef} className="transition-ref">
           {children ? children : childComponent}

@@ -1,4 +1,4 @@
-import ListStats from "../ListStats/ListStats";
+import ListStats from "../../UI/ListStats/ListStats";
 import styles from "./MovieList.module.scss";
 
 function MovieList({ movieList, children }) {

@@ -1,6 +1,6 @@
 import colors from "../../../sass/colors.module.scss";
-import hexToRGB from "../../utils/hexToRGBA";
-import trimSentence from "../../utils/trimSentence";
+import hexToRGB from "../../../utils/hexToRGBA";
+import trimSentence from "../../../utils/trimSentence";
 import styles from "./MovieListItem.module.scss";
 
 function MovieListItem({ movie, position, onClick, children }) {

@@ -1,19 +1,35 @@
 import { useForm } from "react-hook-form";
 
-import Button from "../UI/Button/Button";
-import FormRow from "../UI/FormRow/FormRow";
+import { useLogin } from "../../../hooks/useAuth";
+import Button from "../../UI/Button/Button";
+import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./LoginForm.module.scss";
 
-function LoginForm({ onSubmit }) {
+function LoginForm({ onSubmit, onSuccess }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { status, login } = useLogin();
   const { errors } = formState;
 
-  function onError(error) {}
+  function handleLogin(data) {
+    onSubmit();
+
+    login(
+      { username: data.username, password: data.password },
+      {
+        onSuccess: () => onSuccess(),
+      },
+    );
+  }
+
+  function onError(error) {
+    console.log(error);
+  }
 
   return (
     <form
       className={styles.loginForm}
-      onSubmit={handleSubmit(onSubmit, onError)}
+      // onSubmit={onSubmit()}
+      onSubmit={handleSubmit(handleLogin, onError)}
     >
       <FormRow label="Username" error={errors?.username?.message}>
         <input

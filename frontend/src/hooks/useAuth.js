@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import {
+  sendForgotPasswordApi,
   sendLoginApi,
   sendLogoutApi,
   sendUpdatePasswordApi,
@@ -54,5 +55,15 @@ export function useUpdatePassword() {
   });
 
   return { status, updatePassword };
+}
+
+// send forgot password request
+export function useForgotPassword() {
+  const { mutate: forgotPassword, status } = useMutation({
+    mutationFn: (email) => sendForgotPasswordApi(email),
+    onError: (err) => toast.error(err.message),
+  });
+
+  return { status, forgotPassword };
 }
 

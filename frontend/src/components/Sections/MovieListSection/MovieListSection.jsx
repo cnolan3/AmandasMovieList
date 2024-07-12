@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useSearch } from "../../contexts/searchContext";
+import { useSearch } from "../../../contexts/searchContext";
 import SeenListCard from "../MovieInfoCard/SeenListCard";
 import WatchListCard from "../MovieInfoCard/WatchListCard";
 import SeenList from "../MovieList/SeenList";

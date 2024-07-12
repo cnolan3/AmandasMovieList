@@ -1,10 +1,10 @@
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 
+import { useUser } from "../../../contexts/userContext";
+import { useDeleteMovie } from "../../../hooks/useMovieList";
 import colors from "../../../sass/colors.module.scss";
-import { useUser } from "../../contexts/userContext";
-import { useDeleteMovie } from "../../hooks/useMovieList";
-import Button from "../UI/Button/Button";
-import InfoCard from "../UI/InfoCard/InfoCard";
+import Button from "../../UI/Button/Button";
+import InfoCard from "../../UI/InfoCard/InfoCard";
 import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
 import styles from "./SeenListCard.module.scss";

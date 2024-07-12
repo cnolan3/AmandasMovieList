@@ -4,46 +4,46 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
-import LoginForm from "../../components/LoginForm/LoginForm";
+import ForgotSection from "../../components/Sections/ForgotSection/ForgotSection";
+import LoginForm from "../../components/Sections/LoginForm/LoginForm";
 import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import { useLogin } from "../../hooks/useAuth";
 import colors from "../../sass/colors.module.scss";
-import ForgotSubPage from "./ForgotSubPage";
 import styles from "./LoginForgotPage.module.scss";
 
 function LoginForgotPage() {
   const navigate = useNavigate();
-  const { status, login } = useLogin();
   const timerId = useRef(null);
-  const [show, setShow] = useState(true);
+  const [startTimer, setStartTimer] = useState(false);
+  const [show, setShow] = useState(false);
   const [stage, setStage] = useState(true);
 
   useEffect(() => {
     // start a timer to show the loading spinner 500ms after hitting 'login'
-    if (!show) {
+    if (startTimer) {
       timerId.current = setTimeout(() => {
         setShow(true);
       }, 500);
     }
-  }, [show]);
+  }, [startTimer]);
 
-  function handleLogin(data) {
-    setShow(false); // re-render to trigger the timer
-    login(
-      { username: data.username, password: data.password },
-      {
-        onSuccess: () => {
-          clearTimeout(timerId.current);
-          return navigate("/");
-        },
-      },
-    );
+  function handleSubmit() {
+    setStartTimer(true); // re-render to trigger the timer
+  }
+
+  function handleLoginSuccess() {
+    clearTimeout(timerId.current);
+    return navigate("/");
+  }
+
+  function handleForgotSuccess() {
+    clearTimeout(timerId.current);
+    setShow(false);
   }
 
   return (
     <div className={styles.login}>
-      {show && status === "pending" && (
+      {show && (
         <div className={styles.overlay}>
           <Spinner color={colors.colorBackground} size={20} />
         </div>
@@ -57,13 +57,20 @@ function LoginForgotPage() {
         <div className={styles.loginContainer}>
           {stage ? (
             <>
-              <LoginForm onSubmit={(data) => handleLogin(data)} />
+              <LoginForm
+                onSubmit={handleSubmit}
+                onSuccess={handleLoginSuccess}
+              />
               <a className={styles.forgotLink} onClick={() => setStage(false)}>
                 Forgot Password
               </a>
             </>
           ) : (
-            <h2>Forgot Password</h2>
+            <ForgotSection
+              onSubmit={handleSubmit}
+              onSuccess={handleForgotSuccess}
+              onBack={() => setStage(true)}
+            />
           )}
         </div>
       </SlideTransition>

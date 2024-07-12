@@ -8,12 +8,10 @@ import {
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import "./App.css";
-import MovieListSection from "./components/MovieListSection/MovieListSection";
+import MovieListSection from "./components/Sections/MovieListSection/MovieListSection";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
-import ForgotSubPage from "./pages/LoginForgotPage/ForgotSubPage";
 import LoginForgotPage from "./pages/LoginForgotPage/LoginForgotPage";
-import LoginSubPage from "./pages/LoginForgotPage/LoginSubPage";
 
 const routes = [
   {

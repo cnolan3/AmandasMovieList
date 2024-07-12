@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import colors from "../../../sass/colors.module.scss";
-import Button from "../UI/Button/Button";
-import StarRating from "../UI/StarRating/StarRating";
+import Button from "../../UI/Button/Button";
+import StarRating from "../../UI/StarRating/StarRating";
 import styles from "./RateSection.module.scss";
 
 function RateSection({ onRate }) {

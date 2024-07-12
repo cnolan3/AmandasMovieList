@@ -2,11 +2,11 @@ import { FaClock } from "react-icons/fa6";
 import { IconContext } from "react-icons/lib";
 import { SiRottentomatoes } from "react-icons/si";
 
+import { useMovieList } from "../../../contexts/MovieListContext";
 import colors from "../../../sass/colors.module.scss";
-import { useMovieList } from "../../contexts/MovieListContext";
-import filterMovieList from "../../utils/filterMovieList";
+import filterMovieList from "../../../utils/filterMovieList";
+import Spinner from "../../UI/Spinner/Spinner";
 import MovieListItem from "../MovieListItem/MovieListItem";
-import Spinner from "../UI/Spinner/Spinner";
 import MovieList from "./MovieList";
 import styles from "./WatchList.module.scss";
 

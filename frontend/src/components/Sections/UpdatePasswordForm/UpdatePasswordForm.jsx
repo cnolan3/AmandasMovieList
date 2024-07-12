@@ -1,7 +1,7 @@
 import { Form, useForm } from "react-hook-form";
 
-import Button from "../UI/Button/Button";
-import FormRow from "../UI/FormRow/FormRow";
+import Button from "../../UI/Button/Button";
+import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./UpdatePasswordForm.module.scss";
 
 function UpdatePasswordForm({ onSubmit }) {

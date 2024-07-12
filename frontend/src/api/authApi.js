@@ -70,3 +70,25 @@ export async function sendUpdatePasswordApi(
   return data.data;
 }
 
+// send forgot password request
+export async function sendForgotPasswordApi(email) {
+  const headers = new Headers();
+  addContentTypeHeader(headers);
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/users/forgotpassword`,
+    {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ email }),
+    },
+  );
+
+  if (!response.ok) {
+    handleApiError(response.status);
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+

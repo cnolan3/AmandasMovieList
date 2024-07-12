@@ -4,10 +4,10 @@ import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import UpdatePasswordForm from "../../components/Sections/UpdatePasswordForm/UpdatePasswordForm";
 import Button from "../../components/UI/Button/Button";
 import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import UpdatePasswordForm from "../../components/UpdatePasswordForm/UpdatePasswordForm";
 import { useUser } from "../../contexts/userContext";
 import { useLogout } from "../../hooks/useAuth";
 import { useUpdatePassword } from "../../hooks/useAuth";
