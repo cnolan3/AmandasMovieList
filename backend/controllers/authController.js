@@ -248,9 +248,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   logger.verbose('password reset token created');
 
   // send token to the email
-  const resetUrl = `https://amandasmovielist.com/forgotpassword/${resetToken}`;
+  const resetUrl = `https://amandasmovielist.com/resetpassword/${resetToken}`;
 
-  const message = `Forgot your password? Submit a password reset request with the given temporary password at: ${resetUrl}\n If you didn't forget your password, please ignore this email!`;
+  const message = `Forgot your password? Submit a password reset request by visiting this link: ${resetUrl}\n If you didn't forget your password, please ignore this email!`;
 
   try {
     await sendEmail({
