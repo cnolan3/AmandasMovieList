@@ -1,19 +1,33 @@
 import { Form, useForm } from "react-hook-form";
 
+import { useUpdatePassword } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./UpdatePasswordForm.module.scss";
 
-function UpdatePasswordForm({ onSubmit }) {
+function UpdatePasswordForm({ onSubmit, onSuccess }) {
+  const { updatePassword, status } = useUpdatePassword();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+
+  function handleUpdatePassword(data) {
+    const { currentPassword, newPassword, newPasswordConfirm } = data;
+
+    onSubmit();
+    updatePassword(
+      { currentPassword, newPassword, newPasswordConfirm },
+      {
+        onSuccess: () => onSuccess(),
+      },
+    );
+  }
 
   function onError(error) {}
 
   return (
     <form
       className={styles.updatePasswordForm}
-      onSubmit={handleSubmit(onSubmit, onError)}
+      onSubmit={handleSubmit(handleUpdatePassword, onError)}
     >
       <FormRow
         label="Current Password"

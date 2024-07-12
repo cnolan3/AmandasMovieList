@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </UserProvider>
       </SearchProvider>
       <Toaster
-        position="top-center"
+        position="bottom-center"
         gutter={12}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
@@ -41,7 +41,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             fontSize: "16px",
             maxWidth: "500px",
             padding: "16px 24px",
-            backgroundColor: "#eff0fb",
+            backgroundColor: "#fdfdff",
             color: "#040610",
           },
         }}

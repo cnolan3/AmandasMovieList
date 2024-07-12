@@ -20,17 +20,18 @@ function AccountPage() {
   const navigate = useNavigate();
   const timerId = useRef(null);
   const [show, setShow] = useState(true);
+  const [startTimer, setStartTimer] = useState(false);
   const { myInfo, loggedIn } = useUser();
   const [stage, setStage] = useState(true);
 
   useEffect(() => {
     // start a timer to show the loading spinner 500ms after hitting 'login'
-    if (!show) {
+    if (startTimer) {
       timerId.current = setTimeout(() => {
         setShow(true);
       }, 500);
     }
-  }, [show]);
+  }, [startTimer]);
 
   function handleLogout() {
     setShow(false); // re-render to trigger the timer
@@ -45,18 +46,19 @@ function AccountPage() {
     );
   }
 
-  function handleUpdatePassword(data) {
-    const { currentPassword, newPassword, newPasswordConfirm } = data;
-    setShow(false);
-    updatePassword(
-      { currentPassword, newPassword, newPasswordConfirm },
-      {
-        onSuccess: () => {
-          clearTimeout(timerId.current);
-          return setStage(false);
-        },
-      },
-    );
+  function handleSubmit() {
+    setShow(startTimer);
+  }
+
+  // function handleLogoutSuccess() {
+  //   clearTimeout(timerId.current);
+  //   return navigate("/");
+  // }
+
+  function handleUpdateSuccess() {
+    clearTimeout(timerId.current);
+    setStartTimer(false);
+    return setStage(true);
   }
 
   return (
@@ -98,7 +100,8 @@ function AccountPage() {
           ) : (
             <>
               <UpdatePasswordForm
-                onSubmit={(data) => handleUpdatePassword(data)}
+                onSubmit={handleSubmit}
+                onSuccess={handleUpdateSuccess}
               />
               <Button
                 className={styles.cancelUpdateBtn}
