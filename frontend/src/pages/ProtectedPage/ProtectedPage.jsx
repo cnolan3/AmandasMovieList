@@ -9,7 +9,7 @@ function ProtectedPage({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <>
       {loggedIn ? (
         children
       ) : (
@@ -26,7 +26,7 @@ function ProtectedPage({ children }) {
           </Button>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

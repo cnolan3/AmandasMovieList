@@ -5,7 +5,7 @@ import SeenListCard from "../MovieInfoCard/SeenListCard";
 import WatchListCard from "../MovieInfoCard/WatchListCard";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
-import styles from "./MovieListSection.module.scss";
+import styles from "./AddMovieSection.module.scss";
 
 function AddMovieSection() {
   const [tabState, setTabState] = useState("watchlist");
