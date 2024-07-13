@@ -1,0 +1,75 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: colors.$color-text;
+  // background-color: colors.$color-accent;
+  background: linear-gradient(
+    to bottom,
+    colors.$color-accent-gradient-from,
+    colors.$color-accent-gradient-to
+  );
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(colors.$color-text, 0.5);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2;
+}
+
+.exitRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+  padding: 2.5rem 3rem 0 0;
+}
+
+.exitBtn {
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.loginContainer {
+  width: 100%;
+  height: 80svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+  padding-top: 5rem;
+}
+
+.forgotLink {
+  color: colors.$color-text;
+  font-size: fonts.$size-3;
+  font-weight: fonts.$weight-medium;
+  border-bottom: 1px solid colors.$color-text;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+}
+

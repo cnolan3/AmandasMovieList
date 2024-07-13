@@ -1,0 +1,22 @@
+.containerStyle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  p {
+    width: 2rem;
+  }
+}
+
+.starContainerStyle {
+  display: flex;
+}
+
+.star {
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+

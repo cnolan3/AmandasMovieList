@@ -1,0 +1,45 @@
+$color-primary: #4f53c5;
+$color-primary-light: #dcddf3;
+$color-primary-bright: #4f89c4;
+$color-secondary: #0c0c2c;
+$color-accent: #ef6b91;
+
+$color-background: #eff0fb;
+$color-background-faded: #adadb1;
+$color-background-dark: #c8cbf1;
+$color-background-light: #fdfdff;
+
+$color-text: #040610;
+$color-text-light: #8e8f97;
+
+$color-primary-gradient-from: $color-primary;
+$color-primary-gradient-to: #1c1d53;
+
+$color-accent-gradient-from: $color-accent;
+$color-accent-gradient-to: #ac123e;
+
+$color-attention: #ff4c20;
+$color-attention-faded: #a05248;
+
+:export {
+  colorPrimary: $color-primary;
+  colorPrimaryBright: $color-primary-bright;
+  colorSecondary: $color-secondary;
+  colorAccent: $color-accent;
+
+  colorBackground: $color-background;
+  colorBackgroundFaded: $color-background-faded;
+  colorBackgroundDark: $color-background-dark;
+  colorBackgroundLight: $color-background-light;
+  colorText: $color-text;
+
+  colorPrimaryGradientFrom: $color-primary-gradient-from;
+  colorPrimaryGradientTo: $color-primary-gradient-to;
+
+  colorAccentGradientFrom: $color-accent-gradient-from;
+  colorAccentGradientTo: $color-accent-gradient-to;
+
+  colorAttention: $color-attention;
+  colorAttentionFaded: $color-attention-faded;
+}
+

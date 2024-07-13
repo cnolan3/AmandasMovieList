@@ -1,0 +1,21 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.lowerSection {
+  width: 100%;
+  margin: 2rem 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.deleteBtn {
+  color: colors.$color-background;
+  background-color: colors.$color-attention;
+}
+
+.transitionRef {
+  flex-grow: 1;
+}
+

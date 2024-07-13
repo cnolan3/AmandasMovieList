@@ -1,0 +1,117 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  height: 20svh;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: -1px;
+
+  //colors.$color-primary-gradient-third,
+
+  background: linear-gradient(
+    140deg,
+    colors.$color-primary-bright,
+    colors.$color-primary-gradient-from,
+    75%,
+    colors.$color-primary-gradient-to
+  );
+
+  // bottom bar, simulates rounded edges of list section
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    background-color: colors.$color-background;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+}
+
+.headerContent {
+  width: 100%;
+  height: 11svh;
+  margin: 2rem 0;
+  padding: 0 5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.loginRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h2 {
+    font-size: fonts.$size-3;
+    letter-spacing: 1.5px;
+    color: colors.$color-background;
+
+    z-index: 1;
+  }
+}
+
+.btn {
+  border: none;
+  text-decoration: none;
+  padding: 7px 15px;
+}
+
+.btnLogin {
+  border-radius: 15px / 50%;
+  background-color: colors.$color-accent;
+  color: colors.$color-text;
+  font-size: fonts.$size-2;
+  font-weight: fonts.$weight-semi-bold;
+  -webkit-tap-highlight-color: transparent;
+
+  z-index: 1;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.searchRow {
+  width: 100%;
+}
+
+.search {
+  border: none;
+  border-radius: 17px / 50%;
+  height: 35px;
+  width: 100%;
+  font-family: fonts.$base-font;
+  font-weight: fonts.$weight-medium;
+  color: colors.$color-text;
+  background-color: colors.$color-background-light;
+  padding: 0 4rem;
+  background-image: url("../../../assets/icons8-search-30.png");
+  background-repeat: no-repeat;
+  background-position: left 5px top 2px;
+  transition: box-shadow 0.3s;
+  z-index: 1;
+
+  &:focus {
+    outline: none;
+    // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 5px rgba(colors.$color-primary-bright, 1);
+  }
+
+  &::placeholder {
+    font-family: fonts.$base-font;
+    font-weight: fonts.$weight-semi-bold;
+    color: colors.$color-text-light;
+  }
+}
+

@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  height: 100svh;
+  width: 100%;
+}
+
+.home {
+  position: absolute;
+  width: 100%;
+  height: 100svh;
+  z-index: 0;
+}
+
+.account,
+.login-reset {
+  position: absolute;
+  width: 100%;
+  height: 100svh;
+  z-index: 5;
+}
+
+.account-enter,
+.login-reset-enter {
+  opacity: 0;
+  z-index: 5;
+}
+
+.account-enter-active,
+.login-reset-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+  z-index: 5;
+}
+
+.account-exit,
+.login-reset-exit {
+  opacity: 1;
+  z-index: 5;
+}
+
+.account-exit-active,
+.login-reset-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+  z-index: 5;
+}
+
