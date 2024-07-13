@@ -1,22 +1,27 @@
 import { useForm } from "react-hook-form";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useLogin } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./LoginForm.module.scss";
 
-function LoginForm({ onSubmit, onSuccess }) {
+function LoginForm({ onSubmit = () => {}, onSuccess = () => {} }) {
+  const { setIsLoading } = useIsLoading();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { status, login } = useLogin();
   const { errors } = formState;
 
   function handleLogin(data) {
     onSubmit();
-
+    setIsLoading(true);
     login(
       { username: data.username, password: data.password },
       {
-        onSuccess: () => onSuccess(),
+        onSuccess: () => {
+          setIsLoading(false);
+          return onSuccess();
+        },
       },
     );
   }

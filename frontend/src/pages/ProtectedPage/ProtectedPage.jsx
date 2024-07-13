@@ -9,7 +9,7 @@ function ProtectedPage({ children, roles = [] }) {
   const navigate = useNavigate();
 
   let isAuth = true;
-  if (roles.length > 0) isAuth = roles.includes(myInfo.role);
+  if (loggedIn && roles.length > 0) isAuth = roles.includes(myInfo.role);
 
   return (
     <>

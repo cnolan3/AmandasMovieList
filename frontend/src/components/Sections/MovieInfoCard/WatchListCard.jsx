@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useUser } from "../../../contexts/userContext";
 import { useDeleteMovie } from "../../../hooks/useMovieList";
 import { useRateMovie } from "../../../hooks/useMovieList";
@@ -14,6 +15,7 @@ import RateSection from "./RateSection";
 import styles from "./WatchListCard.module.scss";
 
 function WatchListCard({ movie, onClose }) {
+  const { setIsLoading } = useIsLoading();
   const { myInfo, loggedIn } = useUser();
   const { status: deleteMovieStatus, deleteMovie } = useDeleteMovie();
   const { status: rateMovieStatus, rateMovie } = useRateMovie();
@@ -22,11 +24,26 @@ function WatchListCard({ movie, onClose }) {
   const isAmanda = loggedIn ? myInfo.role === "amanda" : false;
 
   function handleDeleteMovie(movieId) {
-    deleteMovie(movieId, { onSuccess: () => onClose() });
+    setIsLoading(true);
+    deleteMovie(movieId, {
+      onSuccess: () => {
+        setIsLoading(false);
+        onClose();
+      },
+    });
   }
 
   function handleRateMovie(movieId, rating) {
-    rateMovie({ movieId, rating }, { onSuccess: () => onClose() });
+    setIsLoading(true);
+    rateMovie(
+      { movieId, rating },
+      {
+        onSuccess: () => {
+          setIsLoading(false);
+          onClose();
+        },
+      },
+    );
   }
 
   if (!movie) return;

@@ -11,6 +11,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import "./App.css";
 import AddMovieSection from "./components/Sections/AddMovieSection/AddMovieSection";
 import MovieListSection from "./components/Sections/MovieListSection/MovieListSection";
+import LoadingOverlay from "./components/UI/LoadingOverlay/LoadingOverlay";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import Homepage from "./pages/Homepage/Homepage";
 import LoginForgotPage from "./pages/LoginForgotPage/LoginForgotPage";
@@ -81,6 +82,7 @@ function Base() {
     ) ?? {};
   return (
     <div className="container">
+      <LoadingOverlay />
       <SwitchTransition mode="in-out">
         <CSSTransition
           key={location.pathname}

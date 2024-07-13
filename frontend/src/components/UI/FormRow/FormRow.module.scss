@@ -21,12 +21,6 @@
     font-size: fonts.$size-3;
   }
 
-  &.dark {
-    input {
-      border-bottom: 2px solid colors.$color-text;
-    }
-  }
-
   input {
     display: block;
     width: 100%;
@@ -34,7 +28,8 @@
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0);
     border: none;
-    border-bottom: 2px solid colors.$color-background;
+    border-bottom: 2px solid colors.$color-text;
+    color: colors.$color-text;
 
     font-size: fonts.$size-5;
     font-weight: fonts.$weight-default;

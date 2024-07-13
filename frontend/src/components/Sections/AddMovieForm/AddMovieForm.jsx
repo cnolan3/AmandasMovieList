@@ -1,21 +1,28 @@
 import { useForm } from "react-hook-form";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useAddMovie } from "../../../hooks/useMovieList";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./AddMovieForm.module.scss";
 
-function AddMovieForm({ onSubmit, onSuccess, movieId }) {
+function AddMovieForm({ onSubmit = () => {}, onSuccess = () => {}, movieId }) {
+  const { setIsLoading } = useIsLoading();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { addMovie, status } = useAddMovie();
   const { errors } = formState;
 
   function handleAdd(data) {
-    console.log("add", data);
     onSubmit();
+    setIsLoading(true);
     addMovie(
       { movieId, recommendedByName: data.name },
-      { onSuccess: () => onSuccess() },
+      {
+        onSuccess: () => {
+          setIsLoading(false);
+          return onSuccess();
+        },
+      },
     );
   }
 
@@ -27,8 +34,8 @@ function AddMovieForm({ onSubmit, onSuccess, movieId }) {
       onSubmit={handleSubmit(handleAdd, onError)}
     >
       <FormRow
-        label="Recommended by"
-        isDark={false}
+        label="Recommended by (optional)"
+        containerClassName={styles.line}
         error={errors?.email?.message}
       >
         <input type="text" id="name" autoCorrect="off" {...register("name")} />

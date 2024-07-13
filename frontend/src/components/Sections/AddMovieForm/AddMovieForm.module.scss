@@ -25,7 +25,10 @@
 }
 
 .line {
-  border: none;
-  border-bottom: 2px solid colors.$color-background;
+  input {
+    border: none;
+    border-bottom: 2px solid colors.$color-background;
+    color: colors.$color-background;
+  }
 }
 

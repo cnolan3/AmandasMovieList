@@ -1,20 +1,14 @@
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
-import { useForgotPassword } from "../../../hooks/useAuth";
 import colors from "../../../sass/colors.module.scss";
 import Button from "../../UI/Button/Button";
 import SlideTransition from "../../UI/SlideTransition/SlideTransition";
 import ForgotForm from "../ForgotForm/ForgotForm";
 import styles from "./ForgotSection.module.scss";
 
-function ForgotSection({ onSubmit, onSuccess, onBack }) {
+function ForgotSection({ onSubmit = () => {}, onSuccess = () => {}, onBack }) {
   const [stage, setStage] = useState(true);
-  const { forgotPassword, status } = useForgotPassword();
-
-  function handleSubmit(data) {
-    onSubmit();
-  }
 
   function handleSuccess() {
     onSuccess();
@@ -26,7 +20,7 @@ function ForgotSection({ onSubmit, onSuccess, onBack }) {
         <div className={styles.forgotContainer}>
           {stage ? (
             <>
-              <ForgotForm onSubmit={handleSubmit} onSuccess={handleSuccess} />
+              <ForgotForm onSubmit={onSubmit} onSuccess={handleSuccess} />
               <Button className={styles.backBtn} onClick={onBack}>
                 <FaArrowLeft color={colors.colorText} size={10} />
                 Back

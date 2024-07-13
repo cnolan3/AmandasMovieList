@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 
 import App from "./App.jsx";
 import { MovieListProvider } from "./contexts/MovieListContext.jsx";
+import { IsLoadingProvider } from "./contexts/loadingContext.jsx";
 import { SearchProvider } from "./contexts/searchContext.jsx";
 import { UserProvider } from "./contexts/userContext.jsx";
 import "./index.scss";
@@ -14,7 +15,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60000,
-      retry: (count, { message: error }) => error !== "Unauthorized",
+      retry: (count, error) =>
+        error.message !== "Unauthorized" && error.message !== "Not found",
     },
   },
 });
@@ -26,7 +28,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <SearchProvider>
         <UserProvider>
           <MovieListProvider>
-            <App />
+            <IsLoadingProvider>
+              <App />
+            </IsLoadingProvider>
           </MovieListProvider>
         </UserProvider>
       </SearchProvider>

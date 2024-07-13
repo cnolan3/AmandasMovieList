@@ -1,18 +1,26 @@
 import { useForm } from "react-hook-form";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useForgotPassword } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./ForgotForm.module.scss";
 
-function ForgotForm({ onSubmit, onSuccess }) {
+function ForgotForm({ onSubmit = () => {}, onSuccess = () => {} }) {
+  const { setIsLoading } = useIsLoading();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { forgotPassword, status } = useForgotPassword();
   const { errors } = formState;
 
   function handleForgot(data) {
     onSubmit();
-    forgotPassword(data.email, { onSuccess: () => onSuccess() });
+    setIsLoading(true);
+    forgotPassword(data.email, {
+      onSuccess: () => {
+        setIsLoading(false);
+        return onSuccess();
+      },
+    });
   }
 
   function onError(error) {}

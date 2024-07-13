@@ -13,7 +13,10 @@ html {
 }
 
 body {
+  height: 100%;
+  width: 100%;
   font-family: fonts.$base-font, sans-serif;
   background-color: colors.$color-background;
   color: colors.$color-text;
 }
+

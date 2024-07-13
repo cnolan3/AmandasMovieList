@@ -17,7 +17,6 @@ import styles from "./WatchListCard.module.scss";
 function SearchListCard({ movie, onClose }) {
   const { seenList, seenListStatus, watchList, watchListStatus } =
     useMovieList();
-  const { addMovie, status } = useAddMovie();
   const [stage, setStage] = useState(true);
 
   let found = null;

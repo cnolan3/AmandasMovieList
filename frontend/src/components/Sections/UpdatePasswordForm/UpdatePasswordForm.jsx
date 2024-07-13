@@ -1,11 +1,13 @@
 import { Form, useForm } from "react-hook-form";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useUpdatePassword } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./UpdatePasswordForm.module.scss";
 
-function UpdatePasswordForm({ onSubmit, onSuccess }) {
+function UpdatePasswordForm({ onSubmit = () => {}, onSuccess = () => {} }) {
+  const { setIsLoading } = useIsLoading();
   const { updatePassword, status } = useUpdatePassword();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
@@ -14,10 +16,14 @@ function UpdatePasswordForm({ onSubmit, onSuccess }) {
     const { currentPassword, newPassword, newPasswordConfirm } = data;
 
     onSubmit();
+    setIsLoading(true);
     updatePassword(
       { currentPassword, newPassword, newPasswordConfirm },
       {
-        onSuccess: () => onSuccess(),
+        onSuccess: () => {
+          setIsLoading(false);
+          onSuccess();
+        },
       },
     );
   }
