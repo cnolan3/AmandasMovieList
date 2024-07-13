@@ -19,9 +19,9 @@ const movieApiRoutes = require('./routes/movieApiRoutes');
 const AppError = require('./utils/appError');
 const logger = require('./utils/logger');
 
-// const apiBaseUrl = '/api';
+const apiBaseUrl = '/api';
 const apiVersion = '/v1';
-const apiUrl = `${apiVersion}`;
+const apiUrl = `${apiBaseUrl}${apiVersion}`;
 
 logger.verbose(`api url: ${apiUrl}`);
 
@@ -75,7 +75,7 @@ app.use(`${apiUrl}/watchlist`, movieListRoutes);
 app.use(`${apiUrl}/signupkeys`, signupKeyRoutes);
 app.use(`${apiUrl}/users`, userRoutes);
 
-app.get('/', (req, res, next) => {
+app.get(`${apiBaseUrl}/`, (req, res, next) => {
   logger.verbose('get base route activated');
   res.render(`${__dirname}/index.html`);
 });
