@@ -34,3 +34,15 @@ p {
   }
 }
 
+.recommendedSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+
+  p {
+    color: colors.$color-background;
+    font-size: fonts.$size-2;
+  }
+}
+

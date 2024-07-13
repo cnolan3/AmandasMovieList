@@ -40,13 +40,13 @@
   }
 
   100% {
-    transform: translateY(-80svh);
+    transform: translateY(-82svh);
   }
 }
 
 @keyframes slideDown {
   0% {
-    transform: translateY(-80svh);
+    transform: translateY(-82svh);
   }
 
   100% {
@@ -57,13 +57,13 @@
 .infoCard {
   width: 100%;
   position: absolute;
-  bottom: -80svh;
+  bottom: -82svh;
   z-index: 10;
 }
 
 .show {
   animation: slideUp 0.3s ease 0s;
-  transform: translateY(-80svh);
+  transform: translateY(-82svh);
 }
 
 .hide {

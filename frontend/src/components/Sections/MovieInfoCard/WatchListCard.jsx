@@ -32,7 +32,7 @@ function WatchListCard({ movie, onClose }) {
   if (!movie) return;
 
   return (
-    <InfoCard title={movie.title} onClose={onClose}>
+    <InfoCard title={movie.Title} onClose={onClose}>
       <MovieInfo movie={movie}>
         <SlideTransition
           stageState={stage}

@@ -4,14 +4,23 @@ import Button from "../../components/UI/Button/Button";
 import { useUser } from "../../contexts/userContext";
 import styles from "./ProtectedPage.module.scss";
 
-function ProtectedPage({ children }) {
+function ProtectedPage({ children, roles = [] }) {
   const { myInfo, loggedIn } = useUser();
   const navigate = useNavigate();
+
+  let isAuth = true;
+  if (roles.length > 0) isAuth = roles.includes(myInfo.role);
 
   return (
     <>
       {loggedIn ? (
-        children
+        isAuth ? (
+          children
+        ) : (
+          <div className={styles.protected}>
+            <h2>You are not authorized for this page</h2>
+          </div>
+        )
       ) : (
         <div className={styles.protected}>
           <h2>You are not logged in</h2>

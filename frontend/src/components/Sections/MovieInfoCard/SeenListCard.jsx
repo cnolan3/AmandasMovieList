@@ -22,7 +22,7 @@ function SeenListCard({ movie, onClose }) {
   if (!movie) return;
 
   return (
-    <InfoCard title={movie.title} onClose={onClose}>
+    <InfoCard title={movie.Title} onClose={onClose}>
       <MovieInfo movie={movie}>
         <div className={styles.transitionRef}>
           <PlotSection movie={movie} />

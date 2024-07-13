@@ -1,0 +1,31 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.addForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 2rem;
+}
+
+.submitRow {
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn {
+  width: 20rem;
+  color: colors.$color-background;
+  background-color: colors.$color-text;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.line {
+  border: none;
+  border-bottom: 2px solid colors.$color-background;
+}
+

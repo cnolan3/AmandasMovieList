@@ -64,3 +64,24 @@ export async function rateMovieApi(movieId, rating) {
   return data.data;
 }
 
+// add movie to watchlist
+export async function addMovieToListApi(movieId, recommendedByName) {
+  const headers = new Headers();
+  addContentTypeHeader(headers);
+
+  let body = {};
+  if (recommendedByName) body = { recommendedByName };
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/watchlist/${movieId}`,
+    { method: "POST", headers, body: JSON.stringify(body) },
+  );
+
+  if (!response.ok) {
+    handleApiError(response.status);
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+

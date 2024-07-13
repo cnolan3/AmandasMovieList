@@ -9,13 +9,14 @@ import styles from "./MovieListSection.module.scss";
 
 function MovieListSection() {
   const [tabState, setTabState] = useState("watchlist");
-  const { setPlaceholder, query } = useSearch();
+  const { setPlaceholder, setQuery, query } = useSearch();
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
     setPlaceholder("Search the movie list");
+    setQuery("");
   }, []);
 
   // let selectedRecommendedBy = "";

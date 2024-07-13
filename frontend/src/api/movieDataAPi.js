@@ -15,13 +15,13 @@ export async function searchMoviesApi(searchQuery, page = 1) {
   }
 
   const data = await response.json();
-
-  console.log("search data", JSON.stringify(data.data));
   return data.data;
 }
 
 // get movie by id
 export async function getMovieByIdApi(movieId) {
+  if (!movieId) return null;
+
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/movies/id/${movieId}`,
     { method: "GET" },
@@ -37,6 +37,8 @@ export async function getMovieByIdApi(movieId) {
 
 // get movie by title
 export async function getMovieByTitleApi(title) {
+  if (!title) return null;
+
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/movies/title/${title}`,
     { method: "GET" },

@@ -38,7 +38,7 @@ function WatchList({ onSelectMovie, searchQuery }) {
               <IconContext.Provider value={{ color: colors.colorPrimary }}>
                 <div className={styles.stat}>
                   <FaClock />
-                  <span>{movie.runtime}</span>
+                  <span>{movie.Runtime}</span>
                 </div>
                 <div className={styles.stat}>
                   <SiRottentomatoes />

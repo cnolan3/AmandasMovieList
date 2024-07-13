@@ -4,10 +4,10 @@ import trimSentence from "../../../utils/trimSentence";
 import styles from "./MovieListItem.module.scss";
 
 function MovieListItem({ movie, position, onClick, children }) {
-  const title = trimSentence(movie.title, 35);
+  const title = trimSentence(movie.Title, 35);
 
   const posterGradient = {
-    background: `linear-gradient(to right, ${hexToRGB(colors.colorBackgroundLight, 1)} 63%, 90%, ${hexToRGB(colors.colorBackgroundLight, 0.5)}), url(${movie.poster}) right -10rem center no-repeat`,
+    background: `linear-gradient(to right, ${hexToRGB(colors.colorBackgroundLight, 1)} 63%, 90%, ${hexToRGB(colors.colorBackgroundLight, 0.5)}), url(${movie.Poster}) right -10rem center no-repeat`,
   };
 
   const normalGradient = {
@@ -15,7 +15,7 @@ function MovieListItem({ movie, position, onClick, children }) {
   };
 
   const poster = {
-    backgroundImage: `url(${movie.poster})`,
+    backgroundImage: `url(${movie.Poster})`,
   };
 
   const emptyPoster = {
@@ -25,7 +25,7 @@ function MovieListItem({ movie, position, onClick, children }) {
   return (
     <li
       className={styles.movieListItem}
-      style={movie.poster ? posterGradient : normalGradient}
+      style={movie.Poster ? posterGradient : normalGradient}
       onClick={onClick}
     >
       <div className={styles.movieNum}>
@@ -41,7 +41,7 @@ function MovieListItem({ movie, position, onClick, children }) {
 
       <div
         className={styles.moviePoster}
-        style={movie.poster ? poster : emptyPoster}
+        style={movie.Poster ? poster : emptyPoster}
       />
     </li>
   );

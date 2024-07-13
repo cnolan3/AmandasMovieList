@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
+  addMovieToListApi,
   deleteMovieApi,
   getSeenListApi,
   getWatchListApi,
@@ -67,5 +68,23 @@ export function useRateMovie() {
   });
 
   return { status, rateMovie };
+}
+
+// add movie to watchlist
+export function useAddMovie() {
+  const queryClient = useQueryClient();
+
+  const { mutate: addMovie, status } = useMutation({
+    mutationFn: ({ movieId, recommendedByName }) =>
+      addMovieToListApi(movieId, recommendedByName),
+    onSuccess: () => {
+      // toast.success("New cabin successfully created");
+      return queryClient.invalidateQueries({ queryKey: ["movielist"] });
+    },
+    // onError: (err) => toast.error(err.message),
+    onError: (err) => console.log(err),
+  });
+
+  return { status, addMovie };
 }
 

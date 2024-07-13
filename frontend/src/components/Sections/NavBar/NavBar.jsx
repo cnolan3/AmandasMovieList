@@ -28,13 +28,24 @@ function NavBar() {
         <FadeTransition stageState={open}>
           {open && (
             <div className={styles.menuContent}>
+              {myInfo && myInfo.role === "amanda" && (
+                <Link
+                  className={styles.menuItem}
+                  onClick={() => setOpen(false)}
+                  to="/addmovie"
+                >
+                  <FaArrowRight color={colors.colorBackground} size={20} />
+                  Add a movie to the list
+                </Link>
+              )}
+
               <Link
                 className={styles.menuItem}
                 onClick={() => setOpen(false)}
-                to="/addmovie"
+                to="/"
               >
                 <FaArrowRight color={colors.colorBackground} size={20} />
-                Add a movie to the list
+                Home
               </Link>
               {/* TODO: add invite link system */}
               {/* <Link className={styles.menuItem}>

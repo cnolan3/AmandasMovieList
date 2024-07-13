@@ -16,8 +16,6 @@ function SearchList({ onSelectMovie, searchQuery }) {
   const { movies, error, status } = useSearchMovies(searchQuery);
   // const { numResults, Search: movieList, totalResults } = movies;
 
-  console.log(movies);
-
   if (status === "pending")
     return (
       <div className={styles.spinnerContainer}>
@@ -30,7 +28,7 @@ function SearchList({ onSelectMovie, searchQuery }) {
       {movies && movies.Search && movies.Search.length > 0 ? (
         movies.Search.map((movie, i) => (
           <MovieListItem
-            onClick={() => onSelectMovie(movie)}
+            onClick={() => onSelectMovie(movie.imdbID)}
             movie={movie}
             position={i + 1}
             key={movie.imdbID}
@@ -58,7 +56,7 @@ function SearchList({ onSelectMovie, searchQuery }) {
         <h2 className={styles.listEmptyMessage}>Search Not Found</h2>
       ) : (
         <h2 className={styles.listEmptyMessage}>
-          Use search bar to find movies.Search by title
+          Use search bar to find movies by title
         </h2>
       )}
     </MovieList>

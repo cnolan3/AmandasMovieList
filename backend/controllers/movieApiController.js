@@ -17,8 +17,6 @@ exports.searchMovies = catchAsync(async (req, res, next) => {
 
   const data = await omdb.send();
 
-  logger.debug(`search data: ${JSON.stringify(data)}`);
-
   if (!data.Search) return next(new AppError('No search results found', 404));
 
   res.status(200).json({

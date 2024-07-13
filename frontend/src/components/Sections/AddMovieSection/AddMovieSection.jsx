@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
 
 import { useSearch } from "../../../contexts/searchContext";
+import { useGetMovieById } from "../../../hooks/useMovieData";
+import ProtectedPage from "../../../pages/ProtectedPage/ProtectedPage";
+import SearchListCard from "../MovieInfoCard/SearchListCard";
 import SeenListCard from "../MovieInfoCard/SeenListCard";
-import WatchListCard from "../MovieInfoCard/WatchListCard";
 import SearchList from "../MovieList/SearchList";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./AddMovieSection.module.scss";
 
 function AddMovieSection() {
-  const [tabState, setTabState] = useState("watchlist");
-  const { setPlaceholder, query } = useSearch();
-  const [selectedMovie, setSelectedMovie] = useState();
+  const { setPlaceholder, setQuery, query } = useSearch();
+  const [selectedMovieId, setSelectedMovieId] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const {
+    movie: selectedMovie,
+    error,
+    status: movieInfoStatus,
+  } = useGetMovieById(selectedMovieId);
 
   useEffect(() => {
     setPlaceholder("Search movies");
+    setQuery("");
   }, []);
 
   // let selectedRecommendedBy = "";
@@ -25,10 +32,10 @@ function AddMovieSection() {
   // if (selectedMovie && selectedMovie.recommendedByName)
   //   selectedRecommendedBy = selectedMovie.recommendedByName;
 
-  function handleSelectMovie(movie) {
+  function handleSelectMovie(movieId) {
     setHasShown(true);
     setShowCard(true);
-    setSelectedMovie(movie);
+    setSelectedMovieId(movieId);
   }
 
   function handleUnselectMovie() {
@@ -36,20 +43,21 @@ function AddMovieSection() {
   }
 
   return (
-    <>
+    <ProtectedPage roles={["amanda"]}>
       <SearchList
-        onSelectMovie={(movie) => handleSelectMovie(movie)}
+        onSelectMovie={(movieId) => handleSelectMovie(movieId)}
         searchQuery={query}
       />
       <div
-        className={`${styles.infoCard}${showCard ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
+        className={`${styles.infoCard}${showCard && movieInfoStatus === "success" ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
       >
-        <WatchListCard
+        <SearchListCard
           movie={selectedMovie}
+          movieInfoStatus={movieInfoStatus}
           onClose={handleUnselectMovie}
-        ></WatchListCard>
+        ></SearchListCard>
       </div>
-    </>
+    </ProtectedPage>
   );
 }
 
