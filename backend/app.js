@@ -32,6 +32,12 @@ app.use(helmet());
 
 app.use(cors());
 
+app.set('views', `${__dirname}/`);
+
+app.engine('html', require('ejs').renderFile);
+
+app.set('view engine', 'html');
+
 // http logging
 if (process.env.NODE_ENV === 'development') {
   app.use(
@@ -44,12 +50,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // limit requests from same IP
-// const limiter = rateLimit({
-//   max: 100,
-//   windowMs: 60 * 60 * 1000,
-//   message: 'Too many requests from this IP, please try again later',
-// });
-// app.use(apiUrl, limiter);
+const limiter = rateLimit({
+  max: 500,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again later',
+});
+app.use(apiUrl, limiter);
 
 // body parser
 app.use(express.json({ limit: '10kb' }));
@@ -68,6 +74,11 @@ app.use(`${apiUrl}/movies`, movieApiRoutes);
 app.use(`${apiUrl}/watchlist`, movieListRoutes);
 app.use(`${apiUrl}/signupkeys`, signupKeyRoutes);
 app.use(`${apiUrl}/users`, userRoutes);
+
+app.get('/', (req, res, next) => {
+  logger.verbose('get base route activated');
+  res.render(`${__dirname}/index.html`);
+});
 
 app.all('*', (req, res, next) => {
   logger.verbose('catch all route activated');
