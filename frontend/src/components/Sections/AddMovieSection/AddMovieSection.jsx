@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { useIsLoading } from "../../../contexts/loadingContext";
 import { useSearch } from "../../../contexts/searchContext";
 import { useGetMovieById } from "../../../hooks/useMovieData";
 import ProtectedPage from "../../../pages/ProtectedPage/ProtectedPage";
@@ -11,6 +12,7 @@ import WatchList from "../MovieList/WatchList";
 import styles from "./AddMovieSection.module.scss";
 
 function AddMovieSection() {
+  const { setIsLoading } = useIsLoading();
   const { setPlaceholder, setQuery, query } = useSearch();
   const [selectedMovieId, setSelectedMovieId] = useState();
   const [showCard, setShowCard] = useState(false);
@@ -25,6 +27,10 @@ function AddMovieSection() {
     setPlaceholder("Search movies");
     setQuery("");
   }, []);
+
+  useEffect(() => {
+    setIsLoading(movieInfoStatus === "pending");
+  }, [movieInfoStatus, setIsLoading]);
 
   // let selectedRecommendedBy = "";
   // if (selectedMovie && selectedMovie.recommendedById)
