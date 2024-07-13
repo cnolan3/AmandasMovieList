@@ -32,12 +32,6 @@ function AddMovieSection() {
     setIsLoading(movieInfoStatus === "pending");
   }, [movieInfoStatus, setIsLoading]);
 
-  // let selectedRecommendedBy = "";
-  // if (selectedMovie && selectedMovie.recommendedById)
-  //   selectedRecommendedBy = selectedMovie.recommendedById.username;
-  // if (selectedMovie && selectedMovie.recommendedByName)
-  //   selectedRecommendedBy = selectedMovie.recommendedByName;
-
   function handleSelectMovie(movieId) {
     setHasShown(true);
     setShowCard(true);
