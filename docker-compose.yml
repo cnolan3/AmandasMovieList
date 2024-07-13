@@ -15,7 +15,7 @@ services:
   amlbackend:
     build: ./backend
     ports:
-      - "3000:3000"
+      - "8000:8000"
     develop:
       watch:
         - action: sync
