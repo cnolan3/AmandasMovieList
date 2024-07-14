@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useUser } from "../../../contexts/userContext";
 import { useDeleteMovie } from "../../../hooks/useMovieList";
 import colors from "../../../sass/colors.module.scss";
@@ -11,17 +12,19 @@ import PlotSection from "./PlotSection";
 import styles from "./SeenListCard.module.scss";
 
 function SeenListCard({ movie, onClose }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { myInfo, loggedIn } = useUser();
   const { status: deleteMovieStatus, deleteMovie } = useDeleteMovie();
 
   const isAmanda = loggedIn ? myInfo.role === "amanda" : false;
 
+  useEffect(() => {
+    setIsLoading(deleteMovieStatus === "pending");
+  }, [setIsLoading, deleteMovieStatus]);
+
   function handleDeleteMovie(movieId) {
-    setIsLoading(true);
     deleteMovie(movieId, {
       onSuccess: () => {
-        setIsLoading(false);
         onClose();
       },
     });

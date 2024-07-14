@@ -1,23 +1,26 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useForgotPassword } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./ForgotForm.module.scss";
 
 function ForgotForm({ onSubmit = () => {}, onSuccess = () => {} }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { forgotPassword, status } = useForgotPassword();
   const { errors } = formState;
 
+  useEffect(() => {
+    setIsLoading(status === "pending");
+  }, [status, setIsLoading]);
+
   function handleForgot(data) {
     onSubmit();
-    setIsLoading(true);
     forgotPassword(data.email, {
       onSuccess: () => {
-        setIsLoading(false);
         return onSuccess();
       },
     });

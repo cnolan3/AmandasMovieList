@@ -7,13 +7,10 @@ import { Outlet } from "react-router-dom";
 import ForgotSection from "../../components/Sections/ForgotSection/ForgotSection";
 import LoginForm from "../../components/Sections/LoginForm/LoginForm";
 import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import { useIsLoading } from "../../contexts/loadingContext";
 import colors from "../../sass/colors.module.scss";
 import styles from "./LoginForgotPage.module.scss";
 
 function LoginForgotPage() {
-  const { setIsLoading } = useIsLoading();
   const navigate = useNavigate();
 
   const [stage, setStage] = useState(true);
@@ -48,3 +45,4 @@ function LoginForgotPage() {
 }
 
 export default LoginForgotPage;
+

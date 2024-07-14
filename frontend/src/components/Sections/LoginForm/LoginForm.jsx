@@ -1,25 +1,28 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useLogin } from "../../../hooks/useAuth";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./LoginForm.module.scss";
 
 function LoginForm({ onSubmit = () => {}, onSuccess = () => {} }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { status, login } = useLogin();
   const { errors } = formState;
 
+  useEffect(() => {
+    setIsLoading(status === "pending");
+  }, [status, setIsLoading]);
+
   function handleLogin(data) {
     onSubmit();
-    setIsLoading(true);
     login(
       { username: data.username, password: data.password },
       {
         onSuccess: () => {
-          setIsLoading(false);
           return onSuccess();
         },
       },
