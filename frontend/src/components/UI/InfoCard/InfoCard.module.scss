@@ -13,10 +13,12 @@
   height: 82svh;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
-  padding: 2rem 2rem 2rem 2rem;
+  padding: 2rem 3rem;
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   color: colors.$color-background;
 }

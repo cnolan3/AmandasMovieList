@@ -23,6 +23,10 @@ function HeaderSection() {
           )}
         </div>
         <div className={styles.searchRow}>
+          <div
+            className={styles.iconAttrib}
+            title='<a target="_blank" href="https://icons8.com/icon/59878/search">Search</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>'
+          ></div>
           <input
             placeholder={placeholder}
             className={styles.search}
@@ -35,3 +39,4 @@ function HeaderSection() {
 }
 
 export default HeaderSection;
+
