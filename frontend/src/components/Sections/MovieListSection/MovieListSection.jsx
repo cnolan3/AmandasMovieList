@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
 import { useSearch } from "../../../contexts/searchContext";
 import SeenListCard from "../MovieInfoCard/SeenListCard";
 import WatchListCard from "../MovieInfoCard/WatchListCard";
@@ -9,7 +8,6 @@ import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
 
 function MovieListSection() {
-  const { setIsLoading } = useIsLoading();
   const [tabState, setTabState] = useState("watchlist");
   const { setPlaceholder, setQuery, query } = useSearch();
   const [selectedMovie, setSelectedMovie] = useState();

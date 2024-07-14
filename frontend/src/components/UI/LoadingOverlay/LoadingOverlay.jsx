@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import Spinner from "../Spinner/Spinner";
 import styles from "./LoadingOverlay.module.scss";
 
 function LoadingOverlay() {
-  const { isLoading, spinnerColor } = useIsLoading();
+  const { isLoading, spinnerColor } = useLoadingOverlay();
   const timerId = useRef(null);
   const [show, setShow] = useState(false);
 
@@ -20,6 +20,8 @@ function LoadingOverlay() {
       if (show) setShow(false);
     }
   }, [isLoading, show]);
+
+  console.log("spinner color: ", spinnerColor);
 
   return (
     <>

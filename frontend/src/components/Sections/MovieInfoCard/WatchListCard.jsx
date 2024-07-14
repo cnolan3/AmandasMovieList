@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useUser } from "../../../contexts/userContext";
 import { useDeleteMovie } from "../../../hooks/useMovieList";
 import { useRateMovie } from "../../../hooks/useMovieList";
@@ -15,13 +15,19 @@ import RateSection from "./RateSection";
 import styles from "./WatchListCard.module.scss";
 
 function WatchListCard({ movie, onClose }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { myInfo, loggedIn } = useUser();
   const { status: deleteMovieStatus, deleteMovie } = useDeleteMovie();
   const { status: rateMovieStatus, rateMovie } = useRateMovie();
   const [stage, setStage] = useState(true);
 
   const isAmanda = loggedIn ? myInfo.role === "amanda" : false;
+
+  useEffect(() => {
+    setIsLoading(
+      deleteMovieStatus === "pending" || rateMovieStatus === "pending",
+    );
+  }, [setIsLoading, deleteMovieStatus, rateMovieStatus]);
 
   function handleDeleteMovie(movieId) {
     setIsLoading(true);

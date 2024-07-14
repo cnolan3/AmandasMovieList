@@ -1,17 +1,25 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useResetPassword } from "../../../hooks/useAuth";
+import colors from "../../../sass/colors.module.scss";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./ResetForm.module.scss";
 
 function ResetForm({ onSubmit, onSuccess }) {
+  const { setIsLoading } = useLoadingOverlay();
   const { resetToken } = useParams();
   console.log("reset token", resetToken);
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { status, resetPassword } = useResetPassword();
   const { errors } = formState;
+
+  useEffect(() => {
+    setIsLoading(status === "pending");
+  }, [status, setIsLoading]);
 
   function handleReset(data) {
     const { newPassword, newPasswordConfirm } = data;

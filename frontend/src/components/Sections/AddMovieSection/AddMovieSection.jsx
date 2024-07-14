@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useSearch } from "../../../contexts/searchContext";
 import { useGetMovieById } from "../../../hooks/useMovieData";
 import ProtectedPage from "../../../pages/ProtectedPage/ProtectedPage";
 import SearchListCard from "../MovieInfoCard/SearchListCard";
-import SeenListCard from "../MovieInfoCard/SeenListCard";
 import SearchList from "../MovieList/SearchList";
-import SeenList from "../MovieList/SeenList";
-import WatchList from "../MovieList/WatchList";
 import styles from "./AddMovieSection.module.scss";
 
 function AddMovieSection() {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { setPlaceholder, setQuery, query } = useSearch();
   const [selectedMovieId, setSelectedMovieId] = useState();
   const [showCard, setShowCard] = useState(false);
@@ -25,6 +22,7 @@ function AddMovieSection() {
 
   useEffect(() => {
     setPlaceholder("Search movies");
+    // setSpinnerColor(colors)
     setQuery("");
   }, []);
 

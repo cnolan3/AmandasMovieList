@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 
 import App from "./App.jsx";
 import { MovieListProvider } from "./contexts/MovieListContext.jsx";
-import { IsLoadingProvider } from "./contexts/loadingContext.jsx";
+import { LoadingOverlayProvider } from "./contexts/loadingOverlayContext.jsx";
 import { SearchProvider } from "./contexts/searchContext.jsx";
 import { UserProvider } from "./contexts/userContext.jsx";
 import "./index.scss";
@@ -28,9 +28,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <SearchProvider>
         <UserProvider>
           <MovieListProvider>
-            <IsLoadingProvider>
+            <LoadingOverlayProvider>
               <App />
-            </IsLoadingProvider>
+            </LoadingOverlayProvider>
           </MovieListProvider>
         </UserProvider>
       </SearchProvider>
@@ -53,3 +53,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </QueryClientProvider>
   </React.StrictMode>,
 );
+

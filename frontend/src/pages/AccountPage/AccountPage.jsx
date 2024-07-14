@@ -7,33 +7,29 @@ import { useNavigate } from "react-router-dom";
 import UpdatePasswordForm from "../../components/Sections/UpdatePasswordForm/UpdatePasswordForm";
 import Button from "../../components/UI/Button/Button";
 import SlideTransition from "../../components/UI/SlideTransition/SlideTransition";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import { useIsLoading } from "../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../contexts/loadingOverlayContext";
 import { useUser } from "../../contexts/userContext";
 import { useLogout } from "../../hooks/useAuth";
-import { useUpdatePassword } from "../../hooks/useAuth";
 import colors from "../../sass/colors.module.scss";
 import ProtectedPage from "../ProtectedPage/ProtectedPage";
 import styles from "./AccountPage.module.scss";
 
 function AccountPage() {
-  const { setIsLoading, setSpinnerColor } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { logout, status: logoutStatus } = useLogout();
   const navigate = useNavigate();
   const { myInfo, loggedIn } = useUser();
   const [stage, setStage] = useState(true);
 
+  useEffect(() => {
+    setIsLoading(logoutStatus === "pending", colors.colorAccent);
+  }, [logoutStatus, setIsLoading]);
+
   function handleLogout() {
-    setSpinnerColor(colors.colorAccent);
-    setIsLoading(true);
     logout(
       {},
       {
-        onSuccess: () => {
-          setIsLoading(false);
-          setSpinnerColor(colors.colorBackground);
-          return navigate("/");
-        },
+        onSuccess: () => navigate("/"),
       },
     );
   }

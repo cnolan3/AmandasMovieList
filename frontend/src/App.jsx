@@ -82,7 +82,6 @@ function Base() {
     ) ?? {};
   return (
     <div className="container">
-      <LoadingOverlay />
       <SwitchTransition mode="in-out">
         <CSSTransition
           key={location.pathname}

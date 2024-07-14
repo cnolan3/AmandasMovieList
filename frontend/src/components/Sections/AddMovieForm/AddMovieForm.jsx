@@ -1,25 +1,28 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useAddMovie } from "../../../hooks/useMovieList";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./AddMovieForm.module.scss";
 
 function AddMovieForm({ onSubmit = () => {}, onSuccess = () => {}, movieId }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { addMovie, status } = useAddMovie();
   const { errors } = formState;
 
+  useEffect(() => {
+    setIsLoading(status === "pending");
+  }, [status, setIsLoading]);
+
   function handleAdd(data) {
     onSubmit();
-    setIsLoading(true);
     addMovie(
       { movieId, recommendedByName: data.name },
       {
         onSuccess: () => {
-          setIsLoading(false);
           return onSuccess();
         },
       },

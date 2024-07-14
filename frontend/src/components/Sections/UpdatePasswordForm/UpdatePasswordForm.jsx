@@ -1,27 +1,32 @@
-import { Form, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-import { useIsLoading } from "../../../contexts/loadingContext";
+import { useLoadingOverlay } from "../../../contexts/loadingOverlayContext";
 import { useUpdatePassword } from "../../../hooks/useAuth";
+import colors from "../../../sass/colors.module.scss";
 import Button from "../../UI/Button/Button";
 import FormRow from "../../UI/FormRow/FormRow";
 import styles from "./UpdatePasswordForm.module.scss";
 
 function UpdatePasswordForm({ onSubmit = () => {}, onSuccess = () => {} }) {
-  const { setIsLoading } = useIsLoading();
+  const { setIsLoading } = useLoadingOverlay();
   const { updatePassword, status } = useUpdatePassword();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+
+  useEffect(() => {
+    setIsLoading(status === "pending", colors.colorAccent);
+  }, [status, setIsLoading]);
 
   function handleUpdatePassword(data) {
     const { currentPassword, newPassword, newPasswordConfirm } = data;
 
     onSubmit();
-    setIsLoading(true);
+
     updatePassword(
       { currentPassword, newPassword, newPasswordConfirm },
       {
         onSuccess: () => {
-          setIsLoading(false);
           onSuccess();
         },
       },
