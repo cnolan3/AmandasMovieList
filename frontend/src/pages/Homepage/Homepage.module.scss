@@ -1,0 +1,26 @@
+@use "../../sass/colors.module.scss";
+@use "../../sass/fonts.module.scss";
+
+.footer {
+  color: colors.$color-text-light;
+  font-size: fonts.$size-1;
+  font-weight: fonts.$weight-default;
+  // text-decoration: none;
+
+  a:link,
+  a:visited {
+    color: colors.$color-text-light;
+    font-size: fonts.$size-1;
+    font-weight: fonts.$weight-default;
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:active {
+    // color: colors.$color-text-light;
+    // font-size: fonts.$size-1;
+    // font-weight: fonts.$weight-default;
+    // text-decoration: none;
+  }
+}
+

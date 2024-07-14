@@ -12,14 +12,20 @@ function RateSection({ onRate }) {
     <div className={styles.rateSection}>
       <StarRating
         color={colors.colorBackground}
-        size={30}
+        size={25}
         defaultRating={1}
         onSetRating={(r) => setRating(r)}
       />
-      <Button className={styles.rateBtn} onClick={() => onRate(rating)}>
+      <Button
+        className={`${styles.rateBtn} ${styles.btn}`}
+        onClick={() => onRate(rating)}
+      >
         Rate Movie and Move
       </Button>
-      <Button className={styles.moveBtn} onClick={() => onRate(null)}>
+      <Button
+        className={`${styles.moveBtn} ${styles.btn}`}
+        onClick={() => onRate(null)}
+      >
         Move without Rating
       </Button>
     </div>

@@ -83,7 +83,9 @@ function WatchListCard({ movie, onClose }) {
           </Button>
           <Button
             className={styles.rateBtn}
-            onClick={() => setStage((stage) => !stage)}
+            onClick={() => {
+              console.log("aaaaaaaa"), setStage((stage) => !stage);
+            }}
           >
             {stage ? (
               <>

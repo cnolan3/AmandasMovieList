@@ -4,7 +4,10 @@ function Button({ onClick, disabled = false, className = "", children }) {
   return (
     <button
       className={`${styles.btn} ${className}`}
-      onClick={onClick}
+      onClick={() => {
+        console.log("bbbbbb");
+        onClick();
+      }}
       disabled={disabled}
     >
       {children}
