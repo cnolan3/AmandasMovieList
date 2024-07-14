@@ -166,6 +166,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const cookieOptions = getCookieOptions();
 
   res.cookie(cookieName, token, cookieOptions);
+  res.header('Cache-Control', 'no-cache="Set-Cookie"');
 
   logger.verbose('user signed up');
 
@@ -203,6 +204,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const cookieOptions = getCookieOptions();
 
   res.cookie(cookieName, token, cookieOptions);
+  res.header('Cache-Control', 'no-cache="Set-Cookie"');
 
   logger.verbose('user logged in');
 
@@ -219,6 +221,7 @@ exports.login = catchAsync(async (req, res, next) => {
 // log the user out (clear the login token cookie)
 exports.logout = catchAsync(async (req, res, next) => {
   res.clearCookie(cookieName);
+  res.header('Cache-Control', 'no-cache="Set-Cookie"');
 
   logger.verbose('user logged out');
 
@@ -315,6 +318,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   const cookieOptions = getCookieOptions();
 
   res.cookie(cookieName, token, cookieOptions);
+  res.header('Cache-Control', 'no-cache="Set-Cookie"');
 
   logger.verbose('user logged in');
 
@@ -359,6 +363,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   const cookieOptions = getCookieOptions();
 
   res.cookie(cookieName, token, cookieOptions);
+  res.header('Cache-Control', 'no-cache="Set-Cookie"');
 
   logger.verbose('user logged in');
   logger.debug(`update password for: ${JSON.stringify(user)} `);
