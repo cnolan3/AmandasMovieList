@@ -9,13 +9,14 @@ import {
 
 // search movies
 export function useSearchMovies(searchQuery) {
+  const abortController = new AbortController();
   const {
     data: movies,
     error,
     status,
   } = useQuery({
     queryKey: ["moviedata", "search", searchQuery],
-    queryFn: () => searchMoviesApi(searchQuery),
+    queryFn: () => searchMoviesApi(abortController, searchQuery),
   });
 
   return { movies, error, status };
