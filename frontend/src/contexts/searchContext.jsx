@@ -1,38 +1,30 @@
-import { createContext, useContext, useReducer } from "react";
+// debounce functionality modified from https://www.telerik.com/blogs/how-to-create-custom-debounce-hook-react
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const SearchContext = createContext();
 
-const initialState = {
-  query: "",
-  placeholder: "",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "search":
-      return { ...state, query: action.payload };
-    case "placeholder":
-      return { ...state, placeholder: action.payload };
-    default:
-      throw new Error("Unknown action type");
-  }
-}
-
 function SearchProvider({ children }) {
-  const [{ query, placeholder }, dispatch] = useReducer(reducer, initialState);
+  const [input, setInput] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("");
+  const debounceTimerRef = useRef();
 
-  function setQuery(queryStr) {
-    dispatch({ type: "search", payload: queryStr });
-  }
+  useEffect(() => {
+    debounceTimerRef.current = setTimeout(() => setDebouncedQuery(input), 300);
 
-  function setPlaceholder(placeholder) {
-    dispatch({ type: "placeholder", payload: placeholder });
+    return () => {
+      clearTimeout(debounceTimerRef.current);
+    };
+  }, [input]);
+
+  function setQuery(query) {
+    setInput(query);
   }
 
   return (
     <SearchContext.Provider
       value={{
-        query,
+        query: debouncedQuery,
         placeholder,
         setQuery,
         setPlaceholder,
