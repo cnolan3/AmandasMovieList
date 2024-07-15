@@ -42,18 +42,20 @@ function AddMovieSection() {
 
   return (
     <ProtectedPage roles={["amanda"]}>
-      <SearchList
-        onSelectMovie={(movieId) => handleSelectMovie(movieId)}
-        searchQuery={query}
-      />
-      <div
-        className={`${styles.infoCard}${showCard && movieInfoStatus === "success" ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
-      >
-        <SearchListCard
-          movie={selectedMovie}
-          movieInfoStatus={movieInfoStatus}
-          onClose={handleUnselectMovie}
-        ></SearchListCard>
+      <div className={styles.addSection}>
+        <SearchList
+          onSelectMovie={(movieId) => handleSelectMovie(movieId)}
+          searchQuery={query}
+        />
+        <div
+          className={`${styles.infoCard}${showCard && movieInfoStatus === "success" ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
+        >
+          <SearchListCard
+            movie={selectedMovie}
+            movieInfoStatus={movieInfoStatus}
+            onClose={handleUnselectMovie}
+          ></SearchListCard>
+        </div>
       </div>
     </ProtectedPage>
   );
