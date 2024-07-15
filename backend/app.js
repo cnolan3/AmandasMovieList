@@ -69,6 +69,13 @@ app.use(mongoSanitize());
 // xss sanitization
 app.use(xss());
 
+// add the api version to the req object
+app.use(`${apiUrl}/*`, (req, res, next) => {
+  req.apiVersion = process.env.API_VERSION;
+
+  next();
+});
+
 // routes
 app.use(`${apiUrl}/movies`, movieApiRoutes);
 app.use(`${apiUrl}/watchlist`, movieListRoutes);

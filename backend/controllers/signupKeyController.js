@@ -22,6 +22,7 @@ exports.createKey = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       signupKey: key,
       createdBy: {
@@ -38,6 +39,7 @@ exports.getKeys = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       keys,
     },
