@@ -58,12 +58,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // limit requests from same IP
-const limiter = rateLimit({
-  max: 500,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again later',
-});
-app.use(apiUrl, limiter);
+// do not need since its served through cloudfront
+// const limiter = rateLimit({
+// max: 500,
+// windowMs: 60 * 60 * 1000,
+// message: 'Too many requests from this IP, please try again later',
+// });
+// app.use(apiUrl, limiter);
 
 // body parser
 app.use(express.json({ limit: '10kb' }));
