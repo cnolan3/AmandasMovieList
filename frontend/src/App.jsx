@@ -82,6 +82,11 @@ function Base() {
     ) ?? {};
   return (
     <div className="container">
+      {import.meta.env.MODE === "development" && (
+        <p className="version-tag">
+          app version: {import.meta.env.VITE_APP_VERSION}
+        </p>
+      )}
       <SwitchTransition mode="in-out">
         <CSSTransition
           key={location.pathname}
