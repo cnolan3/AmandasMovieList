@@ -100,9 +100,8 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
 
 // give a movie an amanda rating
 exports.rateMovie = catchAsync(async (req, res, next) => {
-  logger.debug(`rating req.body: ${JSON.stringify(req.body)}`);
   let updateData = { seen: true, votes: 0 };
-  if (req.body.rating)
+  if (req.body.rating !== undefined)
     updateData = { ...updateData, amandaRating: req.body.rating };
 
   const movie = await MovieList.findOneAndUpdate(
