@@ -22,7 +22,6 @@ function AddMovieSection() {
 
   useEffect(() => {
     setPlaceholder("Search movies");
-    // setSpinnerColor(colors)
     setQuery("");
   }, []);
 

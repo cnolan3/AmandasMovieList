@@ -5,7 +5,6 @@ function Button({ onClick, disabled = false, className = "", children }) {
     <button
       className={`${styles.btn} ${className}`}
       onClick={() => {
-        console.log("bbbbbb");
         onClick();
       }}
       disabled={disabled}
