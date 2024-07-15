@@ -9,9 +9,9 @@ import colors from "../../../sass/colors.module.scss";
 import Button from "../../UI/Button/Button";
 import InfoCard from "../../UI/InfoCard/InfoCard";
 import SlideTransition from "../../UI/SlideTransition/SlideTransition";
+import StarRating from "../../UI/StarRating/StarRating";
 import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
-import RateSection from "./RateSection";
 import styles from "./WatchListCard.module.scss";
 
 function WatchListCard({ movie, onClose }) {
@@ -20,6 +20,7 @@ function WatchListCard({ movie, onClose }) {
   const { status: deleteMovieStatus, deleteMovie } = useDeleteMovie();
   const { status: rateMovieStatus, rateMovie } = useRateMovie();
   const [stage, setStage] = useState(true);
+  const [ratingState, setRatingState] = useState(1);
 
   const isAmanda = loggedIn ? myInfo.role === "amanda" : false;
 
@@ -29,24 +30,25 @@ function WatchListCard({ movie, onClose }) {
     );
   }, [setIsLoading, deleteMovieStatus, rateMovieStatus]);
 
+  function close() {
+    setStage(true);
+    onClose();
+  }
+
   function handleDeleteMovie(movieId) {
-    setIsLoading(true);
     deleteMovie(movieId, {
       onSuccess: () => {
-        setIsLoading(false);
-        onClose();
+        close();
       },
     });
   }
 
   function handleRateMovie(movieId, rating) {
-    setIsLoading(true);
     rateMovie(
       { movieId, rating },
       {
         onSuccess: () => {
-          setIsLoading(false);
-          onClose();
+          close();
         },
       },
     );
@@ -57,15 +59,33 @@ function WatchListCard({ movie, onClose }) {
   return (
     <InfoCard title={movie.Title} onClose={onClose}>
       <MovieInfo movie={movie}>
-        <SlideTransition
-          stageState={stage}
-          firstComponent={<PlotSection movie={movie} />}
-          secondComponent={
-            <RateSection
-              onRate={(rating) => handleRateMovie(movie.imdbID, rating)}
-            />
-          }
-        />
+        <SlideTransition stageState={stage}>
+          {stage ? (
+            <PlotSection movie={movie} />
+          ) : (
+            <div className={styles.rateSection}>
+              <StarRating
+                color={colors.colorBackground}
+                size={25}
+                defaultRating={1}
+                onSetRating={(r) => setRatingState(r)}
+              />
+
+              <Button
+                className={styles.rateBtn}
+                onClick={() => handleRateMovie(movie.imdbID, ratingState)}
+              >
+                Rate Movie and Move
+              </Button>
+              <Button
+                className={styles.noRateBtn}
+                onClick={() => handleRateMovie(movie.imdbID, null)}
+              >
+                Move without Rating
+              </Button>
+            </div>
+          )}
+        </SlideTransition>
       </MovieInfo>
       {isAmanda && (
         <div className={styles.lowerSection}>
@@ -82,10 +102,8 @@ function WatchListCard({ movie, onClose }) {
             Remove
           </Button>
           <Button
-            className={styles.rateBtn}
-            onClick={() => {
-              console.log("aaaaaaaa"), setStage((stage) => !stage);
-            }}
+            className={styles.moveBtn}
+            onClick={() => setStage((stage) => !stage)}
           >
             {stage ? (
               <>

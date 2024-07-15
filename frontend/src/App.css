@@ -11,6 +11,14 @@
   z-index: 0;
 }
 
+.version-tag {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  color: black;
+  z-index: 20;
+}
+
 .account,
 .login-reset {
   position: absolute;

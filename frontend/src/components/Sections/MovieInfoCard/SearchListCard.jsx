@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { FaArrowRight, FaTrash } from "react-icons/fa";
 
 import { useMovieList } from "../../../contexts/MovieListContext";
-import { useUser } from "../../../contexts/userContext";
-import { useAddMovie } from "../../../hooks/useMovieList";
-import colors from "../../../sass/colors.module.scss";
 import Button from "../../UI/Button/Button";
 import InfoCard from "../../UI/InfoCard/InfoCard";
 import SlideTransition from "../../UI/SlideTransition/SlideTransition";
 import AddMovieForm from "../AddMovieForm/AddMovieForm";
 import MovieInfo from "./MovieInfo";
 import PlotSection from "./PlotSection";
-import RateSection from "./RateSection";
 import styles from "./WatchListCard.module.scss";
 
 function SearchListCard({ movie, onClose }) {

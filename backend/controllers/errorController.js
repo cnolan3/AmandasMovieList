@@ -29,10 +29,11 @@ const handleJWTExpired = () =>
 ///////////////
 
 // format and send error in dev mode
-const sendErrorDev = (err, res) => {
+const sendErrorDev = (err, req, res) => {
   const { status, message, stack } = err;
   res.status(err.statusCode).json({
     status,
+    apiVersion: req.apiVersion,
     error: err,
     message,
     stack,
@@ -40,10 +41,11 @@ const sendErrorDev = (err, res) => {
 };
 
 // format and send error in prod mode
-const sendErrorProd = (err, res) => {
+const sendErrorProd = (err, req, res) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
+      apiVersion: req.apiVersion,
       message: err.message,
     });
   } else {
@@ -51,6 +53,7 @@ const sendErrorProd = (err, res) => {
 
     res.status(500).json({
       status: 'error',
+      apiVersion: req.apiVersion,
       message: 'Something went wrong',
     });
   }
@@ -62,7 +65,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     let appErrorObj = err;
 
@@ -73,6 +76,6 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'JsonWebTokenError') appErrorObj = handleJWTError();
     if (err.name === 'TokenExpiredError') appErrorObj = handleJWTExpired();
 
-    sendErrorProd(appErrorObj, res);
+    sendErrorProd(appErrorObj, req, res);
   }
 };

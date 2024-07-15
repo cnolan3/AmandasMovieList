@@ -59,6 +59,7 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: data,
   });
 });
@@ -73,6 +74,7 @@ exports.getWatchlist = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       watchlist,
     },
@@ -89,6 +91,7 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       seenlist,
     },
@@ -97,9 +100,8 @@ exports.getSeenList = catchAsync(async (req, res, next) => {
 
 // give a movie an amanda rating
 exports.rateMovie = catchAsync(async (req, res, next) => {
-  logger.debug(`rating req.body: ${JSON.stringify(req.body)}`);
   let updateData = { seen: true, votes: 0 };
-  if (req.body.rating)
+  if (req.body.rating !== undefined)
     updateData = { ...updateData, amandaRating: req.body.rating };
 
   const movie = await MovieList.findOneAndUpdate(
@@ -112,6 +114,7 @@ exports.rateMovie = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       movie: {
         id: movie._id,
@@ -133,6 +136,7 @@ exports.unwatch = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       movie: {
         id: movie._id,
@@ -152,6 +156,7 @@ exports.deleteMovie = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {},
   });
 });

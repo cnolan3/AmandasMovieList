@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-let configFile;
+let fileArray = [`${__dirname}/config.version.env`];
 if (process.argv.length > 2) {
-  configFile = process.argv[2];
-  dotenv.config({ path: `${__dirname}/${configFile}` });
+  const configFile = process.argv[2];
+  fileArray = [...fileArray, `${__dirname}/${configFile}`];
 }
+
+dotenv.config({ path: fileArray });
 
 const logger = require('./utils/logger');
 
-if (configFile) logger.info(`Loaded config file ${configFile}`);
+logger.info(`Loaded config file/s [${fileArray}]`);
 
+logger.info(`API version: ${process.env.API_VERSION}`);
 logger.info(`Running in ${process.env.NODE_ENV} environment`);
 
 // process.on('uncaughtRejection', (err) => {

@@ -21,8 +21,6 @@ function LoadingOverlay() {
     }
   }, [isLoading, show]);
 
-  console.log("spinner color: ", spinnerColor);
-
   return (
     <>
       {isLoading && show && (

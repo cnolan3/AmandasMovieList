@@ -172,6 +172,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       newUser: {
         username: newUser.username,
@@ -210,6 +211,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       username: user.username,
       role: user.role,
@@ -227,6 +229,7 @@ exports.logout = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: null,
   });
 });
@@ -324,6 +327,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       username: user.username,
       email: user.email,
@@ -370,6 +374,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       username: user.username,
       email: user.email,

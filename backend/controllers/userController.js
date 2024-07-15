@@ -24,6 +24,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       users,
     },
@@ -42,6 +43,7 @@ exports.getAUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: user,
   });
 });
@@ -56,6 +58,7 @@ exports.searchUser = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       users,
     },
@@ -70,6 +73,7 @@ exports.myInfo = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: user,
   });
 });
@@ -91,6 +95,7 @@ exports.voteFor = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       votedFor: {
         imdbID,
@@ -128,6 +133,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       id: user._id,
       username: user.username,
@@ -159,6 +165,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: user,
   });
 });

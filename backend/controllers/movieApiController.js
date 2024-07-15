@@ -2,7 +2,7 @@ const catchAsync = require('../utils/catchAsync');
 const OMDBSearch = require('../utils/omdbSearch');
 const OMDBGet = require('../utils/omdbGet');
 const AppError = require('../utils/appError');
-const logger = require('../utils/logger');
+// const logger = require('../utils/logger');
 
 // search omdb for a movie
 exports.searchMovies = catchAsync(async (req, res, next) => {
@@ -21,6 +21,7 @@ exports.searchMovies = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: {
       numResults: data.Search.length,
       Search: data.Search,
@@ -47,6 +48,7 @@ exports.getMovieById = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: { ...data, rottenTomatoRating: rottenPercent },
   });
 });
@@ -69,6 +71,7 @@ exports.getMovieByTitle = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    apiVersion: req.apiVersion,
     data: { ...data, rottenTomatoRating: rottenPercent },
   });
 });
