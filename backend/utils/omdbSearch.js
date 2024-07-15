@@ -21,7 +21,7 @@ class OMDBSearch {
 
   async send() {
     const url = `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&${this.optionsStr}&type=movie&r=json`;
-    logger.verbose(`sending omdb search: ${url}`);
+    logger.info(`sending omdb search: ${url}`);
     return await (await fetch(url)).json();
   }
 }

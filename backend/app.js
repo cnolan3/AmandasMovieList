@@ -47,6 +47,14 @@ if (process.env.NODE_ENV === 'development') {
       },
     }),
   );
+} else {
+  app.use(
+    morgan('common', {
+      stream: {
+        write: (message) => logger.http(stripAnsi(message.trim())),
+      },
+    }),
+  );
 }
 
 // limit requests from same IP
