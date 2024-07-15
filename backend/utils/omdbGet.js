@@ -33,7 +33,7 @@ class OMDBGet {
 
   async send() {
     const url = `https://www.omdbapi.com/?${this.optionsStr}&type=movie&r=json&apikey=${process.env.OMDB_API_KEY}`;
-    logger.verbose(`sending ombd get: ${url}`);
+    logger.info(`sending ombd get: ${url}`);
     return await (await fetch(url)).json();
   }
 }
