@@ -34,7 +34,13 @@ class OMDBGet {
   async send() {
     const url = `https://www.omdbapi.com/?${this.optionsStr}&type=movie&r=json&apikey=${process.env.OMDB_API_KEY}`;
     logger.info(`sending ombd get: ${url}`);
-    return await (await fetch(url)).json();
+    const response = await fetch(url, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    logger.info(`omdb get response status: ${response.status}`);
+    const data = await response.json();
+    logger.info(`omdb get response data: ${JSON.stringify(data)}`);
+    return data;
   }
 }
 

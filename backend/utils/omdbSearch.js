@@ -22,7 +22,13 @@ class OMDBSearch {
   async send() {
     const url = `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&${this.optionsStr}&type=movie&r=json`;
     logger.info(`sending omdb search: ${url}`);
-    return await (await fetch(url)).json();
+    const response = await fetch(url, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    logger.info(`omdb search response status: ${response.status}`);
+    const data = await response.json();
+    logger.info(`omdb search response data: ${JSON.stringify(data)}`);
+    return data;
   }
 }
 
