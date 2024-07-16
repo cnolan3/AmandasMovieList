@@ -2,12 +2,12 @@ import handleApiError from "../utils/handleApiError";
 import { addContentTypeHeader } from "../utils/reqHeaders";
 
 // search for movies by title
-export async function searchMoviesApi(abortController, searchQuery, page = 1) {
+export async function searchMoviesApi(searchQuery, page = 1) {
   if (!searchQuery) return null;
 
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/movies/${searchQuery}?page=${page}`,
-    { signal: abortController.signal, method: "GET" },
+    { method: "GET" },
   );
 
   if (!response.ok) {
