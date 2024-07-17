@@ -13,7 +13,7 @@ export async function getWatchListApi() {
   }
 
   const data = await response.json();
-  return data.data.watchlist;
+  return data.data.watchList;
 }
 
 // get the seenlist from the backend
@@ -28,7 +28,7 @@ export async function getSeenListApi() {
   }
 
   const data = await response.json();
-  return data.data.seenlist;
+  return data.data.seenList;
 }
 
 // delete movie from all lists
