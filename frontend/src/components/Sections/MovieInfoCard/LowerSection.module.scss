@@ -1,0 +1,21 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
+.deleteBtn {
+  color: colors.$color-background;
+  background-color: colors.$color-attention;
+
+  transition: background-color 0.3s;
+
+  &.disabled {
+    color: colors.$color-background-faded;
+    background-color: colors.$color-attention-faded;
+  }
+}
+
+.stageBtn {
+  width: 15rem;
+  color: colors.$color-text;
+  background-color: colors.$color-background;
+}
+

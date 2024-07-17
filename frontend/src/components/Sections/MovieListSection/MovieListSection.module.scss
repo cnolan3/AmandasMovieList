@@ -36,40 +36,11 @@
   }
 }
 
-@keyframes slideUp {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-82svh);
-  }
-}
-
-@keyframes slideDown {
-  0% {
-    transform: translateY(-82svh);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
 .infoCard {
   width: 100%;
   position: absolute;
-  bottom: -82svh;
+  bottom: 0;
+  left: 0;
   z-index: 10;
-}
-
-.show {
-  animation: slideUp 0.3s ease 0s;
-  transform: translateY(-82svh);
-}
-
-.hide {
-  animation: slideDown 0.3s ease 0s;
-  transform: translateY(0);
 }
 
