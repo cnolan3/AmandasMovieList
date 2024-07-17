@@ -8,12 +8,13 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const logger = require('../utils/logger');
 const sendEmail = require('../utils/email');
+const cache = require('../utils/nodeCache');
 
 const cookieName = 'AML_login_token';
 
 // create JWT
-const signToken = async (id) =>
-  await promisify(jwt.sign)({ id: id }, process.env.JWT_SECRET, {
+const signToken = async (id, username) =>
+  await promisify(jwt.sign)({ id, username }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
@@ -48,14 +49,23 @@ const verifyUserWithJWT = async (token, next) => {
   // verify the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
+  // check cache
+  let user = cache.getUser(decoded.id);
+
   // get user from db
-  const user = await User.findById(decoded.id).select(
-    '+passwordChangedAt +role',
-  );
+  if (!user) {
+    user = await User.findById(decoded.id).select(
+      '+passwordChangedAt +email +role',
+    );
+  }
+
   if (!user)
     return next(
       new AppError('The user belonging to this token no longer exists', 401),
     );
+
+  // store user in cache
+  cache.storeUser(user);
 
   // check if user changed password after jwt was created
   if (await user.wasPasswordChangedAfter(decoded.iat))
@@ -71,12 +81,8 @@ const verifyUserWithJWT = async (token, next) => {
 
 // protect routes with jwt token login
 exports.protect = catchAsync(async (req, res, next) => {
-  // logger.debug('protect');
   // get token from auth headers
-  logger.debug(`protect - ${JSON.stringify(req.cookies)}`);
   const token = getTokenFromCookies(req.cookies);
-
-  logger.debug(JSON.stringify(req.cookies));
 
   if (!token)
     return next(
@@ -157,11 +163,14 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(new AppError('User creation failed', 500));
   }
 
+  // store new user in cache
+  cache.storeUser(newUser);
+
   // delete the signup key
   await SignupKey.deleteOne({ _id: key._id });
 
   // sign the user in with a token
-  const token = await signToken(newUser._id);
+  const token = await signToken(newUser._id, newUser.username);
 
   const cookieOptions = getCookieOptions();
 
@@ -177,6 +186,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       newUser: {
         username: newUser.username,
         email: newUser.email,
+        role: newUser.role,
       },
     },
   });
@@ -199,8 +209,11 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect username or password', 401));
   }
 
+  // store user in cache
+  cache.storeUser(user);
+
   // sign the uer in with a token
-  const token = await signToken(user._id);
+  const token = await signToken(user._id, user.username);
 
   const cookieOptions = getCookieOptions();
 
@@ -310,13 +323,16 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // set new password if user exists and token has not expired
   if (!user) return next(new AppError('Token is invalid or has expired', 400));
 
+  // store user in cache
+  cache.storeUser(user);
+
   user.password = newPassword;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
 
   // log the user in with jwt
-  const token = await signToken(user._id);
+  const token = await signToken(user._id, user.username);
 
   const cookieOptions = getCookieOptions();
 
@@ -361,8 +377,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.password = req.body.newPassword;
   user = await user.save();
 
+  // store user in cache
+  cache.storeUser(user);
+
   // sign the uer in with a token
-  const token = await signToken(user._id);
+  const token = await signToken(user._id, user.username);
 
   const cookieOptions = getCookieOptions();
 

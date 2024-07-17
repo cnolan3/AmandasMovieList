@@ -4,6 +4,7 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 const logger = require('../utils/logger');
 const MovieList = require('../models/movieListModel');
+const cache = require('../utils/nodeCache');
 
 const addPriviledgedInfo = (req, query) => {
   if (req.priviledged)
@@ -67,9 +68,16 @@ exports.searchUser = catchAsync(async (req, res, next) => {
 
 // get my own user info
 exports.myInfo = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id).select('+email +role -__v');
+  // check cache
+  let user = cache.getUser(req.user._id);
+
+  if (!user) {
+    user = await User.findById(req.user._id).select('+email +role -__v');
+  }
 
   if (!user) return next(new AppError('User not found', 404));
+
+  cache.storeUser(user);
 
   res.status(200).json({
     status: 'success',

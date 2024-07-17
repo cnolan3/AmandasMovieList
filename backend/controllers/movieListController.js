@@ -6,6 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 const logger = require('../utils/logger');
 const APIFeatures = require('../utils/apiFeatures');
 const OMDBGet = require('../utils/omdbGet');
+const cache = require('../utils/nodeCache');
 
 // add user info to add movie request middleware
 exports.recommendMovie = catchAsync(async (req, res, next) => {
@@ -21,17 +22,31 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
   let recommendedByName;
   let recommendedById;
 
-  if (
-    req.body.recommendedById &&
-    (await User.findById(req.body.recommendedById))
-  ) {
-    recommendedById = req.body.recommendedById;
+  if (req.body.recommendedById) {
+    let user = cache.getUser(req.body.recommendedById);
+
+    if (!user) {
+      user = await User.findById(req.body.recommendedById);
+    }
+
+    if (user) {
+      recommendedById = req.body.recommendedById;
+      cache.storeUser(user);
+    }
   } else if (req.body.recommendedByName) {
     recommendedByName = req.body.recommendedByName;
   }
 
-  const omdb = new OMDBGet().imdbID(imdbID);
-  const data = await omdb.send();
+  // check for movie in cache
+  let data = cache.getMovieById(imdbID);
+
+  if (!data) {
+    const omdb = new OMDBGet().imdbID(imdbID);
+    data = await omdb.send();
+
+    // store movie in cache
+    cache.storeMovieById(data);
+  }
 
   // check for a rotten tomatoes rating
   const rotten = data.Ratings.find(
@@ -57,6 +72,9 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
     recommendedById,
   });
 
+  // invalidate watchlist cache
+  cache.invalidateWatchList();
+
   res.status(200).json({
     status: 'success',
     apiVersion: req.apiVersion,
@@ -66,34 +84,50 @@ exports.addToWatchlist = catchAsync(async (req, res, next) => {
 
 // get watchlist
 exports.getWatchlist = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(MovieList.find({ seen: false }), req.query)
-    .sort('+numVotes')
-    .limitFields()
-    .paginate();
-  const watchlist = await features.query.select('-amandaRating');
+  // check cache for watchlist
+  let watchList = cache.getWatchList();
+
+  if (!watchList) {
+    const features = new APIFeatures(MovieList.find({ seen: false }), req.query)
+      .sort('+numVotes')
+      .limitFields()
+      .paginate();
+    watchList = await features.query.select('-amandaRating');
+
+    // store watchlist in cache
+    cache.storeWatchList(watchList);
+  }
 
   res.status(200).json({
     status: 'success',
     apiVersion: req.apiVersion,
     data: {
-      watchlist,
+      watchList,
     },
   });
 });
 
 // get seen list
 exports.getSeenList = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(MovieList.find({ seen: true }), req.query)
-    .sort('+amandaRating')
-    .limitFields()
-    .paginate();
-  const seenlist = await features.query.select('-numVotes');
+  // check cache for seenlist
+  let seenList = cache.getSeenList();
+
+  if (!seenList) {
+    const features = new APIFeatures(MovieList.find({ seen: true }), req.query)
+      .sort('+amandaRating')
+      .limitFields()
+      .paginate();
+    seenList = await features.query.select('-numVotes');
+
+    // store seenlist in cache
+    cache.storeSeenList(seenList);
+  }
 
   res.status(200).json({
     status: 'success',
     apiVersion: req.apiVersion,
     data: {
-      seenlist,
+      seenList,
     },
   });
 });
@@ -109,6 +143,9 @@ exports.rateMovie = catchAsync(async (req, res, next) => {
     updateData,
     { runValidators: true },
   );
+
+  // invalidate caches
+  cache.invalidateLists();
 
   await User.deleteVotesFor(movie._id);
 
@@ -134,6 +171,9 @@ exports.unwatch = catchAsync(async (req, res, next) => {
     { runValidators: true },
   );
 
+  // invalidate caches
+  cache.invalidateLists();
+
   res.status(200).json({
     status: 'success',
     apiVersion: req.apiVersion,
@@ -153,6 +193,10 @@ exports.deleteMovie = catchAsync(async (req, res, next) => {
   const movie = await MovieList.findOne({ imdbID });
   await User.deleteVotesFor(movie._id);
   await MovieList.findByIdAndDelete(movie._id);
+
+  // invalidate caches
+  if (movie.seen) cache.invalidateSeenList();
+  else cache.invalidateWatchList();
 
   res.status(200).json({
     status: 'success',
