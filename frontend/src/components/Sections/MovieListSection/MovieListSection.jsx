@@ -81,7 +81,7 @@ function MovieListSection() {
       <CSSTransition
         nodeRef={nodeRef}
         in={showCard}
-        timeout={300}
+        timeout={250}
         classNames="slide-up"
         unmountOnExit
       >
