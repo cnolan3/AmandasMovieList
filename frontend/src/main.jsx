@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 
 import App from "./App.jsx";
+import { BlurProvider } from "./contexts/BlurContext.jsx";
 import { MovieListProvider } from "./contexts/MovieListContext.jsx";
 import { LoadingOverlayProvider } from "./contexts/loadingOverlayContext.jsx";
 import { SearchProvider } from "./contexts/searchContext.jsx";
@@ -27,11 +28,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
       <SearchProvider>
         <UserProvider>
-          <MovieListProvider>
-            <LoadingOverlayProvider>
-              <App />
-            </LoadingOverlayProvider>
-          </MovieListProvider>
+          <BlurProvider>
+            <MovieListProvider>
+              <LoadingOverlayProvider>
+                <App />
+              </LoadingOverlayProvider>
+            </MovieListProvider>
+          </BlurProvider>
         </UserProvider>
       </SearchProvider>
       <Toaster

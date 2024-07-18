@@ -1,9 +1,17 @@
 @use "../../../sass/colors.module.scss";
 @use "../../../sass/fonts.module.scss";
 
-.movieList {
-  height: 77svh;
+.movieListContainer {
   flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.movieList {
+  height: 100%;
+  // height: 77svh;
+  // flex: 0 1 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +42,27 @@
     text-decoration: none;
     font-size: fonts.$size-3;
   }
+}
+
+.listContainer {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15px,
+    black calc(100% - 15px),
+    transparent 100%
+  );
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .infoCard {

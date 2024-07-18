@@ -1,10 +1,52 @@
+@use "../../../sass/colors.module.scss";
+@use "../../../sass/fonts.module.scss";
+
 .main {
-  // margin-top: 1rem;
-  height: 80svh;
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  // gap: 0.5rem;
+  // justify-content: center;
+  // align-items: center;
+}
+
+.mainContent {
+  position: relative;
+  flex: 0 1 40rem;
+  padding-top: 2rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  // justify-content: center;
-  align-items: center;
+  overflow: hidden;
+
+  background-color: colors.$color-background;
+
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+@media (min-width: 400px) {
+  @media (min-height: 800px) {
+    .mainContent {
+      height: 95%;
+      // margin-bottom: 2rem;
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .mainContent {
+      height: 80%;
+    }
+  }
+
+  @media (min-height: 1300px) {
+    .mainContent {
+      height: 70%;
+    }
+  }
 }
 

@@ -2,14 +2,9 @@ import { useState } from "react";
 
 import { useMovieList } from "../../../contexts/MovieListContext";
 import Button from "../../UI/Button/Button";
-import InfoCard from "../../UI/InfoCard/InfoCard";
-import SlideTransition from "../../UI/SlideTransition/SlideTransition";
 import AddMovieForm from "../AddMovieForm/AddMovieForm";
 import InfoCardBody from "./InfoCardBody";
-import MovieInfo from "./MovieInfo";
-import PlotSection from "./PlotSection";
-import RatingSection from "./RatingSection";
-import styles from "./WatchListCard.module.scss";
+import styles from "./SearchListCard.module.scss";
 
 function SearchListCard({ movie, onClose }) {
   const { seenList, seenListStatus, watchList, watchListStatus } =

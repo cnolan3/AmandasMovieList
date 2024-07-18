@@ -26,6 +26,8 @@
 
 .line {
   input {
+    height: 2.5rem;
+    font-size: fonts.$size-4;
     border: none;
     border-bottom: 2px solid colors.$color-background;
     color: colors.$color-background;

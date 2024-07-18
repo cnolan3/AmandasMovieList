@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
+import { useBlur } from "../../../contexts/BlurContext";
 import { useSearch } from "../../../contexts/searchContext";
 import MovieListCard from "../MovieInfoCard/MovieListCard";
-import SeenListCard from "../MovieInfoCard/SeenListCard";
-import WatchListCard from "../MovieInfoCard/WatchListCard";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
@@ -16,6 +15,7 @@ function MovieListSection() {
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const { setBlur } = useBlur();
   const nodeRef = useRef(null);
 
   useEffect(() => {
@@ -32,16 +32,18 @@ function MovieListSection() {
   function handleSelectMovie(movie) {
     setHasShown(true);
     setShowCard(true);
+    setBlur(true);
     setSelectedMovie(movie);
   }
 
   function handleUnselectMovie() {
     console.log("close");
+    setBlur(false);
     setShowCard(false);
   }
 
   return (
-    <>
+    <div className={styles.movieListContainer}>
       <div className={styles.movieList}>
         <div className={styles.tabRow}>
           <div
@@ -108,7 +110,7 @@ function MovieListSection() {
           )}
         </div>
       </CSSTransition>
-    </>
+    </div>
   );
 }
 

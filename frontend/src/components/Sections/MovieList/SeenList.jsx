@@ -2,6 +2,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
 import { useMovieList } from "../../../contexts/MovieListContext";
+import { useScreenSize } from "../../../hooks/useScreenSize";
 import colors from "../../../sass/colors.module.scss";
 import filterMovieList from "../../../utils/filterMovieList";
 import ListStats from "../../UI/ListStats/ListStats";
@@ -12,6 +13,7 @@ import styles from "./SeenList.module.scss";
 
 function SeenList({ onSelectMovie, searchQuery }) {
   const { seenList, seenListStatus } = useMovieList();
+  const { height } = useScreenSize();
 
   const filteredList = filterMovieList(seenList, searchQuery);
 
@@ -24,7 +26,9 @@ function SeenList({ onSelectMovie, searchQuery }) {
 
   return (
     <>
-      <ListStats list={filteredList} />
+      {height > 450 && (
+        <ListStats className={styles.listStats} list={filteredList} />
+      )}
       <MovieList movieListStatus={seenListStatus}>
         {filteredList && filteredList.length > 0 ? (
           filteredList.map((movie, i) => (
@@ -67,3 +71,4 @@ function SeenList({ onSelectMovie, searchQuery }) {
 }
 
 export default SeenList;
+

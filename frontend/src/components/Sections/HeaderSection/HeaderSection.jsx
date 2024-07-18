@@ -12,8 +12,9 @@ function HeaderSection() {
   return (
     <div className={styles.header}>
       <div className={styles.headerContent}>
-        <div className={styles.loginRow}>
-          <h2>Amanda&apos;s Movie List</h2>
+        <h2 className={styles.title}>Amanda&apos;s Movie List</h2>
+
+        <div className={styles.loginBox}>
           {loggedIn ? (
             <UserIcon username={myInfo.username} />
           ) : (
@@ -22,11 +23,14 @@ function HeaderSection() {
             </Link>
           )}
         </div>
-        <input
-          placeholder={placeholder}
-          className={styles.search}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+
+        <div className={styles.searchBox}>
+          <input
+            placeholder={placeholder}
+            className={styles.search}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
       </div>
     </div>
   );

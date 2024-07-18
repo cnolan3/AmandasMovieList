@@ -1,0 +1,22 @@
+.transition-ref {
+  flex-grow: 1;
+}
+
+.fade-in-enter {
+  opacity: 0;
+}
+
+.fade-in-enter-active {
+  opacity: 1;
+  transition: all 0.25s ease-out;
+}
+
+.fade-in-exit {
+  opacity: 1;
+}
+
+.fade-in-exit-active {
+  opacity: 0;
+  transition: all 0.25s ease-in;
+}
+
