@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
 
+import { useBlur } from "../../../contexts/BlurContext";
 import { useSearch } from "../../../contexts/searchContext";
-import SeenListCard from "../MovieInfoCard/SeenListCard";
-import WatchListCard from "../MovieInfoCard/WatchListCard";
+import MovieListCard from "../MovieInfoCard/MovieListCard";
 import SeenList from "../MovieList/SeenList";
 import WatchList from "../MovieList/WatchList";
 import styles from "./MovieListSection.module.scss";
+import "./transition.css";
 
 function MovieListSection() {
   const [tabState, setTabState] = useState("watchlist");
@@ -13,6 +15,8 @@ function MovieListSection() {
   const [selectedMovie, setSelectedMovie] = useState();
   const [showCard, setShowCard] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const { setBlur } = useBlur();
+  const nodeRef = useRef(null);
 
   useEffect(() => {
     setPlaceholder("Search the movie list");
@@ -28,15 +32,18 @@ function MovieListSection() {
   function handleSelectMovie(movie) {
     setHasShown(true);
     setShowCard(true);
+    setBlur(true);
     setSelectedMovie(movie);
   }
 
   function handleUnselectMovie() {
+    console.log("close");
+    setBlur(false);
     setShowCard(false);
   }
 
   return (
-    <>
+    <div className={styles.movieListContainer}>
       <div className={styles.movieList}>
         <div className={styles.tabRow}>
           <div
@@ -73,22 +80,37 @@ function MovieListSection() {
         )}
       </div>
 
-      <div
-        className={`${styles.infoCard}${showCard ? ` ${styles.show}` : hasShown ? ` ${styles.hide}` : ""}`}
+      <CSSTransition
+        nodeRef={nodeRef}
+        in={showCard}
+        timeout={250}
+        classNames="slide-up"
+        unmountOnExit
       >
-        {tabState === "watchlist" ? (
-          <WatchListCard
-            movie={selectedMovie}
-            onClose={handleUnselectMovie}
-          ></WatchListCard>
-        ) : (
-          <SeenListCard
-            movie={selectedMovie}
-            onClose={handleUnselectMovie}
-          ></SeenListCard>
-        )}
-      </div>
-    </>
+        <div className={styles.infoCard} ref={nodeRef}>
+          {tabState === "watchlist" ? (
+            <MovieListCard
+              movie={selectedMovie}
+              rateBtnLabel="Rate Movie and Move"
+              noRateBtnLabel="Move Without Rating"
+              stageBtnLabelFirst="Move to Seen"
+              stageBtnLabelSecond="Cancel Move"
+              onClose={handleUnselectMovie}
+            />
+          ) : (
+            <MovieListCard
+              movie={selectedMovie}
+              rateBtnLabel="Rate Movie"
+              noRateBtnLabel="Remove Rating"
+              stageBtnLabelFirst="Rate Movie"
+              stageBtnLabelSecond="Cancel"
+              enableNoRateBtnDisable={true}
+              onClose={handleUnselectMovie}
+            />
+          )}
+        </div>
+      </CSSTransition>
+    </div>
   );
 }
 

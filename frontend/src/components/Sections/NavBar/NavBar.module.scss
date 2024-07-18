@@ -5,6 +5,7 @@
   position: absolute;
   bottom: 6rem;
   right: 0;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -33,7 +34,7 @@
 }
 
 .menuContentContainer {
-  height: 100%;
+  // height: 100%;
   width: 100%;
   flex: auto;
 }
@@ -46,13 +47,13 @@
   align-items: start;
   justify-content: center;
   padding: 0 3rem;
-  margin: 1rem 0;
+  // margin: 1rem 0;
   gap: 2rem;
 }
 
 .logoutBtnContainer {
   align-self: center;
-  height: 4.2rem;
+  height: 4rem;
   margin-top: 1rem;
 }
 
@@ -98,5 +99,34 @@
   height: 100%;
   width: 100%;
   padding-right: 2rem;
+}
+
+@media (min-width: 400px) {
+  .navBar {
+    right: 2rem;
+    bottom: 2rem;
+    width: 6rem;
+    border-radius: 50%;
+
+    &.open {
+      height: 22rem;
+
+      border-radius: 30px;
+    }
+  }
+
+  .openCloseBtn {
+    width: 6rem;
+    padding-right: 0;
+    justify-content: center;
+  }
+
+  .menuContent {
+    gap: 1rem;
+  }
+
+  .logoutBtnContainer {
+    margin-top: 0;
+  }
 }
 

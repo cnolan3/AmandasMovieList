@@ -2,12 +2,9 @@ import { useState } from "react";
 
 import { useMovieList } from "../../../contexts/MovieListContext";
 import Button from "../../UI/Button/Button";
-import InfoCard from "../../UI/InfoCard/InfoCard";
-import SlideTransition from "../../UI/SlideTransition/SlideTransition";
 import AddMovieForm from "../AddMovieForm/AddMovieForm";
-import MovieInfo from "./MovieInfo";
-import PlotSection from "./PlotSection";
-import styles from "./WatchListCard.module.scss";
+import InfoCardBody from "./InfoCardBody";
+import styles from "./SearchListCard.module.scss";
 
 function SearchListCard({ movie, onClose }) {
   const { seenList, seenListStatus, watchList, watchListStatus } =
@@ -24,31 +21,29 @@ function SearchListCard({ movie, onClose }) {
   if (!movie) return;
 
   return (
-    <InfoCard title={movie.Title} onClose={onClose}>
-      <MovieInfo movie={movie}>
-        <SlideTransition stageState={stage}>
-          {stage ? (
-            <PlotSection movie={movie} />
-          ) : (
-            <AddMovieForm
-              onSubmit={() => {}}
-              onSuccess={() => onClose()}
-              movieId={movie.imdbID}
-            />
-          )}
-        </SlideTransition>
-      </MovieInfo>
-
-      <div className={styles.lowerSection}>
-        <Button
-          className={`${styles.addBtn} ${found ? styles.disabled : ""}`}
-          onClick={() => setStage((stage) => !stage)}
-          disabled={found}
-        >
-          {stage ? "Add to list" : "cancel"}
-        </Button>
-      </div>
-    </InfoCard>
+    <InfoCardBody
+      movie={movie}
+      stage={stage}
+      onClose={onClose}
+      plotTransitionTo={
+        <AddMovieForm
+          onSubmit={() => {}}
+          onSuccess={() => onClose()}
+          movieId={movie.imdbID}
+        />
+      }
+      lowerSection={
+        <div className={styles.lowerSection}>
+          <Button
+            className={`${styles.addBtn} ${found ? styles.disabled : ""}`}
+            onClick={() => setStage((stage) => !stage)}
+            disabled={found}
+          >
+            {stage ? "Add to list" : "cancel"}
+          </Button>
+        </div>
+      }
+    />
   );
 }
 

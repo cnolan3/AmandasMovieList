@@ -3,6 +3,7 @@ import { IconContext } from "react-icons/lib";
 import { SiRottentomatoes } from "react-icons/si";
 
 import { useMovieList } from "../../../contexts/MovieListContext";
+import { useScreenSize } from "../../../hooks/useScreenSize";
 import colors from "../../../sass/colors.module.scss";
 import filterMovieList from "../../../utils/filterMovieList";
 import ListStats from "../../UI/ListStats/ListStats";
@@ -13,6 +14,7 @@ import styles from "./WatchList.module.scss";
 
 function WatchList({ onSelectMovie, searchQuery }) {
   const { watchList, watchListStatus } = useMovieList();
+  const { height } = useScreenSize();
 
   const filteredList = filterMovieList(watchList, searchQuery);
 
@@ -25,7 +27,9 @@ function WatchList({ onSelectMovie, searchQuery }) {
 
   return (
     <>
-      <ListStats list={filteredList} />
+      {height > 450 && (
+        <ListStats className={styles.listStats} list={filteredList} />
+      )}
       <MovieList movieListStatus={watchListStatus}>
         {filteredList && filteredList.length > 0 ? (
           filteredList.map((movie, i) => (
@@ -62,3 +66,4 @@ function WatchList({ onSelectMovie, searchQuery }) {
 }
 
 export default WatchList;
+

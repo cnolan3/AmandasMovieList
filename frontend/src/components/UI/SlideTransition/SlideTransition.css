@@ -1,5 +1,6 @@
 .transition-ref {
   flex-grow: 1;
+  /* flex-grow: 0; */
 }
 
 .slide-left-enter {
