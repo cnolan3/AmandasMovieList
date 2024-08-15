@@ -19,43 +19,22 @@ function SearchList({ onSelectMovie, searchQuery }) {
     );
 
   return (
-    <MovieList moviesStatus={status}>
-      {movies && movies.Search && movies.Search.length > 0 ? (
-        movies.Search.map((movie, i) => (
-          <MovieListItem
-            onClick={() => onSelectMovie(movie.imdbID)}
-            movie={movie}
-            position={i + 1}
-            key={movie.imdbID}
-          >
-            {/* <div className={styles.stat}>
-              {movie.amandaRating && movie.amandaRating > 0 ? (
-                <IconContext.Provider value={{ color: colors.colorPrimary }}>
-                  {Array.from({ length: movie.amandaRating }, (item, index) => (
-                    <FaStar key={index} />
-                  ))}
-                  {Array.from(
-                    { length: 5 - movie.amandaRating },
-                    (item, index) => (
-                      <FaRegStar key={index} />
-                    ),
-                  )}
-                </IconContext.Provider>
-              ) : (
-                <p>No rating</p>
-              )}
-            </div> */}
-          </MovieListItem>
-        ))
-      ) : searchQuery ? (
-        <h2 className={styles.listEmptyMessage}>Search Not Found</h2>
-      ) : (
-        <h2 className={styles.listEmptyMessage}>
-          Use search bar to find movies by title
-        </h2>
+    <MovieList
+      movieList={movies}
+      emptyListMsg="Use search bar to find movies by title"
+      noResultsMsg="Search Not Found"
+      isSearchActive={searchQuery}
+      render={(movie, i) => (
+        <MovieListItem
+          onClick={() => onSelectMovie(movie.imdbID)}
+          movie={movie}
+          position={i + 1}
+          key={movie.imdbID}
+        />
       )}
-    </MovieList>
+    />
   );
 }
 
 export default SearchList;
+
