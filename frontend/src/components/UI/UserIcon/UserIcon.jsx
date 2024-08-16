@@ -14,4 +14,3 @@ function UserIcon({ username }) {
 }
 
 export default UserIcon;
-

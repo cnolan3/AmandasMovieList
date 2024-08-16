@@ -41,4 +41,3 @@ function LowerSection({
 }
 
 export default LowerSection;
-

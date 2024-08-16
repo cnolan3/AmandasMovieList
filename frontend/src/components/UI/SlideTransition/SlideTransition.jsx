@@ -25,4 +25,3 @@ function SlideTransition({
 }
 
 export default SlideTransition;
-

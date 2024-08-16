@@ -84,4 +84,3 @@ export async function addMovieToListApi(movieId, recommendedByName) {
   const data = await response.json();
   return data.data;
 }
-

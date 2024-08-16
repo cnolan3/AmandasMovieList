@@ -28,4 +28,3 @@ function InfoCard({ title, onClose, children }) {
 }
 
 export default InfoCard;
-

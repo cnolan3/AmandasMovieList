@@ -23,4 +23,3 @@ function FadeTransition({
 }
 
 export default FadeTransition;
-

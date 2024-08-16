@@ -37,4 +37,3 @@ function HeaderSection() {
 }
 
 export default HeaderSection;
-

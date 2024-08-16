@@ -65,4 +65,3 @@ function LoginForm({ onSubmit = () => {}, onSuccess = () => {} }) {
 }
 
 export default LoginForm;
-

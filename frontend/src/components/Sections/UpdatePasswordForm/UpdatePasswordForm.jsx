@@ -91,4 +91,3 @@ function UpdatePasswordForm({ onSubmit = () => {}, onSuccess = () => {} }) {
 }
 
 export default UpdatePasswordForm;
-

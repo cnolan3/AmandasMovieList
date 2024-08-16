@@ -52,4 +52,3 @@ function ForgotForm({ onSubmit = () => {}, onSuccess = () => {} }) {
 }
 
 export default ForgotForm;
-

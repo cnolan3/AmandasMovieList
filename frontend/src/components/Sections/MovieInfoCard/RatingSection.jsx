@@ -37,4 +37,3 @@ function RatingSection({
 }
 
 export default RatingSection;
-

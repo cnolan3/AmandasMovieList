@@ -24,4 +24,3 @@ function BlurOverlay() {
 }
 
 export default BlurOverlay;
-

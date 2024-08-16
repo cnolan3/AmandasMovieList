@@ -28,4 +28,3 @@ function InfoCardBody({
 }
 
 export default InfoCardBody;
-

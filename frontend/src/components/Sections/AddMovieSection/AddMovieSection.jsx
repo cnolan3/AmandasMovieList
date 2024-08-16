@@ -77,4 +77,3 @@ function AddMovieSection() {
 }
 
 export default AddMovieSection;
-

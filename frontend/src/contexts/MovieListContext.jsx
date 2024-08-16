@@ -27,4 +27,3 @@ function useMovieList() {
 }
 
 export { MovieListProvider, useMovieList };
-

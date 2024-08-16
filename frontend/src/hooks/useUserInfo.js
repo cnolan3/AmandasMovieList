@@ -15,4 +15,3 @@ export function useMyInfo() {
 
   return { myInfo, error, status };
 }
-

@@ -8,4 +8,3 @@ function Spinner({ color = colors.colorPrimary, size = 10 }) {
 }
 
 export default Spinner;
-

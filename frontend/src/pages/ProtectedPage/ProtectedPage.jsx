@@ -40,4 +40,3 @@ function ProtectedPage({ children, roles = [] }) {
 }
 
 export default ProtectedPage;
-

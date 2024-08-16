@@ -44,4 +44,3 @@ function MovieInfo({ movie, children }) {
 }
 
 export default MovieInfo;
-

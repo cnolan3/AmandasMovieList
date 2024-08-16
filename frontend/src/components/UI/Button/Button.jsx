@@ -15,4 +15,3 @@ function Button({ onClick, disabled = false, className = "", children }) {
 }
 
 export default Button;
-
