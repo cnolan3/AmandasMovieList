@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { FaRegStar, FaStar } from "react-icons/fa";
-import { IconContext } from "react-icons/lib";
-
 import { useSearchMovies } from "../../../hooks/useMovieData";
 import Spinner from "../../UI/Spinner/Spinner";
 import MovieListItem from "../MovieListItem/MovieListItem";
 import MovieList from "./MovieList";
-import styles from "./SeenList.module.scss";
+import styles from "./SearchList.module.scss";
 
 function SearchList({ onSelectMovie, searchQuery }) {
   const { movies, error, status } = useSearchMovies(searchQuery);
@@ -37,4 +33,3 @@ function SearchList({ onSelectMovie, searchQuery }) {
 }
 
 export default SearchList;
-

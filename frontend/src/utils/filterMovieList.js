@@ -6,4 +6,3 @@ export default function filterMovieList(movieList, query) {
 
   return movieList;
 }
-

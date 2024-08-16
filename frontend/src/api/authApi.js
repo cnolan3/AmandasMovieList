@@ -118,4 +118,3 @@ export async function sendResetPasswordApi(
   const data = await response.json();
   return data.data;
 }
-

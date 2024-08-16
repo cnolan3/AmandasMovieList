@@ -45,4 +45,3 @@ function LoginForgotPage() {
 }
 
 export default LoginForgotPage;
-

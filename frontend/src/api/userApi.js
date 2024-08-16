@@ -13,4 +13,3 @@ export async function getMyInfoApi() {
   const { username, role, email } = (await response.json()).data;
   return { username, role, email };
 }
-

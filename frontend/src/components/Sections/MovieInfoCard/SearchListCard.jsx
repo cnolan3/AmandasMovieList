@@ -48,4 +48,3 @@ function SearchListCard({ movie, onClose }) {
 }
 
 export default SearchListCard;
-

@@ -48,4 +48,3 @@ export function useGetMovieByTitle(movieTitle) {
 
   return { movie, error, status };
 }
-

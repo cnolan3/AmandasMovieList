@@ -39,4 +39,3 @@ function ForgotSection({ onSubmit = () => {}, onSuccess = () => {}, onBack }) {
 }
 
 export default ForgotSection;
-

@@ -51,4 +51,3 @@ export async function getMovieByTitleApi(title) {
   const data = await response.json();
   return data.data;
 }
-

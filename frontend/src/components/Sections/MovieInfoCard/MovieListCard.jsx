@@ -77,4 +77,3 @@ function MovieListCard({
 }
 
 export default MovieListCard;
-

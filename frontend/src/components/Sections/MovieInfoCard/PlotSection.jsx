@@ -38,4 +38,3 @@ function PlotSection({ movie }) {
 }
 
 export default PlotSection;
-

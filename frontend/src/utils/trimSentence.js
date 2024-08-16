@@ -16,4 +16,3 @@ function trimSentence(sentence, maxCharacters) {
 }
 
 export default trimSentence;
-

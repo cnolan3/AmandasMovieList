@@ -9,4 +9,3 @@ function MainSection({ children }) {
 }
 
 export default MainSection;
-

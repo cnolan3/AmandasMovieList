@@ -35,4 +35,3 @@ function ComponentTransition({
 }
 
 export default ComponentTransition;
-

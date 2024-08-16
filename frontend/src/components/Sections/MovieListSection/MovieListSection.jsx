@@ -1,16 +1,22 @@
 import { useEffect, useRef, useState } from "react";
+import { IconContext } from "react-icons";
+import { FaClock, FaRegStar, FaStar } from "react-icons/fa";
+import { SiRottentomatoes } from "react-icons/si";
 import { CSSTransition } from "react-transition-group";
 
 import { useBlur } from "../../../contexts/BlurContext";
-import { useSearch } from "../../../contexts/searchContext";
 import { useMovieList } from "../../../contexts/MovieListContext";
+import { useSearch } from "../../../contexts/searchContext";
+import colors from "../../../sass/colors.module.scss";
 import MovieListCard from "../MovieInfoCard/MovieListCard";
 import WatchList from "../MovieList/WatchList";
+import MovieListItem from "../MovieListItem/MovieListItem";
 import styles from "./MovieListSection.module.scss";
 import "./transition.css";
 
 function MovieListSection() {
-  const { watchList, watchListStatus, seenList, seenListStatus } = useMovieList();
+  const { watchList, watchListStatus, seenList, seenListStatus } =
+    useMovieList();
   const [tabState, setTabState] = useState("watchlist");
   const { setPlaceholder, setQuery, query } = useSearch();
   const [selectedMovie, setSelectedMovie] = useState();
@@ -21,7 +27,7 @@ function MovieListSection() {
   useEffect(() => {
     setPlaceholder("Search the movie list");
     setQuery("");
-  }, []);
+  }, [setPlaceholder, setQuery]);
 
   function handleSelectMovie(movie) {
     setShowCard(true);
@@ -98,14 +104,16 @@ function MovieListSection() {
             searchQuery={query}
             render={(movie, i) => (
               <MovieListItem
-                onClick={() => onSelectMovie(movie)}
+                onClick={() => handleSelectMovie(movie)}
                 movie={movie}
                 position={i + 1}
                 key={movie.imdbID}
               >
                 <div className={styles.stat}>
                   {movie.amandaRating && movie.amandaRating > 0 ? (
-                    <IconContext.Provider value={{ color: colors.colorPrimary }}>
+                    <IconContext.Provider
+                      value={{ color: colors.colorPrimary }}
+                    >
                       {Array.from(
                         { length: movie.amandaRating },
                         (item, index) => (
@@ -127,7 +135,6 @@ function MovieListSection() {
             )}
           />
         )}
-
       </div>
 
       {/* INFOCARD */}
@@ -166,4 +173,3 @@ function MovieListSection() {
 }
 
 export default MovieListSection;
-

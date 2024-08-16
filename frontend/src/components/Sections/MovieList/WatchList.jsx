@@ -1,6 +1,7 @@
 import { useScreenSize } from "../../../hooks/useScreenSize";
 import filterMovieList from "../../../utils/filterMovieList";
 import ListStats from "../../UI/ListStats/ListStats";
+import Spinner from "../../UI/Spinner/Spinner";
 import MovieList from "./MovieList";
 import styles from "./WatchList.module.scss";
 
@@ -33,4 +34,3 @@ function WatchList({ movieList, movieListStatus, searchQuery, render }) {
 }
 
 export default WatchList;
-

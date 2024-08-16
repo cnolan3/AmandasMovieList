@@ -48,4 +48,3 @@ function MovieListItem({ movie, position, onClick, children }) {
 }
 
 export default MovieListItem;
-

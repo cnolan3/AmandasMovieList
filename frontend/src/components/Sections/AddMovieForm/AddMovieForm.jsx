@@ -52,4 +52,3 @@ function AddMovieForm({ onSubmit = () => {}, onSuccess = () => {}, movieId }) {
 }
 
 export default AddMovieForm;
-
