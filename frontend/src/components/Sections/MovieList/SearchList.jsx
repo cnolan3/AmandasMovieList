@@ -16,7 +16,7 @@ function SearchList({ onSelectMovie, searchQuery }) {
 
   return (
     <MovieList
-      movieList={movies}
+      movieList={movies.Search}
       emptyListMsg="Use search bar to find movies by title"
       noResultsMsg="Search Not Found"
       isSearchActive={searchQuery}

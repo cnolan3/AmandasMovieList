@@ -27,7 +27,7 @@ function MovieListSection() {
   useEffect(() => {
     setPlaceholder("Search the movie list");
     setQuery("");
-  }, [setPlaceholder, setQuery]);
+  }, []);
 
   function handleSelectMovie(movie) {
     setShowCard(true);
