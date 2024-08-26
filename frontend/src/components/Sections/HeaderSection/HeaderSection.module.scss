@@ -154,10 +154,16 @@
   transition: box-shadow 0.3s;
   z-index: 1;
 
+  // needed to prevent IOS devices from zooming in on input box
+  font-size: 16px;
+
   &:focus {
     outline: none;
     // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 10px 5px rgba(colors.$color-primary-bright, 1);
+
+    // needed to prevent IOS devices from zooming in on input box
+    font-size: 16px;
   }
 
   &::placeholder {
