@@ -9,16 +9,15 @@ import {
 
 // search movies
 export function useSearchMovies(searchQuery) {
-  const {
-    data: movies,
-    error,
-    status,
-  } = useQuery({
+  const { data, error, status } = useQuery({
     queryKey: ["moviedata", "search", searchQuery],
     queryFn: () => searchMoviesApi(searchQuery),
   });
 
-  return { movies, error, status };
+  const movies = data && data.Search ? data.Search : [];
+  const numResults = data && data.numResults ? data.numResults : 0;
+
+  return { movies, numResults, error, status };
 }
 
 // get a movie by imdbid
