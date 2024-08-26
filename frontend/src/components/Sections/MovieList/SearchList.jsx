@@ -5,8 +5,7 @@ import MovieList from "./MovieList";
 import styles from "./SearchList.module.scss";
 
 function SearchList({ onSelectMovie, searchQuery }) {
-  const { movies, error, status } = useSearchMovies(searchQuery);
-  const movieList = movies && movies.Search ? movies.Search : null;
+  const { movies, status } = useSearchMovies(searchQuery);
 
   if (status === "pending")
     return (
@@ -17,7 +16,7 @@ function SearchList({ onSelectMovie, searchQuery }) {
 
   return (
     <MovieList
-      movieList={movieList}
+      movieList={movies}
       emptyListMsg="Use search bar to find movies by title"
       noResultsMsg="Search Not Found"
       isSearchActive={searchQuery}
